@@ -5,9 +5,14 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float maxHealth;
     private float health;
-    [SerializeField] private HealthBar healthBar;
+    private HealthBar healthBar;
 
     private void Awake()
+    {
+        healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
+    }
+
+    private void Start()
     {
         health = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
