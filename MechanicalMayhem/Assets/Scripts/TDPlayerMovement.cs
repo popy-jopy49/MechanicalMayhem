@@ -11,8 +11,9 @@ public class TDPlayerMovement : MonoBehaviour
     
     private float sprint = 0;
     private bool isSprinting = false;
-    private float speedMultiplier = 10;
     private Rigidbody2D rb;
+    private Vector2 input;
+    private float speed;
 
     private void Awake()
     {
@@ -22,9 +23,9 @@ public class TDPlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        Vector2 input = InputManager.INPUT_ACTIONS.Main.Movement.ReadValue<Vector2>();
+        input = InputManager.INPUT_ACTIONS.Main.Movement.ReadValue<Vector2>();
         isSprinting = InputManager.INPUT_ACTIONS.Main.Sprint.ReadValue<float>() != 0;
-        float speed = movementSpeed;
+        speed = movementSpeed;
         if (isSprinting)
         {
             sprint -= Time.deltaTime;
@@ -38,8 +39,11 @@ public class TDPlayerMovement : MonoBehaviour
             sprint += Time.deltaTime;
         }
         sprint = Mathf.Clamp(sprint, 0, maxSprint);
+    }
 
-        Vector2 newPos = input * speed / speedMultiplier;
+    private void FixedUpdate()
+    {
+        Vector2 newPos = speed * Time.fixedDeltaTime * input;
         rb.MovePosition(rb.position + newPos);
     }
 

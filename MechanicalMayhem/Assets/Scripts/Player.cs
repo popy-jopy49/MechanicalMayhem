@@ -18,13 +18,20 @@ public class Player : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (Input.GetMouseButtonDown(1))
         {
             health -= 10;
             healthBar.SetHealth(health);
         }
+
+        Vector3 mousePos = InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>();
+        mousePos.z = 0.0f;
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        mousePos -= transform.position;
+        float rot = SWAssets.Utils.VectorUtils.GetAngleFromVector(mousePos);
+        transform.eulerAngles = new Vector3(0, 0, rot - 90);
     }
 
 }
