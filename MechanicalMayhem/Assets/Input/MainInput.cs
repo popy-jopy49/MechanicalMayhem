@@ -62,6 +62,15 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Value"",
+                    ""id"": ""a4d3fb8a-49ef-46e6-ab87-91f6a256e480"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,17 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
                     ""action"": ""MousePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35e792bc-15e2-4d81-a268-55d13cba83af"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -181,6 +201,7 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
         m_Main_Sprint = m_Main.FindAction("Sprint", throwIfNotFound: true);
         m_Main_Fire = m_Main.FindAction("Fire", throwIfNotFound: true);
         m_Main_MousePosition = m_Main.FindAction("MousePosition", throwIfNotFound: true);
+        m_Main_Interact = m_Main.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -244,6 +265,7 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Sprint;
     private readonly InputAction m_Main_Fire;
     private readonly InputAction m_Main_MousePosition;
+    private readonly InputAction m_Main_Interact;
     public struct MainActions
     {
         private @MainInput m_Wrapper;
@@ -252,6 +274,7 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Main_Sprint;
         public InputAction @Fire => m_Wrapper.m_Main_Fire;
         public InputAction @MousePosition => m_Wrapper.m_Main_MousePosition;
+        public InputAction @Interact => m_Wrapper.m_Main_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -273,6 +296,9 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
                 @MousePosition.started -= m_Wrapper.m_MainActionsCallbackInterface.OnMousePosition;
                 @MousePosition.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnMousePosition;
                 @MousePosition.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnMousePosition;
+                @Interact.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -289,6 +315,9 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -308,5 +337,6 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }
