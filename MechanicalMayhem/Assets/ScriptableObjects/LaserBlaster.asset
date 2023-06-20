@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8844a08333d0e4f968379ada559eed, type: 3}
   m_Name: LaserBlaster
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 5a01776564dc952448d487196d666ab1, type: 3}
   fireRate: 5
   damage: 5
   range: 30
@@ -21,3 +22,6 @@ MonoBehaviour:
   melee: 0
   bulletPrefab: {fileID: 4793002964381020082, guid: 11949ccbe7308914ab3e0d69d906f5ae, type: 3}
   bulletSpeed: 1000
+  maxAmmo: 30
+  startingMags: 6
+  reloadTime: 3

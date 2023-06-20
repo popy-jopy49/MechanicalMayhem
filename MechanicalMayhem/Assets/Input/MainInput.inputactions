@@ -15,10 +15,28 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Interact",
+                    "type": "Value",
+                    "id": "a4d3fb8a-49ef-46e6-ab87-91f6a256e480",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Sprint",
                     "type": "Value",
                     "id": "3590f1b0-71e6-479b-8462-36193feef33c",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ToggleInventory",
+                    "type": "Value",
+                    "id": "ae302c20-833e-4bb3-af7b-0a31ffe56fc1",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -33,19 +51,46 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MousePosition",
+                    "name": "Reload",
                     "type": "Value",
-                    "id": "161ddaca-6044-4e70-a134-e1feed90dbc4",
-                    "expectedControlType": "Vector2",
+                    "id": "3b7f3530-45f1-4b53-9314-90e5e5451356",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Interact",
+                    "name": "SelectWeapon1",
                     "type": "Value",
-                    "id": "a4d3fb8a-49ef-46e6-ab87-91f6a256e480",
+                    "id": "ccfab791-6a09-436d-b748-38d30f8aadd9",
                     "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SelectWeapon2",
+                    "type": "Value",
+                    "id": "c1f6f73d-481b-40cc-a86c-2d4d53507ab8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SelectWeapon3",
+                    "type": "Value",
+                    "id": "397dc104-eb0b-4b2b-8cd6-4ead655c09c8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "MousePosition",
+                    "type": "Value",
+                    "id": "161ddaca-6044-4e70-a134-e1feed90dbc4",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -120,12 +165,56 @@
                 },
                 {
                     "name": "",
-                    "id": "1f2f63ab-ac69-4a19-be1a-88076770065d",
-                    "path": "<Mouse>/leftButton",
+                    "id": "7a5b5fb3-8367-4156-9780-8e8507f0eb9d",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectWeapon1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6e0f8b80-5625-4fb4-bfd9-a7d82e3217d8",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectWeapon2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e3b5649-ee57-434e-9a85-5fd73aed0468",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectWeapon3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "315ff72f-49f0-4496-97d1-5e62a52527a8",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "35e792bc-15e2-4d81-a268-55d13cba83af",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
-                    "action": "Fire",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -142,12 +231,23 @@
                 },
                 {
                     "name": "",
-                    "id": "35e792bc-15e2-4d81-a268-55d13cba83af",
-                    "path": "<Keyboard>/f",
+                    "id": "c754a681-4d71-4402-83e4-d209daa486dc",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1f2f63ab-ac69-4a19-be1a-88076770065d",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
-                    "action": "Interact",
+                    "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

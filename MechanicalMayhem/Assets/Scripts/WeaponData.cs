@@ -4,6 +4,7 @@ using UnityEngine;
 public class WeaponData : ScriptableObject
 {
 
+    public Sprite icon;
     public float fireRate;
     public float damage;
     public float range;
@@ -12,5 +13,8 @@ public class WeaponData : ScriptableObject
     public bool melee;
     public GameObject bulletPrefab;
     public float bulletSpeed = 10f;
+	public int maxAmmo;
+	public int startingMags;
+    public float reloadTime;
 
 }

@@ -1,22 +1,28 @@
-using System;
+using SWAssets;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Player : Singleton<Player>
 {
 
     [SerializeField] private float maxHealth;
 
-    private List<GameObject> itemsToPickup = new List<GameObject>();
-    private List<Repairable> repairables = new List<Repairable>();
+	private float health;
+	private HealthBar healthBar;
+
+	private List<GameObject> itemsToPickup = new List<GameObject>();
+    private List<Repairable> nearbyRepairables = new List<Repairable>();
     private List<GameObject> inventory = new List<GameObject>();
-    private float health;
-    private HealthBar healthBar;
+
+    private TMP_Text nbText;
+    private int nutsAndBolts;
 
     private void Awake()
     {
         healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
+        nbText = GameObject.Find("NutsAndBoltsAmount").GetComponent<TMP_Text>();
         InputManager.INPUT_ACTIONS.Main.Interact.started += Interact;
     }
 
@@ -26,17 +32,11 @@ public class Player : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
     }
 
-    private void Update()
-    {
-        //if ()
-    }
-
     private void LateUpdate()
     {
         if (Input.GetMouseButtonDown(1))
         {
-            health -= 10;
-            healthBar.SetHealth(health);
+            Damage(10);
         }
 
         Vector3 mousePos = InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>();
@@ -58,8 +58,8 @@ public class Player : MonoBehaviour
         Repairable repairable = collision.GetComponent<Repairable>();
         if (repairable)
         {
-            if (!repairables.Contains(repairable))
-                repairables.Add(repairable);
+            if (!nearbyRepairables.Contains(repairable))
+                nearbyRepairables.Add(repairable);
         }
     }
 
@@ -74,30 +74,49 @@ public class Player : MonoBehaviour
         Repairable repairable = collision.GetComponent<Repairable>();
         if (repairable)
         {
-            if (repairables.Contains(repairable))
-                repairables.Remove(repairable);
+            if (nearbyRepairables.Contains(repairable))
+                nearbyRepairables.Remove(repairable);
         }
     }
 
-    private void Interact(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        if (itemsToPickup.Count > 0)
+    private void Interact(InputAction.CallbackContext obj)
+	{
+		// Pick up
+		if (itemsToPickup.Count > 0)
         {
-            // Pick up
-            inventory.Add(itemsToPickup[0]);
-            itemsToPickup.RemoveAt(0);
+			GameObject temp = itemsToPickup[0];
+			inventory.Add(temp);
+			itemsToPickup.Remove(temp);
+            temp.transform.parent = transform;
             return;
         }
 
         // Repair
-        if (repairables.Count > 0)
+        if (nearbyRepairables.Count <= 0)
+            return;
+
+        Repairable repairable = nearbyRepairables[0];
+        for (int i = 0; i < inventory.Count; i++)
         {
-            for (int i = 0; i < itemsToPickup.Count; i++)
-            {
-                if (repairables[0].AddItem(itemsToPickup[i]))
-                    repairables.RemoveAt(0);
-            }
+            if (!repairable.AddItem(inventory[i]))
+                continue;
+
+			nearbyRepairables.Remove(repairable);
+            inventory.RemoveAt(i);
         }
     }
+
+    public void Damage(float damage)
+	{
+		health -= damage;
+		healthBar.SetHealth(health);
+	}
+
+    public void ChangeNutsAndBolts(int amount)
+    {
+		nutsAndBolts += amount;
+        nbText.text = nutsAndBolts.ToString();
+	}
+    public int GetNutsAndBolts() => nutsAndBolts;
 
 }

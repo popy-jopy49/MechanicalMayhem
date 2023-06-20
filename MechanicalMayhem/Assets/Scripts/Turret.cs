@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Machine : Repairable
+public class Turret : Repairable
 {
 
 
