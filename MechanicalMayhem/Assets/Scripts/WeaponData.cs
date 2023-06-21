@@ -12,9 +12,11 @@ public class WeaponData : ScriptableObject
 
     public bool melee;
     public GameObject bulletPrefab;
-    public float bulletSpeed = 10f;
+    public float bulletSpeed = 30f;
 	public int maxAmmo;
 	public int startingMags;
     public float reloadTime;
+    public float explosionRadius = 0;
+    public bool semiAuto = false;
 
 }

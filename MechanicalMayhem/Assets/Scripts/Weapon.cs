@@ -1,3 +1,4 @@
+using SWAssets.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -73,20 +74,23 @@ public class Weapon : MonoBehaviour
 
 			Attackable attackable = hit.transform.GetComponent<Attackable>();
 			if (!attackable)
-			{
-				// Spawn wall hit decal
 				return;
-			}
 
 			attackable.Damage(weaponData.damage);
 			// Spawn hit affect
+
 		}
 		else
 		{
+			// Spawn Muzzle Flash
+
 			// Spawn Bullet
-			GameObject bullet = Instantiate(weaponData.bulletPrefab, firePoint.position, Quaternion.Euler(firePoint.up));
-			bullet.GetComponent<Bullet>().Setup(firePoint.up * weaponData.bulletSpeed, weaponData.damage);
+			Quaternion bulletDirection = Quaternion.Euler(new Vector3(0, 0, VectorUtils.GetAngleFromVector(firePoint.right) - 90f));
+			GameObject bullet = Instantiate(weaponData.bulletPrefab, firePoint.position, bulletDirection);
+			bullet.GetComponent<Bullet>().Setup(firePoint.right * weaponData.bulletSpeed, weaponData.damage, weaponData.explosionRadius, weaponData.whatToHit);
 			Destroy(bullet, 5f);
+			if (weaponData.semiAuto)
+				isFiring = false;
 		}
 	}
 
@@ -102,7 +106,7 @@ public class Weapon : MonoBehaviour
 
 	private void Reload(InputAction.CallbackContext obj)
 	{
-		if (totalAmmo <= 0)
+		if (totalAmmo <= 0 || reloading || currentAmmo >= weaponData.maxAmmo)
 			return;
 
         reloading = true;
@@ -125,6 +129,11 @@ public class Weapon : MonoBehaviour
 			currentAmmo = weaponData.maxAmmo;
 		}
     }
+
+	private void OnDisable()
+	{
+		reloadTime = 0;
+	}
 
 	public int GetCurrentAmmo() => currentAmmo;
 	public int GetTotalAmmo() => totalAmmo;

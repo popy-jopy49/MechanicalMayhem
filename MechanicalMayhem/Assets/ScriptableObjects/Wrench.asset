@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8844a08333d0e4f968379ada559eed, type: 3}
   m_Name: Wrench
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: b533c652136df4744a089524507a44c6, type: 3}
+  icon: {fileID: 21300000, guid: 7eb8fa640a227f442afcaaf25d86a371, type: 3}
   fireRate: 3
   damage: 10
   range: 2

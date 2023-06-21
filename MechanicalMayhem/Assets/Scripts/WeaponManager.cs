@@ -97,11 +97,32 @@ public class WeaponManager : MonoBehaviour
             currentAmmo.gameObject.SetActive(!weapon.GetWeaponData().melee);
 		}
 		if (weapons.Count > 1)
+		{
 			firstWeapon.sprite = weapons[1].GetComponent<Weapon>().GetWeaponData().icon;
+			firstWeapon.gameObject.SetActive(true);
+		}
+		else
+		{
+			firstWeapon.gameObject.SetActive(false);
+		}
 		if (weapons.Count > 2)
+		{
 			secondWeapon.sprite = weapons[2].GetComponent<Weapon>().GetWeaponData().icon;
+			secondWeapon.gameObject.SetActive(true);
+		}
+		else
+		{
+			secondWeapon.gameObject.SetActive(false);
+		}
 		if (weapons.Count > 3)
+		{
 			thirdWeapon.sprite = weapons[3].GetComponent<Weapon>().GetWeaponData().icon;
+			thirdWeapon.gameObject.SetActive(true);
+		}
+		else
+		{
+			thirdWeapon.gameObject.SetActive(false);
+		}
 	}
 
 }

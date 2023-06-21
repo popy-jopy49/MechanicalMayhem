@@ -1,4 +1,5 @@
 using SWAssets;
+using SWAssets.Utils;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -43,7 +44,7 @@ public class Player : Singleton<Player>
         mousePos.z = 0.0f;
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
         mousePos -= transform.position;
-        float rot = SWAssets.Utils.VectorUtils.GetAngleFromVector(mousePos);
+        float rot = VectorUtils.GetAngleFromVector(mousePos);
         transform.Find("WeaponManager").eulerAngles = new Vector3(0, 0, rot);
         transform.Find("WeaponManager").localScale = new Vector3(1, rot + 90 < 0 || rot + 90 >= 180 ? -1 : 1, 1);
     }
@@ -87,6 +88,7 @@ public class Player : Singleton<Player>
         {
 			GameObject temp = itemsToPickup[0];
 			inventory.Add(temp);
+            temp.SetActive(false);
 			itemsToPickup.Remove(temp);
             temp.transform.parent = transform;
             return;
