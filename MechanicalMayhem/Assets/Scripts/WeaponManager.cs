@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class WeaponManager : MonoBehaviour
 {
 
-    private List<Transform> guns = new List<Transform>();
+    private List<Transform> weapons = new List<Transform>();
     private int currentWeaponIndex = 0;
 
     private Image firstWeapon;
@@ -21,8 +21,8 @@ public class WeaponManager : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            guns.Add(transform.GetChild(i));
-            guns[i].gameObject.SetActive(i == currentWeaponIndex);
+            weapons.Add(transform.GetChild(i));
+            weapons[i].gameObject.SetActive(i == currentWeaponIndex);
         }
 
         InputManager.INPUT_ACTIONS.Main.SelectWeapon1.started += SelectWeapon1;
@@ -39,65 +39,69 @@ public class WeaponManager : MonoBehaviour
 
     private void SelectWeapon3(InputAction.CallbackContext obj)
 	{
-        if (guns.Count <= 3)
+        if (weapons.Count <= 3)
             return;
 		currentWeaponIndex = 3;
-        UpdateCurrentGun();
+        UpdateCurrentWeapon();
 	}
 
 	private void SelectWeapon2(InputAction.CallbackContext obj)
 	{
-		if (guns.Count <= 2)
+		if (weapons.Count <= 2)
 			return;
 		currentWeaponIndex = 2;
-        UpdateCurrentGun();
+        UpdateCurrentWeapon();
 	}
 
 	private void SelectWeapon1(InputAction.CallbackContext obj)
 	{
-		if (guns.Count <= 1)
+		if (weapons.Count <= 1)
 			return;
 		currentWeaponIndex = 1;
-        UpdateCurrentGun();
+        UpdateCurrentWeapon();
 	}
 
 	private void Update()
 	{
-		UpdateGunUI();
+		UpdateWeaponUI();
 	}
 
-	private void UpdateCurrentGun()
+	private void UpdateCurrentWeapon()
     {
-        if (!guns[currentWeaponIndex] || currentWeaponIndex <= 0)
+        if (!weapons[currentWeaponIndex] || currentWeaponIndex <= 0)
             return;
 
         transform.GetChild(currentWeaponIndex).SetAsFirstSibling();
-        guns.Insert(0, transform.GetChild(0));
-        guns.RemoveAt(currentWeaponIndex + 1);
+        weapons.Insert(0, transform.GetChild(0));
+        weapons.RemoveAt(currentWeaponIndex + 1);
+        weapons.Insert(currentWeaponIndex + 1, weapons[1]);
+		weapons.RemoveAt(1);
         transform.GetChild(1).SetSiblingIndex(currentWeaponIndex);
         currentWeaponIndex = 0;
-        foreach (Transform gun in guns)
+        foreach (Transform weapon in weapons)
         {
-            gun.gameObject.SetActive(gun.GetSiblingIndex() == currentWeaponIndex);
+            weapon.gameObject.SetActive(weapon.GetSiblingIndex() == currentWeaponIndex);
 		}
-		UpdateGunUI();
+		UpdateWeaponUI();
 	}
 
-    private void UpdateGunUI()
+    private void UpdateWeaponUI()
 	{
-		if (guns.Count > 0)
+		if (weapons.Count > 0)
 		{
-			Weapon gun = guns[0].GetComponent<Weapon>();
-			equippedWeapon.sprite = gun.GetWeaponData().icon;
-			totalAmmo.text = gun.GetTotalAmmo().ToString();
-			currentAmmo.text = gun.GetCurrentAmmo().ToString();
+			Weapon weapon = weapons[0].GetComponent<Weapon>();
+			equippedWeapon.sprite = weapon.GetWeaponData().icon;
+            totalAmmo.text = weapon.GetTotalAmmo().ToString();
+            currentAmmo.text = weapon.GetCurrentAmmo().ToString();
+            totalAmmo.gameObject.SetActive(!weapon.GetWeaponData().melee);
+            currentAmmo.gameObject.SetActive(!weapon.GetWeaponData().melee);
 		}
-		if (guns.Count > 1)
-			firstWeapon.sprite = guns[1].GetComponent<Weapon>().GetWeaponData().icon;
-		if (guns.Count > 2)
-			secondWeapon.sprite = guns[2].GetComponent<Weapon>().GetWeaponData().icon;
-		if (guns.Count > 3)
-			thirdWeapon.sprite = guns[3].GetComponent<Weapon>().GetWeaponData().icon;
+		if (weapons.Count > 1)
+			firstWeapon.sprite = weapons[1].GetComponent<Weapon>().GetWeaponData().icon;
+		if (weapons.Count > 2)
+			secondWeapon.sprite = weapons[2].GetComponent<Weapon>().GetWeaponData().icon;
+		if (weapons.Count > 3)
+			thirdWeapon.sprite = weapons[3].GetComponent<Weapon>().GetWeaponData().icon;
 	}
 
 }
