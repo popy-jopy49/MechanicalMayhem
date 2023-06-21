@@ -102,7 +102,7 @@ public class Weapon : MonoBehaviour
 
 	private void Reload(InputAction.CallbackContext obj)
 	{
-		if (totalAmmo <= 0)
+		if (totalAmmo <= 0 || reloading)
 			return;
 
         reloading = true;

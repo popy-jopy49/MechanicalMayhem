@@ -87,6 +87,7 @@ public class Player : Singleton<Player>
         {
 			GameObject temp = itemsToPickup[0];
 			inventory.Add(temp);
+            temp.SetActive(false);
 			itemsToPickup.Remove(temp);
             temp.transform.parent = transform;
             return;
