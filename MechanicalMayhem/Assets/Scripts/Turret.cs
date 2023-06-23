@@ -1,4 +1,5 @@
 using SWAssets.Utils;
+using UnityEditor;
 using UnityEngine;
 
 public class Turret : Repairable
@@ -46,5 +47,11 @@ public class Turret : Repairable
 		bullet.GetComponent<Bullet>().Setup(firePoint.right * bulletSpeed, damage, explosionRadius, whatToHit);
 		Destroy(bullet, 5f);
 	}
+
+    private void OnDrawGizmosSelected()
+    {
+		Handles.color = Color.red;
+		Handles.DrawWireDisc(transform.position, Vector3.back, range);
+    }
 
 }

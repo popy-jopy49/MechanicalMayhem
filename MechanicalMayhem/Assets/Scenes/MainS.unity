@@ -766,6 +766,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6604966487644839891, guid: 7f617fdf55e72d8499f3d2eee2392e09, type: 3}
+      propertyPath: m_Mass
+      value: 0.7853982
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2281,6 +2285,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6604966487644839891, guid: 7f617fdf55e72d8499f3d2eee2392e09, type: 3}
+      propertyPath: m_Mass
+      value: 0.7853982
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2914,7 +2922,7 @@ MonoBehaviour:
   linkedItems:
   - {fileID: 864297943}
   repairedSprite: {fileID: 21300000, guid: 538c6b53f120f754fa9502ddd219a4f1, type: 3}
-  range: 5
+  range: 3
   damage: 10
   fireRate: 1
   whatToHit:
@@ -3243,6 +3251,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 6604966487644839891, guid: 7f617fdf55e72d8499f3d2eee2392e09, type: 3}
+      propertyPath: m_Mass
+      value: 0.7853982
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3308,6 +3320,10 @@ PrefabInstance:
     - target: {fileID: 4181180336321469019, guid: 7f617fdf55e72d8499f3d2eee2392e09, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604966487644839891, guid: 7f617fdf55e72d8499f3d2eee2392e09, type: 3}
+      propertyPath: m_Mass
+      value: 0.7853982
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3759,6 +3775,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 6604966487644839891, guid: 7f617fdf55e72d8499f3d2eee2392e09, type: 3}
+      propertyPath: m_Mass
+      value: 0.7853982
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3933,6 +3953,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6604966487644839891, guid: 7f617fdf55e72d8499f3d2eee2392e09, type: 3}
+      propertyPath: m_Mass
+      value: 0.7853982
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3978,7 +4002,7 @@ MonoBehaviour:
   linkedItems:
   - {fileID: 316274060}
   repairedSprite: {fileID: 0}
-  modifier: {x: -1, y: 0}
+  modifier: 1
   speed: 10
 --- !u!212 &1876207048
 SpriteRenderer:
@@ -4039,8 +4063,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1876207046}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.4406, y: 4.24, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.44, y: 4.24, z: 0}
   m_LocalScale: {x: 1.3204783, y: 0.1897, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4291,6 +4315,10 @@ PrefabInstance:
     - target: {fileID: 4181180336321469019, guid: 7f617fdf55e72d8499f3d2eee2392e09, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604966487644839891, guid: 7f617fdf55e72d8499f3d2eee2392e09, type: 3}
+      propertyPath: m_Mass
+      value: 0.7853982
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

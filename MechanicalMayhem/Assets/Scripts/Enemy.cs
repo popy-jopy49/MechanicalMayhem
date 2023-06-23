@@ -1,5 +1,7 @@
 using SWAssets.Utils;
+using UnityEditor;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Enemy : Attackable
 {
@@ -7,6 +9,7 @@ public class Enemy : Attackable
     [SerializeField] private float lookRange;
     [SerializeField] private float followRange;
     [SerializeField] private float attackRange;
+    [SerializeField] private float movementSpeed;
     [SerializeField] private float damage;
     [SerializeField] private float fireRate;
     [SerializeField] private LayerMask whatToHit;
@@ -16,12 +19,16 @@ public class Enemy : Attackable
     [SerializeField] private float explosionRadius;
 
     private float time;
+    private bool collidingWithEnemies = false;
     private Transform firePoint;
+    private Rigidbody2D rb;
+    private Vector3 dir;
 
     private void Awake()
     {
         firePoint = transform.Find("FirePoint");
         useBullet = firePoint;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -35,6 +42,12 @@ public class Enemy : Attackable
         }
 
         print("Hit");
+    }
+
+    private void FixedUpdate()
+    {
+        if (!collidingWithEnemies)
+            rb.MovePosition(transform.position + (dir * movementSpeed));
     }
 
     private void FindTarget()
@@ -56,8 +69,10 @@ public class Enemy : Attackable
             }
         }
 
+        Vector3 dir = shortestCol.transform.position - transform.position;
+
         // Look
-        float rot = VectorUtils.GetAngleFromVector(shortestCol.transform.position - transform.position, true);
+        float rot = VectorUtils.GetAngleFromVector(dir, true);
         transform.eulerAngles = new Vector3(0, 0, VectorUtils.LinearInterpolate(transform.eulerAngles.z, rot, Time.deltaTime * 10));
 
         if (shortestLength > followRange * followRange)
@@ -66,10 +81,38 @@ public class Enemy : Attackable
         if (shortestLength > attackRange * attackRange)
         {
             // Follow
-
+            this.dir = dir;
             return;
         }
 
         // attack
+
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemies"))
+        {
+            collidingWithEnemies = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemies"))
+        {
+            collidingWithEnemies = false;
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Handles.color = Color.green;
+        Handles.DrawWireDisc(transform.position, Vector3.back, lookRange);
+        Handles.color = Color.yellow;
+        Handles.DrawWireDisc(transform.position, Vector3.back, followRange);
+        Handles.color = Color.red;
+        Handles.DrawWireDisc(transform.position, Vector3.back, attackRange);
+    }
+
 }

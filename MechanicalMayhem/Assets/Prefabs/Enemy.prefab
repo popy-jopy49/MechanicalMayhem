@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 5733145266888356031}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &4181180336321469015
 CircleCollider2D:
@@ -81,8 +81,8 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
+  m_UseAutoMass: 1
+  m_Mass: 0.7853982
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -93,10 +93,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 4
 --- !u!114 &4743051929509805257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +110,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 30
+  lookRange: 6
+  followRange: 5
+  attackRange: 1
+  movementSpeed: 0.1
+  damage: 10
+  fireRate: 1
+  whatToHit:
+    serializedVersion: 2
+    m_Bits: 512
+  useBullet: 0
+  bulletPrefab: {fileID: 0}
+  bulletSpeed: 0
+  explosionRadius: 0
 --- !u!1 &8534894114065610581
 GameObject:
   m_ObjectHideFlags: 0
