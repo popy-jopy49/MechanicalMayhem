@@ -47,7 +47,10 @@ public class Weapon : MonoBehaviour
 				return;
 			}
 			if (currentAmmo <= 0)
+            {
+				Reload(new InputAction.CallbackContext());
                 return;
+            }
 		}
 
 		if (isFiring)

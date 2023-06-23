@@ -26,4 +26,4 @@ MonoBehaviour:
   startingMags: 7
   reloadTime: 1.5
   explosionRadius: 0
-  semiAuto: 0
+  semiAuto: 1
