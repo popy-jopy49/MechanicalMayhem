@@ -53,9 +53,24 @@ public class Weapon : MonoBehaviour
             }
 		}
 
-		if (isFiring)
-			Shoot();
-	}
+		if (!isFiring)
+			return;
+
+		Shoot();
+    }
+
+    private Vector2 GetFireDirection(Vector3 target)
+    {
+        float bulletSpread = weaponData.bulletSpread;
+        Vector3 targetPos = new(
+            target.x,
+            target.y,
+            Random.Range(-bulletSpread, bulletSpread)
+            );
+
+        Vector3 dir = (targetPos - target).normalized;
+        return dir;
+    }
 
     private void Shoot()
     {
@@ -65,9 +80,8 @@ public class Weapon : MonoBehaviour
 		Vector3 mousePos = InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>();
 		mousePos.z = 0.0f;
 		mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-		mousePos -= firePoint.position;
 
-		RaycastHit2D hit = Physics2D.Raycast(firePoint.position, mousePos, weaponData.range, weaponData.whatToHit);
+		RaycastHit2D hit = Physics2D.Raycast(firePoint.position, GetFireDirection(mousePos), weaponData.range, weaponData.whatToHit);
 		if (weaponData.melee)
 		{
 			// Do animation
