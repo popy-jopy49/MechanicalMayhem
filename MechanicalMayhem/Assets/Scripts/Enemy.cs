@@ -1,7 +1,6 @@
-using SWAssets.Utils;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Enemy : Attackable
 {
@@ -21,75 +20,45 @@ public class Enemy : Attackable
     private float time;
     private bool collidingWithEnemies = false;
     private Transform firePoint;
+    private Transform target;
     private Rigidbody2D rb;
-    private Vector3 dir;
 
     private void Awake()
     {
         firePoint = transform.Find("FirePoint");
+        target = GameObject.Find("Player").transform;
         useBullet = firePoint;
         rb = GetComponent<Rigidbody2D>();
     }
-
-    private void Update()
+     private void FixedUpdate()
     {
-        FindTarget();
+        float distance = Vector2.Distance(transform.position, target.position);
+        Vector2 vDir = target.position - transform.position;
+        vDir.Normalize();
+        float dir = Mathf.Atan2(vDir.y, vDir.x) * Mathf.Rad2Deg;
+
+        if (distance <= followRange)
+        {
+            if (!collidingWithEnemies)
+                rb.MovePosition(rb.position + (distance * Time.deltaTime * vDir));
+            rb.MoveRotation(dir);
+        }
+        else
+        {
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0;
+        }
 
         if (time < 1f / fireRate)
         {
-            time += Time.deltaTime;
+            time += Time.fixedDeltaTime;
             return;
         }
 
         print("Hit");
     }
-
-    private void FixedUpdate()
-    {
-        if (!collidingWithEnemies)
-            rb.MovePosition(transform.position + (dir * movementSpeed));
-    }
-
-    private void FindTarget()
-    {
-        Collider2D[] lookCols = Physics2D.OverlapCircleAll(transform.position, lookRange, whatToHit);
-
-        if (lookCols.Length <= 0)
-            return;
-
-        float shortestLength = float.MaxValue;
-        Collider2D shortestCol = null;
-        foreach (Collider2D col in lookCols)
-        {
-            float length = (col.transform.position - transform.position).sqrMagnitude;
-            if (length <= shortestLength)
-            {
-                shortestLength = length;
-                shortestCol = col;
-            }
-        }
-
-        Vector3 dir = shortestCol.transform.position - transform.position;
-
-        // Look
-        float rot = VectorUtils.GetAngleFromVector(dir, true);
-        transform.eulerAngles = new Vector3(0, 0, VectorUtils.LinearInterpolate(transform.eulerAngles.z, rot, Time.deltaTime * 10));
-
-        if (shortestLength > followRange * followRange)
-            return;
-
-        if (shortestLength > attackRange * attackRange)
-        {
-            // Follow
-            this.dir = dir;
-            return;
-        }
-
-        // attack
-
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemies"))
         {
@@ -97,7 +66,7 @@ public class Enemy : Attackable
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemies"))
         {
