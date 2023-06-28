@@ -1,24 +1,23 @@
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
 public class Enemy : Attackable
 {
 
+    [SerializeField] private float collisionDetectionRange;
     [SerializeField] private float lookRange;
     [SerializeField] private float followRange;
     [SerializeField] private float attackRange;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float damage;
     [SerializeField] private float fireRate;
-    [SerializeField] private LayerMask whatToHit;
     [SerializeField] private bool useBullet;
+    [SerializeField] private LayerMask whatToHit;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float explosionRadius;
 
     private float time;
-    private bool collidingWithEnemies = false;
     private Transform firePoint;
     private Transform target;
     private Rigidbody2D rb;
@@ -39,8 +38,10 @@ public class Enemy : Attackable
 
         if (distance <= followRange)
         {
-            if (!collidingWithEnemies)
+            if (!CollidingWithEntities())
+            {
                 rb.MovePosition(rb.position + (distance * Time.deltaTime * vDir));
+            }
             rb.MoveRotation(dir);
         }
         else
@@ -57,21 +58,28 @@ public class Enemy : Attackable
 
         print("Hit");
     }
-    
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemies"))
-        {
-            collidingWithEnemies = true;
-        }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private bool CollidingWithEntities()
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemies"))
+        // Check forward
+        RaycastHit2D hitf = Physics2D.Raycast(transform.position, transform.up, collisionDetectionRange, whatToHit);
+        if (hitf && hitf.transform.gameObject.layer == LayerMask.NameToLayer("Enemies"))
         {
-            collidingWithEnemies = false;
+            return true;
         }
+        // Check left
+        RaycastHit2D hitl = Physics2D.Raycast(transform.position, -transform.right, collisionDetectionRange, whatToHit);
+        if (hitl && hitl.transform.gameObject.layer == LayerMask.NameToLayer("Enemies"))
+        {
+            return true;
+        }
+        // Check right
+        RaycastHit2D hitr = Physics2D.Raycast(transform.position, transform.right, collisionDetectionRange, whatToHit);
+        if (hitr && hitr.transform.gameObject.layer == LayerMask.NameToLayer("Enemies"))
+        {
+            return true;
+        }
+        return false;
     }
 
     private void OnDrawGizmosSelected()
