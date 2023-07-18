@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: LaserBlaster
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 5a01776564dc952448d487196d666ab1, type: 3}
-  fireRate: 300
-  damage: 30
+  fireRate: 5
+  damage: 70
   range: 30
   whatToHit:
     serializedVersion: 2
@@ -24,8 +24,8 @@ MonoBehaviour:
   bulletSpeed: 30
   shotCount: 0
   bulletSpread: 100
-  maxAmmo: 300
+  maxAmmo: 30
   startingMags: 7
-  reloadTime: -23.8
+  reloadTime: 1.5
   explosionRadius: 0
   semiAuto: 0

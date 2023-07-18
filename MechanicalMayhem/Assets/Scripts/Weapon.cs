@@ -96,6 +96,7 @@ public class Weapon : MonoBehaviour
 			attackable.Damage(weaponData.damage);
 			// Spawn hit affect
 
+			isFiring = false;
 		}
 		else
 		{
