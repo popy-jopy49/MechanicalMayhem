@@ -1,3 +1,5 @@
+using SWAssets.Utils;
+using System.IO.Pipes;
 using UnityEditor;
 using UnityEngine;
 
@@ -29,6 +31,8 @@ public class Enemy : Attackable
         useBullet = firePoint;
         rb = GetComponent<Rigidbody2D>();
     }
+
+
      private void FixedUpdate()
     {
         float distance = Vector2.Distance(transform.position, target.position);
@@ -56,7 +60,11 @@ public class Enemy : Attackable
             return;
         }
 
-        print("Hit");
+        // Spawn Bullet
+        Quaternion bulletDirection = Quaternion.Euler(new Vector3(0, 0, dir - 90f));
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, bulletDirection);
+        bullet.GetComponent<Bullet>().Setup(vDir * bulletSpeed, damage, explosionRadius, whatToHit);
+        Destroy(bullet, 5f);
     }
 
     private bool CollidingWithEntities()
