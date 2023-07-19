@@ -25,7 +25,7 @@ public class Weapon : MonoBehaviour
         currentAmmo = weaponData.maxAmmo;
         totalAmmo = weaponData.maxAmmo * weaponData.startingMags;
 
-        firePoint = transform.Find("FirePoint");
+        firePoint = GameObject.Find("Player").transform;
     }
 
 	private void Update()
@@ -61,14 +61,13 @@ public class Weapon : MonoBehaviour
 
     private Vector2 GetFireDirection(Vector3 target)
     {
-        float bulletSpread = weaponData.bulletSpread;
+		float bulletSpread = Random.Range(-weaponData.bulletSpread, weaponData.bulletSpread);
         Vector3 targetPos = new(
-            target.x,
-            target.y,
-            Random.Range(-bulletSpread, bulletSpread)
+            target.x,// + bulletSpread,
+            target.y// + bulletSpread
             );
 
-        Vector3 dir = (targetPos - target).normalized;
+        Vector3 dir = (targetPos - firePoint.position).normalized;
         return dir;
     }
 
@@ -81,7 +80,8 @@ public class Weapon : MonoBehaviour
 		mousePos.z = 0.0f;
 		mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
-		RaycastHit2D hit = Physics2D.Raycast(firePoint.position, GetFireDirection(mousePos), weaponData.range, weaponData.whatToHit);
+		Vector2 fireDirection = GetFireDirection(mousePos);
+        RaycastHit2D hit = Physics2D.Raycast(firePoint.position, fireDirection, weaponData.range, weaponData.whatToHit);
 		if (weaponData.melee)
 		{
 			// Do animation
@@ -103,9 +103,9 @@ public class Weapon : MonoBehaviour
 			// Spawn Muzzle Flash
 
 			// Spawn Bullet
-			Quaternion bulletDirection = Quaternion.Euler(new Vector3(0, 0, VectorUtils.GetAngleFromVector(firePoint.right) - 90f));
+			Quaternion bulletDirection = Quaternion.Euler(new Vector3(0, 0, VectorUtils.GetAngleFromVector(fireDirection) - 90f));
 			GameObject bullet = Instantiate(weaponData.bulletPrefab, firePoint.position, bulletDirection);
-			bullet.GetComponent<Bullet>().Setup(firePoint.right * weaponData.bulletSpeed, weaponData.damage, weaponData.explosionRadius, weaponData.whatToHit);
+			bullet.GetComponent<Bullet>().Setup(fireDirection * weaponData.bulletSpeed, weaponData.damage, weaponData.explosionRadius, weaponData.whatToHit);
 			Destroy(bullet, 5f);
 			if (weaponData.semiAuto)
 				isFiring = false;
