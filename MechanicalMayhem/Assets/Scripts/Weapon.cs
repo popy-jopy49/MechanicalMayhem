@@ -63,8 +63,8 @@ public class Weapon : MonoBehaviour
     {
 		float bulletSpread = Random.Range(-weaponData.bulletSpread, weaponData.bulletSpread);
         Vector3 targetPos = new(
-            target.x,// + bulletSpread,
-            target.y// + bulletSpread
+            target.x + bulletSpread,
+            target.y + bulletSpread
             );
 
         Vector3 dir = (targetPos - firePoint.position).normalized;
