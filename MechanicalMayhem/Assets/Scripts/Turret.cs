@@ -28,7 +28,8 @@ public class Turret : Repairable
 		if (!collider)
 			return;
 
-		float rot = VectorUtils.GetAngleFromVector(collider.transform.position - transform.position, true);
+		Vector2 vDir = collider.transform.position - transform.position;
+        float rot = VectorUtils.GetAngleFromVector(vDir, true);
 		transform.eulerAngles = new Vector3(0, 0, VectorUtils.LinearInterpolate(transform.eulerAngles.z, rot, Time.deltaTime * 10));
 
 		if (time < 1 / fireRate)
@@ -38,6 +39,12 @@ public class Turret : Repairable
 		}
 
 		time = 0;
+
+		RaycastHit2D hit = Physics2D.Raycast(firePoint.position, vDir, 50f, whatToHit);
+
+		print(hit.transform.gameObject.layer);
+		if (hit.transform.gameObject.layer != LayerMask.NameToLayer("Enemies"))
+			return;
 
 		// Spawn muzzle flash
 

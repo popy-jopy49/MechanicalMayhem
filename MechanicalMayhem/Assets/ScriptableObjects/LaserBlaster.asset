@@ -23,7 +23,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4793002964381020082, guid: 11949ccbe7308914ab3e0d69d906f5ae, type: 3}
   bulletSpeed: 30
   shotCount: 0
-  bulletSpread: 1013.1
+  bulletSpread: 0.1
   maxAmmo: 60
   startingMags: 8
   reloadTime: 1.07

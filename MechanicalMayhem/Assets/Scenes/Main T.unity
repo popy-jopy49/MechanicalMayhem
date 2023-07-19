@@ -9783,7 +9783,7 @@ GameObject:
   - component: {fileID: 1257811203}
   - component: {fileID: 1257811202}
   m_Layer: 0
-  m_Name: Machine
+  m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9873,7 +9873,7 @@ MonoBehaviour:
   fireRate: 6
   whatToHit:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1015
   bulletPrefab: {fileID: 4793002964381020082, guid: 11949ccbe7308914ab3e0d69d906f5ae, type: 3}
   bulletSpeed: 30
   explosionRadius: 0
