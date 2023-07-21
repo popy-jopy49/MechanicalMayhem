@@ -9868,9 +9868,9 @@ MonoBehaviour:
   linkedItems:
   - {fileID: 1603929247}
   repairedSprite: {fileID: 21300000, guid: 538c6b53f120f754fa9502ddd219a4f1, type: 3}
-  range: 5
-  damage: 5
-  fireRate: 6
+  range: 9
+  damage: 4
+  fireRate: 9
   whatToHit:
     serializedVersion: 2
     m_Bits: 64
