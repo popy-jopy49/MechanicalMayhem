@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: Wrench
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 7eb8fa640a227f442afcaaf25d86a371, type: 3}
-  fireRate: 100
+  fireRate: 2222
   damage: 10
-  range: 2
+  range: 3
   whatToHit:
     serializedVersion: 2
     m_Bits: 64
   melee: 1
-  bulletPrefab: {fileID: 0}
-  bulletSpeed: 10
-  shotCount: 0
-  bulletSpread: 0
-  maxAmmo: 0
-  startingMags: 0
-  reloadTime: 0
+  bulletPrefab: {fileID: 4793002964381020082, guid: 11949ccbe7308914ab3e0d69d906f5ae, type: 3}
+  bulletSpeed: 1e+30
+  shotCount: 1e+22
+  bulletSpread: 1e+9
+  maxAmmo: 2147483647
+  startingMags: 2147483647
+  reloadTime: 1e+22
   explosionRadius: 0
   semiAuto: 0
