@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RayGun
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 155d56e3806da60408398da5ed398eea, type: 3}
-  fireRate: 5
+  fireRate: 0.7
   damage: 30
   range: 30
   whatToHit:
@@ -28,4 +28,4 @@ MonoBehaviour:
   startingMags: 4
   reloadTime: 4
   explosionRadius: 3
-  semiAuto: 0
+  semiAuto: 1
