@@ -18,7 +18,10 @@ MonoBehaviour:
   range: 2
   whatToHit:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 375
+  enemy:
+    serializedVersion: 2
+    m_Bits: 0
   melee: 1
   bulletPrefab: {fileID: 0}
   bulletSpeed: 10

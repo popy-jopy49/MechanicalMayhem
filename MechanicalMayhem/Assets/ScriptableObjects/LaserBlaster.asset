@@ -18,12 +18,15 @@ MonoBehaviour:
   range: 40.2
   whatToHit:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 375
+  enemy:
+    serializedVersion: 2
+    m_Bits: 320
   melee: 0
   bulletPrefab: {fileID: 4793002964381020082, guid: 11949ccbe7308914ab3e0d69d906f5ae, type: 3}
   bulletSpeed: 30
   shotCount: 0
-  bulletSpread: 0.1
+  bulletSpread: 0.5
   maxAmmo: 60
   startingMags: 8
   reloadTime: 1.07
