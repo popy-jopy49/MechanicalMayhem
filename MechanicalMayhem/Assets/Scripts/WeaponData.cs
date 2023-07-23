@@ -9,6 +9,7 @@ public class WeaponData : ScriptableObject
     public float damage;
     public float range;
     public LayerMask whatToHit;
+    public LayerMask enemy;
 
     public bool melee;
     public GameObject bulletPrefab;

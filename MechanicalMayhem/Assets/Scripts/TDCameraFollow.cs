@@ -14,6 +14,9 @@ public class TDCameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!player)
+            return;
+
         transform.position = Vector2.SmoothDamp(transform.position, player.position, ref currentVelocity, smoothTime);
         transform.position = new Vector3(transform.position.x, transform.position.y, -10);
     }

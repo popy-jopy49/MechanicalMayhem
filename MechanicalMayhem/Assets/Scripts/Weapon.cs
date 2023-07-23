@@ -82,6 +82,7 @@ public class Weapon : MonoBehaviour
 
 		Vector2 fireDirection = GetFireDirection(mousePos);
         RaycastHit2D hit = Physics2D.Raycast(firePoint.position, fireDirection, weaponData.range, weaponData.whatToHit);
+
 		if (weaponData.melee)
 		{
 			// Do animation
@@ -89,7 +90,14 @@ public class Weapon : MonoBehaviour
 			if (!hit.transform)
 				return;
 
-			Attackable attackable = hit.transform.GetComponent<Attackable>();
+			print(hit.transform.gameObject.layer);
+			print(hit.transform.name);
+			print(LayerMask.NameToLayer("Enemies"));	
+
+            if (hit.transform.gameObject.layer != LayerMask.NameToLayer("Enemies"))
+                return;
+
+            Attackable attackable = hit.transform.GetComponent<Attackable>();
 			if (!attackable)
 				return;
 
