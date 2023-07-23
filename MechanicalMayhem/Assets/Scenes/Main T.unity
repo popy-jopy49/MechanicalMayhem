@@ -15020,7 +15020,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1823909913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15033,6 +15033,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d1057e3fcfb7a343a43ae5d4bb6375d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  speed: 3
+  rotateSpeed: 0.0025
+  rb: {fileID: 0}
 --- !u!50 &1823909914
 Rigidbody2D:
   serializedVersion: 4
