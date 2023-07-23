@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemy : MonoBehaviour {
-    public Transform target;
-    public float speed = 3f;
-    public float rotateSpeed = 0.0025f;
-    public Rigidbody2D rb;
+public class Enemy : Attackable {
+    
+    [SerializeField] private Transform target;
+    [SerializeField] private float speed = 3f;
+    [SerializeField] private float rotateSpeed = 0.0025f;
+    private Rigidbody2D rb;
 
-
-  private void Start() {
+    private void Start() {
         rb = GetComponent<Rigidbody2D>();
     }
 
