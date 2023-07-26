@@ -12,10 +12,12 @@ public class Player : Singleton<Player>
 
 	private float health;
 	private HealthBar healthBar;
+    private Transform respawnPoint;
+    private Rigidbody2D rb;
 
-	private List<GameObject> itemsToPickup = new List<GameObject>();
-    private List<Repairable> nearbyRepairables = new List<Repairable>();
-    private List<GameObject> inventory = new List<GameObject>();
+	private List<GameObject> itemsToPickup = new();
+    private List<Repairable> nearbyRepairables = new();
+    private List<GameObject> inventory = new();
 
     private TMP_Text nbText;
     private int nutsAndBolts;
@@ -24,6 +26,9 @@ public class Player : Singleton<Player>
     {
         healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
         nbText = GameObject.Find("NutsAndBoltsAmount").GetComponent<TMP_Text>();
+        respawnPoint = GameObject.Find("RespawnPoint").transform;
+        rb = GetComponent<Rigidbody2D>();
+
         InputManager.INPUT_ACTIONS.Main.Interact.started += Interact;
     }
 
@@ -35,10 +40,12 @@ public class Player : Singleton<Player>
 
     private void LateUpdate()
     {
+#if UNITY_EDITOR
         if (Input.GetMouseButtonDown(1))
         {
             Damage(10);
         }
+#endif
 
         Vector3 mousePos = InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>();
         mousePos.z = 0.0f;
@@ -113,7 +120,20 @@ public class Player : Singleton<Player>
 	{
 		health -= damage;
 		healthBar.SetHealth(health);
+
+        if (health <= 0)
+        {
+            Respawn();
+        }
 	}
+
+    private void Respawn()
+    {
+        rb.position = respawnPoint.position;
+        rb.velocity = Vector2.zero;
+        health = maxHealth;
+        healthBar.SetHealth(health);
+    }
 
     public void ChangeNutsAndBolts(int amount)
     {

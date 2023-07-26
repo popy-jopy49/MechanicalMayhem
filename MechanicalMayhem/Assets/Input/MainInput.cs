@@ -116,6 +116,15 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PauseScreen"",
+                    ""type"": ""Value"",
+                    ""id"": ""682e077f-6f46-4f71-bb59-861fb3ad3af9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -272,6 +281,17 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""89f374fd-ced9-4fd7-8bb7-0624fe50f7dc"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""PauseScreen"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -307,6 +327,7 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
         m_Main_SelectWeapon2 = m_Main.FindAction("SelectWeapon2", throwIfNotFound: true);
         m_Main_SelectWeapon3 = m_Main.FindAction("SelectWeapon3", throwIfNotFound: true);
         m_Main_MousePosition = m_Main.FindAction("MousePosition", throwIfNotFound: true);
+        m_Main_PauseScreen = m_Main.FindAction("PauseScreen", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -376,6 +397,7 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_SelectWeapon2;
     private readonly InputAction m_Main_SelectWeapon3;
     private readonly InputAction m_Main_MousePosition;
+    private readonly InputAction m_Main_PauseScreen;
     public struct MainActions
     {
         private @MainInput m_Wrapper;
@@ -390,6 +412,7 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
         public InputAction @SelectWeapon2 => m_Wrapper.m_Main_SelectWeapon2;
         public InputAction @SelectWeapon3 => m_Wrapper.m_Main_SelectWeapon3;
         public InputAction @MousePosition => m_Wrapper.m_Main_MousePosition;
+        public InputAction @PauseScreen => m_Wrapper.m_Main_PauseScreen;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -429,6 +452,9 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
                 @MousePosition.started -= m_Wrapper.m_MainActionsCallbackInterface.OnMousePosition;
                 @MousePosition.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnMousePosition;
                 @MousePosition.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnMousePosition;
+                @PauseScreen.started -= m_Wrapper.m_MainActionsCallbackInterface.OnPauseScreen;
+                @PauseScreen.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnPauseScreen;
+                @PauseScreen.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnPauseScreen;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -463,6 +489,9 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
+                @PauseScreen.started += instance.OnPauseScreen;
+                @PauseScreen.performed += instance.OnPauseScreen;
+                @PauseScreen.canceled += instance.OnPauseScreen;
             }
         }
     }
@@ -488,5 +517,6 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
         void OnSelectWeapon2(InputAction.CallbackContext context);
         void OnSelectWeapon3(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
+        void OnPauseScreen(InputAction.CallbackContext context);
     }
 }
