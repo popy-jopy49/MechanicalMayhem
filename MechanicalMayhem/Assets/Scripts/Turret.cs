@@ -51,7 +51,7 @@ public class Turret : Repairable
 		// Spawn bullet
 		Quaternion bulletDirection = Quaternion.Euler(new Vector3(0, 0, VectorUtils.GetAngleFromVector(firePoint.right) - 90f));
 		GameObject bullet = Instantiate(bulletPrefab, firePoint.position, bulletDirection);
-		bullet.GetComponent<Bullet>().Setup(firePoint.right * bulletSpeed, damage, explosionRadius, whatToHit);
+		bullet.GetComponent<Bullet>().Setup(firePoint.right * bulletSpeed, damage, explosionRadius, whatToHit, "PlayerBullet");
 		Destroy(bullet, 5f);
 	}
 
