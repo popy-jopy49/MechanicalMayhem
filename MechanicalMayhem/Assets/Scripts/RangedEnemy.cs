@@ -1,82 +1,74 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedEnemy : Attackable {
+public class RangedEnemy : Enemy {
     
-    [SerializeField] private Transform target;
-    [SerializeField] private float speed = 3f;
-    [SerializeField] private float rotateSpeed = 0.0025f;
-    private Rigidbody2D rb;
-    public GameObject bulletPrefab;
+    [SerializeField] private float distanceToShoot = 5f;
+    [SerializeField] private float distanceToStop = 3f;
 
-    public float distanceToShoot = 5f;
-    public float distanceToStop = 3f;
-
-    public float fireRate;
-    private float timeToFire;
+    [SerializeField] private float fireRate;
+    [SerializeField] private float timeToFire;
+    [SerializeField] private float bulletSpeed = 30f;
+    [SerializeField] private float damage = 10f;
+    [SerializeField] private float explosionRadius = 0f;
+    [SerializeField] private LayerMask whatToHit;
     
-    public Transform firingPoint;
+    private Transform firePoint;
 
-    private void Start() {
-        rb = GetComponent<Rigidbody2D>();
-        firingPoint = transform.Find("FirePoint");
+    protected override void Start()
+    {
+        base.Start();
+        firePoint = transform.Find("FirePoint");
     }
 
-    private void Update(){
-        if (!target){
-            GetTarget();
-        } else {
-             RotateTowardsTarget();
-        }
-        
-        if (Vector2.Distance(target.position, transform.position) <= distanceToStop) {
+    protected override void Update()
+    {
+        base.Update();
+
+        float sqrDist = Vector2.SqrMagnitude(target.position - transform.position);
+        if (sqrDist <= distanceToStop * distanceToStop)
+        {
             Shoot();
         }
     }
 
-    private void Shoot() {
-        if (timeToFire <= 0f) {
-            Instantiate(bulletPrefab, firingPoint.position, firingPoint.rotation);
-            timeToFire = fireRate;
-         } else {
-            timeToFire -= Time.deltaTime;
-       
-         }
+    protected void Shoot()
+    {
+        if (timeToFire < 1 / fireRate)
+        {
+            timeToFire += Time.deltaTime;
+            return;
+        }
+
+        GameObject bullet = Instantiate(GameAssets.I.EnemyBulletPrefab, firePoint.position, firePoint.rotation);
+        bullet.GetComponent<Bullet>().Setup(firePoint.rotation.eulerAngles * bulletSpeed, damage, explosionRadius, whatToHit, "EnemyBullet");
+        Destroy(bullet, 5f);
+        timeToFire = 0f;
     }
 
-    private void FixedUpdate() {
-        if (target != null){
-            if (Vector2.Distance(target.position, transform.position) >= distanceToStop) {
-                rb.velocity = transform.up * speed;
-            } else {
-                rb.velocity = Vector2.zero;
-            }
+    protected override void FixedUpdate()
+    {
+        if (!target)
+            return;
+
+        float sqrDist = Vector2.SqrMagnitude(target.position - transform.position);
+        if (sqrDist >= distanceToStop * distanceToStop)
+        {
+            rb.velocity = transform.up * speed;
+        }
+        else
+        {
+            rb.velocity = Vector2.zero;
         }
     }
 
-    private void RotateTowardsTarget() {
-        Vector2 targetDirection = target.position - transform.position;
-        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg -
-            90f;
-        Quaternion q = Quaternion.Euler(new Vector3(0, 0,angle));
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, q,
-        rotateSpeed);
-    }
-    private void GetTarget () {
-        if (GameObject.FindGameObjectWithTag("Player")) {
-            target = GameObject.FindGameObjectWithTag("Player").transform;
-        }
-        
-    }
-
-    private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.CompareTag("Player")) {
-            Destroy(other.gameObject);
-            target = null;
-        } else if (other.gameObject.CompareTag("Player")) {
+    protected override void OnCollisionEnter2D(Collision2D other)
+    {
+        base.OnCollisionEnter2D(other);
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
+        {
             Destroy(other.gameObject);
             Destroy(gameObject);
+            return;
         }
     }
 }

@@ -59,5 +59,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
   MessagePrefab: {fileID: 223894602397469670, guid: b62db026fe8d3aa47bd43248c60f93c1, type: 3}
-  ShardPrefab: {fileID: 8075633053165197700, guid: 6ad65a9ed2a61d043a606be416f1df6e, type: 3}
-  IndicatorPrefab: {fileID: 8083248349016213732, guid: 4af8fb0511c79874e834b95b93b3b29f, type: 3}
+  EnemyBulletPrefab: {fileID: 4793002964381020082, guid: 11949ccbe7308914ab3e0d69d906f5ae, type: 3}

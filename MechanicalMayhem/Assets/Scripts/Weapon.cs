@@ -90,10 +90,6 @@ public class Weapon : MonoBehaviour
 			if (!hit.transform)
 				return;
 
-			print(hit.transform.gameObject.layer);
-			print(hit.transform.name);
-			print(LayerMask.NameToLayer("Enemies"));	
-
             if (hit.transform.gameObject.layer != LayerMask.NameToLayer("Enemies"))
                 return;
 

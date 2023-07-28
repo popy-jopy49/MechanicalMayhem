@@ -6,6 +6,7 @@ public class GameAssets : Singleton<GameAssets> {
 
 	[Header("Prefabs")]
 	public GameObject MessagePrefab;
+	public GameObject EnemyBulletPrefab;
 
 	void Awake()
 	{
