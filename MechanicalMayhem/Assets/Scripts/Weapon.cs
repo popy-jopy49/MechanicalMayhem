@@ -113,7 +113,7 @@ public class Weapon : MonoBehaviour
 			// Spawn Bullet
 			Quaternion bulletDirection = Quaternion.Euler(new Vector3(0, 0, VectorUtils.GetAngleFromVector(fireDirection) - 90f));
 			GameObject bullet = Instantiate(weaponData.bulletPrefab, firePoint.position, bulletDirection);
-			bullet.GetComponent<Bullet>().Setup(fireDirection * weaponData.bulletSpeed, weaponData.damage, weaponData.explosionRadius, weaponData.whatToHit);
+			bullet.GetComponent<Bullet>().Setup(fireDirection * weaponData.bulletSpeed, weaponData.damage, weaponData.explosionRadius, weaponData.whatToHit, "PlayerBullet");
 			Destroy(bullet, 5f);
 			if (weaponData.semiAuto)
 				isFiring = false;

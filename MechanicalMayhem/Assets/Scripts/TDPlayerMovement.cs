@@ -65,9 +65,9 @@ public class TDPlayerMovement : MonoBehaviour
             ChangeAnimationState(WALK_STATE, LEFTRIGHT);
             Vector3 scale = transform.GetChild(0).localScale;
             scale.x = input.x > 0 ? 1 : -1;
-            transform.GetChild(0).localScale = scale;
+            transform.Find("GFX").localScale = scale;
         }
-
+        
         speed = movementSpeed;
 
         if (isSprinting)

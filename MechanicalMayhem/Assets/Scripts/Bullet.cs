@@ -6,11 +6,12 @@ public class Bullet : MonoBehaviour
     private float explosionRadius;
     private LayerMask whatToHit;
 
-    public void Setup(Vector2 dir, float damage, float explosionRadius, LayerMask whatToHit)
+    public void Setup(Vector2 dir, float damage, float explosionRadius, LayerMask whatToHit, string layer)
     {
         this.damage = damage;
         this.explosionRadius = explosionRadius;
         this.whatToHit = whatToHit;
+        gameObject.layer = LayerMask.NameToLayer(layer);
         GetComponent<Rigidbody2D>().velocity = dir;
     }
 
@@ -25,6 +26,10 @@ public class Bullet : MonoBehaviour
 
             foreach (Collider2D col in cols)
             {
+                RaycastHit2D hit2D = Physics2D.Raycast(transform.position, col.transform.position - transform.position);
+                if (hit2D.transform.gameObject.layer != LayerMask.NameToLayer("Enemies"))
+                    continue;
+
                 Attackable attackable = col.GetComponent<Attackable>();
                 if (!attackable)
                     continue;
