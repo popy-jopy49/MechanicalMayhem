@@ -8,10 +8,10 @@ public class Enemy : Attackable {
     protected Transform target;
     protected Rigidbody2D rb;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        GetTarget();
+        target = GameObject.Find("Player").transform;
     }
 
     protected virtual void Update()
@@ -29,17 +29,8 @@ public class Enemy : Attackable {
     {
         Vector2 targetDirection = target.position - transform.position;
         float angle = VectorUtils.GetAngleFromVector(targetDirection);
-        Quaternion q = Quaternion.Euler(new Vector3(0, 0, angle));
+        Quaternion q = Quaternion.Euler(new Vector3(0, 0, angle - 90f));
         transform.localRotation = Quaternion.Slerp(transform.localRotation, q, rotateSpeed);
-    }
-
-    protected virtual void GetTarget()
-    {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player)
-        {
-            target = player.transform;
-        }
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D other)

@@ -53,11 +53,19 @@ public class Bullet : MonoBehaviour
             // Spawn hit effect
 
         }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            Player player = collision.gameObject.GetComponent<Player>();
+            if (!player) 
+                return;
+
+            player.Damage(damage);
+		}
         else
         {
-			// Spawn wall hit effect
+            // Spawn wall hit effect
 
-		}
-	}
+        }
+    }
 
 }

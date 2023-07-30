@@ -5,18 +5,18 @@ public class RangedEnemy : Enemy {
     [SerializeField] private float distanceToShoot = 5f;
     [SerializeField] private float distanceToStop = 3f;
 
-    [SerializeField] private float fireRate;
-    [SerializeField] private float timeToFire;
+    [SerializeField] private float fireRate = 1f;
     [SerializeField] private float bulletSpeed = 30f;
     [SerializeField] private float damage = 10f;
     [SerializeField] private float explosionRadius = 0f;
     [SerializeField] private LayerMask whatToHit;
     
     private Transform firePoint;
+    private float timeToFire;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         firePoint = transform.Find("FirePoint");
     }
 
@@ -25,7 +25,7 @@ public class RangedEnemy : Enemy {
         base.Update();
 
         float sqrDist = Vector2.SqrMagnitude(target.position - transform.position);
-        if (sqrDist <= distanceToStop * distanceToStop)
+        if (sqrDist <= distanceToShoot * distanceToShoot)
         {
             Shoot();
         }
@@ -40,7 +40,7 @@ public class RangedEnemy : Enemy {
         }
 
         GameObject bullet = Instantiate(GameAssets.I.EnemyBulletPrefab, firePoint.position, firePoint.rotation);
-        bullet.GetComponent<Bullet>().Setup(firePoint.rotation.eulerAngles * bulletSpeed, damage, explosionRadius, whatToHit, "EnemyBullet");
+        bullet.GetComponent<Bullet>().Setup(firePoint.up * bulletSpeed, damage, explosionRadius, whatToHit, "EnemyBullet");
         Destroy(bullet, 5f);
         timeToFire = 0f;
     }
@@ -61,14 +61,4 @@ public class RangedEnemy : Enemy {
         }
     }
 
-    protected override void OnCollisionEnter2D(Collision2D other)
-    {
-        base.OnCollisionEnter2D(other);
-        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
-        {
-            Destroy(other.gameObject);
-            Destroy(gameObject);
-            return;
-        }
-    }
 }

@@ -47,18 +47,28 @@ public class TDPlayerMovement : MonoBehaviour
 
 	private void Update()
     {
+        HandlePlayerMovement();
+
+        Sprint();
+    }
+
+    private void HandlePlayerMovement()
+    {
         input = InputManager.INPUT_ACTIONS.Main.Movement.ReadValue<Vector2>();
         if (input.y == 0 && input.x == 0)
         {
             ChangeAnimationState(IDLE_STATE, currentDir);
+            return;
         }
         if (input.y > 0)
         {
             ChangeAnimationState(WALK_STATE, UP);
+            return;
         }
         if (input.y < 0)
         {
             ChangeAnimationState(WALK_STATE, DOWN);
+            return;
         }
         if (input.x != 0)
         {
@@ -66,8 +76,12 @@ public class TDPlayerMovement : MonoBehaviour
             Vector3 scale = transform.GetChild(0).localScale;
             scale.x = input.x > 0 ? 1 : -1;
             transform.Find("GFX").localScale = scale;
+            return;
         }
-        
+    }
+
+    private void Sprint()
+    {
         speed = movementSpeed;
 
         if (isSprinting)
