@@ -1,7 +1,7 @@
 public static class InputManager
 {
 
-    public static MainInput INPUT_ACTIONS;
+    public static MainInput INPUiT_ACTIONS;
 
     static InputManager()
     {
