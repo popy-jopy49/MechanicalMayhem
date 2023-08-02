@@ -115,6 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
   maxHealth: 100
+  fToPickUp: {fileID: 0}
 --- !u!50 &418985780168701942
 Rigidbody2D:
   serializedVersion: 4
@@ -127,7 +128,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 2.9497426
+  m_Mass: 1.7600001
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -385,18 +386,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.015764505, y: -0.0052547455}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.7006595, y: 3.15}
+    oldSize: {x: 1.3503298, y: 1.575}
     newSize: {x: 1.060259, y: 1.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4308934, y: 2.061469}
+  m_Size: {x: 1.1, y: 1.6}
   m_EdgeRadius: 0
 --- !u!1 &3941413457270007313
 GameObject:
