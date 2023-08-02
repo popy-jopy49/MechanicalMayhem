@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7162030105035352114}
   - component: {fileID: 7162030105035352117}
   - component: {fileID: 7162030105035352116}
-  - component: {fileID: 7162030105035352119}
   - component: {fileID: 8061648068839086657}
+  - component: {fileID: 1951869089}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7162030105035352114
 SpriteRenderer:
@@ -163,22 +163,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &7162030105035352119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7162030105035352118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d1057e3fcfb7a343a43ae5d4bb6375d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  target: {fileID: 0}
-  speed: 3
-  rotateSpeed: 0.25
 --- !u!61 &8061648068839086657
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -224,3 +208,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1951869089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7162030105035352118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e84ee0b245da6034f8c35520b80b4069, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  speed: 3
+  rotateSpeed: 1
+  damage: 10
+  fireRate: 1

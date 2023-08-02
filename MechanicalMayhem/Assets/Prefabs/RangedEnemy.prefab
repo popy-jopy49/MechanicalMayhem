@@ -255,11 +255,11 @@ MonoBehaviour:
   maxHealth: 100
   speed: 3
   rotateSpeed: 1
+  damage: 10
+  fireRate: 1
   distanceToShoot: 5
   distanceToStop: 3
-  fireRate: 1
   bulletSpeed: 30
-  damage: 10
   explosionRadius: 0
   whatToHit:
     serializedVersion: 2

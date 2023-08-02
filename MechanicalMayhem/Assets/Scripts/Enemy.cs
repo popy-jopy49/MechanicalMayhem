@@ -4,7 +4,10 @@ using SWAssets.Utils;
 public class Enemy : Attackable {
     
     [SerializeField] protected float speed = 3f;
-    [SerializeField] protected float rotateSpeed = 0.0025f;
+    [SerializeField] protected float rotateSpeed = 1f;
+    [SerializeField] protected float damage = 10f;
+    [SerializeField] protected float fireRate = 1f;
+    protected float time;
     protected Transform target;
     protected Rigidbody2D rb;
 
@@ -20,6 +23,28 @@ public class Enemy : Attackable {
             RotateTowardsTarget();
     }
 
+    protected virtual void Attack()
+    {
+        if (!CheckForFireRate())
+            return;
+
+        target.GetComponent<Player>().Damage(damage);
+    }
+    
+    protected bool CheckForFireRate()
+    {
+        if (time < 1 / fireRate)
+        {
+            time += Time.deltaTime;
+            return false;
+        }
+        else
+        {
+            time = 0;
+            return true;
+        }
+    }
+
     protected virtual void FixedUpdate()
     {
         rb.velocity = transform.up * speed;
@@ -33,13 +58,4 @@ public class Enemy : Attackable {
         transform.localRotation = Quaternion.Slerp(transform.localRotation, q, rotateSpeed);
     }
 
-    protected virtual void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Destroy(other.gameObject);
-            target = null;
-            return;
-        }
-    }
 }

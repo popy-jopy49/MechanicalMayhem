@@ -5,14 +5,11 @@ public class RangedEnemy : Enemy {
     [SerializeField] private float distanceToShoot = 5f;
     [SerializeField] private float distanceToStop = 3f;
 
-    [SerializeField] private float fireRate = 1f;
     [SerializeField] private float bulletSpeed = 30f;
-    [SerializeField] private float damage = 10f;
     [SerializeField] private float explosionRadius = 0f;
     [SerializeField] private LayerMask whatToHit;
     
     private Transform firePoint;
-    private float timeToFire;
 
     protected override void Awake()
     {
@@ -27,22 +24,19 @@ public class RangedEnemy : Enemy {
         float sqrDist = Vector2.SqrMagnitude(target.position - transform.position);
         if (sqrDist <= distanceToShoot * distanceToShoot)
         {
-            Shoot();
+            Attack();
         }
     }
 
-    protected void Shoot()
+    protected override void Attack()
     {
-        if (timeToFire < 1 / fireRate)
-        {
-            timeToFire += Time.deltaTime;
+        if (!CheckForFireRate())
             return;
-        }
 
         GameObject bullet = Instantiate(GameAssets.I.EnemyBulletPrefab, firePoint.position, firePoint.rotation);
         bullet.GetComponent<Bullet>().Setup(firePoint.up * bulletSpeed, damage, explosionRadius, whatToHit, "EnemyBullet");
         Destroy(bullet, 5f);
-        timeToFire = 0f;
+        time = 0f;
     }
 
     protected override void FixedUpdate()
