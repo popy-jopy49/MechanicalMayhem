@@ -21,6 +21,7 @@ public class Player : Singleton<Player>
 
     private TMP_Text nbText;
     private int nutsAndBolts;
+    [SerializeField] private GameObject fToPickUp;
 
     private void Awake()
     {
@@ -62,6 +63,7 @@ public class Player : Singleton<Player>
         {
             if (!itemsToPickup.Contains(collision.gameObject))
                 itemsToPickup.Add(collision.gameObject);
+            fToPickUp.SetActive(true);
         }
 
         Repairable repairable = collision.GetComponent<Repairable>();
@@ -78,6 +80,7 @@ public class Player : Singleton<Player>
         {
             if (itemsToPickup.Contains(collision.gameObject))
                 itemsToPickup.Remove(collision.gameObject);
+            fToPickUp.SetActive(false);
         }
 
         Repairable repairable = collision.GetComponent<Repairable>();
