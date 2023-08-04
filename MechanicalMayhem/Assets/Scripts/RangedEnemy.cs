@@ -33,7 +33,7 @@ public class RangedEnemy : Enemy {
         if (!CheckForFireRate())
             return;
 
-        GameObject bullet = Instantiate(GameAssets.I.EnemyBulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject bullet = Instantiate(GameAssets.I.BulletPrefab, firePoint.position, firePoint.rotation);
         bullet.GetComponent<Bullet>().Setup(firePoint.up * bulletSpeed, damage, explosionRadius, whatToHit, "EnemyBullet");
         Destroy(bullet, 5f);
         time = 0f;
