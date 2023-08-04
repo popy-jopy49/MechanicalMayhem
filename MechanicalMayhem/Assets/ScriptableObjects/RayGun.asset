@@ -27,8 +27,8 @@ MonoBehaviour:
   bulletSpeed: 30
   shotCount: 0
   bulletSpread: 0
-  maxAmmo: 3
+  maxAmmo: 12
   startingMags: 4
-  reloadTime: 4
+  reloadTime: 2
   explosionRadius: 3
   semiAuto: 1
