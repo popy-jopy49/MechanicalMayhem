@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,8 +8,12 @@ public class TDPlayerMovement : MonoBehaviour
 
     [SerializeField] private float movementSpeed = 2f;
     [SerializeField] private float sprintSpeed = 4f;
+    [SerializeField] private float regainSpeed = 0.5f;
+    [SerializeField] private float loseSpeed = 0.5f;
     [SerializeField] private float maxSprint = 2f;
     [SerializeField] private float minSprint = 0.5f;
+
+    public static event Action<float, float> OnSprintChanged;
     
     private float sprint = 0;
     private bool isSprinting = false;
@@ -86,17 +91,19 @@ public class TDPlayerMovement : MonoBehaviour
 
         if (isSprinting)
         {
-            sprint -= Time.deltaTime;
+            sprint -= Time.deltaTime * loseSpeed;
             speed = sprintSpeed;
             if (sprint <= 0)
                 isSprinting = false;
         }
         else
         {
-            sprint += Time.deltaTime;
+            sprint += Time.deltaTime * regainSpeed;
         }
 
         sprint = Mathf.Clamp(sprint, 0, maxSprint);
+
+        OnSprintChanged?.Invoke(sprint, maxSprint);
     }
 
     private void FixedUpdate()
