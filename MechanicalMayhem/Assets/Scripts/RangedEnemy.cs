@@ -7,6 +7,7 @@ public class RangedEnemy : Enemy {
 
     [SerializeField] private float bulletSpeed = 30f;
     [SerializeField] private float explosionRadius = 0f;
+    [SerializeField] protected LayerMask everthingButSelf;
     [SerializeField] private LayerMask whatToHit;
     
     private Transform firePoint;
@@ -33,9 +34,14 @@ public class RangedEnemy : Enemy {
         if (!CheckForFireRate())
             return;
 
-        GameObject bullet = Instantiate(GameAssets.I.EnemyBulletPrefab, firePoint.position, firePoint.rotation);
-        bullet.GetComponent<Bullet>().Setup(firePoint.up * bulletSpeed, damage, explosionRadius, whatToHit, "EnemyBullet");
-        Destroy(bullet, 5f);
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position, transform.up, 50f, everthingButSelf);
+        if (hit2D.transform.gameObject.CompareTag("Player"))
+        {
+            GameObject bullet = Instantiate(GameAssets.I.BulletPrefab, firePoint.position, firePoint.rotation);
+            bullet.GetComponent<Bullet>().Setup(firePoint.up * bulletSpeed, damage, explosionRadius, whatToHit, "EnemyBullet");
+            Destroy(bullet, 5f);
+        }
+
         time = 0f;
     }
 

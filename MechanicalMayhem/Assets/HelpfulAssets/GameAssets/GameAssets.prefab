@@ -59,4 +59,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
   MessagePrefab: {fileID: 223894602397469670, guid: b62db026fe8d3aa47bd43248c60f93c1, type: 3}
-  EnemyBulletPrefab: {fileID: 4793002964381020082, guid: 11949ccbe7308914ab3e0d69d906f5ae, type: 3}
+  BulletPrefab: {fileID: 4793002964381020082, guid: 11949ccbe7308914ab3e0d69d906f5ae, type: 3}
+  EnemyPrefabs:
+  - g: {fileID: 7162030105035352118, guid: 6cfbebbf5053986429dafc0824e142be, type: 3}
+    chance: 75
+  - g: {fileID: 7819356467655666842, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
+    chance: 25

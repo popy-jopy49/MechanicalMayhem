@@ -21,7 +21,7 @@ public class Player : Singleton<Player>
 
     private TMP_Text nbText;
     private int nutsAndBolts;
-    [SerializeField] private GameObject fToPickUp;
+    private GameObject fToInteract;
 
     private void Awake()
     {
@@ -29,6 +29,9 @@ public class Player : Singleton<Player>
         nbText = GameObject.Find("NutsAndBoltsAmount").GetComponent<TMP_Text>();
         respawnPoint = GameObject.Find("RespawnPoint").transform;
         rb = GetComponent<Rigidbody2D>();
+
+        fToInteract = GameObject.Find("FToInteract");
+        fToInteract.SetActive(false);
 
         InputManager.INPUT_ACTIONS.Main.Interact.started += Interact;
     }
@@ -39,7 +42,7 @@ public class Player : Singleton<Player>
         healthBar.SetMaxHealth(maxHealth);
     }
 
-    private void LateUpdate()
+    private void Update()
     {
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(1))
@@ -47,6 +50,8 @@ public class Player : Singleton<Player>
             Damage(10);
         }
 #endif
+
+        fToInteract.SetActive(itemsToPickup.Count > 0 || nearbyRepairables.Count > 0);
 
         Vector3 mousePos = InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>();
         mousePos.z = 0.0f;
@@ -63,7 +68,6 @@ public class Player : Singleton<Player>
         {
             if (!itemsToPickup.Contains(collision.gameObject))
                 itemsToPickup.Add(collision.gameObject);
-            fToPickUp.SetActive(true);
         }
 
         Repairable repairable = collision.GetComponent<Repairable>();
@@ -80,7 +84,6 @@ public class Player : Singleton<Player>
         {
             if (itemsToPickup.Contains(collision.gameObject))
                 itemsToPickup.Remove(collision.gameObject);
-            fToPickUp.SetActive(false);
         }
 
         Repairable repairable = collision.GetComponent<Repairable>();
