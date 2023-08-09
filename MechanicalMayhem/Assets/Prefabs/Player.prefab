@@ -100,7 +100,7 @@ MonoBehaviour:
   movementSpeed: 6
   sprintSpeed: 8
   maxSprint: 4
-  minSprint: 2
+  minSprint: 1
 --- !u!114 &2240107287887508589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +115,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
   maxHealth: 100
-  fToPickUp: {fileID: 0}
 --- !u!50 &418985780168701942
 Rigidbody2D:
   serializedVersion: 4

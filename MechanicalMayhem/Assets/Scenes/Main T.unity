@@ -4137,6 +4137,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1441800706}
     m_Modifications:
+    - target: {fileID: 6919764457939001068, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
+      propertyPath: bulletSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7819356467655666842, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
       propertyPath: m_Name
       value: RangedEnemy (1)
@@ -5530,6 +5534,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1441800706}
     m_Modifications:
+    - target: {fileID: 6919764457939001068, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
+      propertyPath: bulletSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7819356467655666842, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
       propertyPath: m_Name
       value: RangedEnemy (2)
@@ -5807,6 +5815,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1441800706}
     m_Modifications:
+    - target: {fileID: 6919764457939001068, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
+      propertyPath: bulletSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7819356467655666842, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
       propertyPath: m_Name
       value: RangedEnemy (3)
@@ -16185,6 +16197,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1441800706}
     m_Modifications:
+    - target: {fileID: 6919764457939001068, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
+      propertyPath: bulletSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7819356467655666842, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
       propertyPath: m_Name
       value: RangedEnemy (4)
@@ -19830,6 +19846,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1441800706}
     m_Modifications:
+    - target: {fileID: 6919764457939001068, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
+      propertyPath: bulletSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7819356467655666842, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
       propertyPath: m_Name
       value: RangedEnemy

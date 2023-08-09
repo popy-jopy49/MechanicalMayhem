@@ -21,7 +21,7 @@ public class Player : Singleton<Player>
 
     private TMP_Text nbText;
     private int nutsAndBolts;
-    private GameObject fToPickUp;
+    private GameObject fToInteract;
 
     private void Awake()
     {
@@ -30,8 +30,8 @@ public class Player : Singleton<Player>
         respawnPoint = GameObject.Find("RespawnPoint").transform;
         rb = GetComponent<Rigidbody2D>();
 
-        fToPickUp = GameObject.Find("FToPickUp");
-        fToPickUp.SetActive(false);
+        fToInteract = GameObject.Find("FToInteract");
+        fToInteract.SetActive(false);
 
         InputManager.INPUT_ACTIONS.Main.Interact.started += Interact;
     }
@@ -51,7 +51,7 @@ public class Player : Singleton<Player>
         }
 #endif
 
-        fToPickUp.SetActive(itemsToPickup.Count > 0 || nearbyRepairables.Count > 0);
+        fToInteract.SetActive(itemsToPickup.Count > 0 || nearbyRepairables.Count > 0);
 
         Vector3 mousePos = InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>();
         mousePos.z = 0.0f;
