@@ -35,6 +35,9 @@ public class RangedEnemy : Enemy {
             return;
 
         RaycastHit2D hit2D = Physics2D.Raycast(transform.position, transform.up, 50f, everthingButSelf);
+        if (!hit2D.transform)
+            goto TIME;
+
         if (hit2D.transform.gameObject.CompareTag("Player"))
         {
             GameObject bullet = Instantiate(GameAssets.I.BulletPrefab, firePoint.position, firePoint.rotation);
@@ -42,6 +45,7 @@ public class RangedEnemy : Enemy {
             Destroy(bullet, 5f);
         }
 
+        TIME:
         time = 0f;
     }
 

@@ -44,14 +44,14 @@ public class Player : Singleton<Player>
 
     private void Update()
     {
-#if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(1))
+        if (itemsToPickup.Count > 0)
         {
-            Damage(10);
+            fToInteract.SetActive(true);
         }
-#endif
-
-        fToInteract.SetActive(itemsToPickup.Count > 0 || nearbyRepairables.Count > 0);
+        else
+        {
+            fToInteract.SetActive(false);
+        }
 
         Vector3 mousePos = InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>();
         mousePos.z = 0.0f;

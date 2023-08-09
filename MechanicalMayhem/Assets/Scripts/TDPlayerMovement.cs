@@ -13,7 +13,7 @@ public class TDPlayerMovement : MonoBehaviour
     [SerializeField] private float maxSprint = 2f;
     [SerializeField] private float minSprint = 0.5f;
 
-    public static event Action<float, float> OnSprintChanged;
+    public static event Action<float, float, float> OnSprintChanged;
     
     private float sprint = 0;
     private bool isSprinting = false;
@@ -103,7 +103,7 @@ public class TDPlayerMovement : MonoBehaviour
 
         sprint = Mathf.Clamp(sprint, 0, maxSprint);
 
-        OnSprintChanged?.Invoke(sprint, maxSprint);
+        OnSprintChanged?.Invoke(sprint, maxSprint, minSprint);
     }
 
     private void FixedUpdate()

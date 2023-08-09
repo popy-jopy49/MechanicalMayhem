@@ -99,6 +99,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 6
   sprintSpeed: 8
+  regainSpeed: 0.5
+  loseSpeed: 0.5
   maxSprint: 4
   minSprint: 1
 --- !u!114 &2240107287887508589
