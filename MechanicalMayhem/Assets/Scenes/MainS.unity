@@ -705,9 +705,9 @@ RectTransform:
   - {fileID: 963959366}
   - {fileID: 1007468101}
   - {fileID: 1600674634}
-  - {fileID: 953879419}
   - {fileID: 453655966}
   - {fileID: 1924473734}
+  - {fileID: 953879419}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2853,7 +2853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenSpawns: 4
-  numberPerSpawn: 7839
+  numberPerSpawn: 1
 --- !u!1 &864297943
 GameObject:
   m_ObjectHideFlags: 0
