@@ -2853,7 +2853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenSpawns: 4
-  numberPerSpawn: 7839
+  numberPerSpawn: 1
 --- !u!1 &864297943
 GameObject:
   m_ObjectHideFlags: 0
