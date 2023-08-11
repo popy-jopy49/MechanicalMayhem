@@ -5,6 +5,11 @@ public static class InputManager
 
     static InputManager()
     {
+        Initialise();
+    }
+
+    public static void Initialise()
+    {
         INPUT_ACTIONS = new MainInput();
         INPUT_ACTIONS.Enable();
     }

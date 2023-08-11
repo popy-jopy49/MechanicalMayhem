@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 7eb8fa640a227f442afcaaf25d86a371, type: 3}
   fireRate: 1
-  damage: 10
+  damage: 100
   range: 3
   whatToHit:
     serializedVersion: 2

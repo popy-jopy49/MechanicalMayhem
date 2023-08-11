@@ -44,14 +44,7 @@ public class Player : Singleton<Player>
 
     private void Update()
     {
-        if (itemsToPickup.Count > 0)
-        {
-            fToInteract.SetActive(true);
-        }
-        else
-        {
-            fToInteract.SetActive(false);
-        }
+        fToInteract.SetActive(itemsToPickup.Count > 0 || nearbyRepairables.Count > 0);
 
         Vector3 mousePos = InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>();
         mousePos.z = 0.0f;
@@ -111,14 +104,20 @@ public class Player : Singleton<Player>
         if (nearbyRepairables.Count <= 0)
             return;
 
-        Repairable repairable = nearbyRepairables[0];
-        for (int i = 0; i < inventory.Count; i++)
+        bool foundSomething = false;
+        foreach (Repairable repairable in nearbyRepairables)
         {
-            if (!repairable.AddItem(inventory[i]))
-                continue;
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                if (!repairable.AddItem(inventory[i]))
+                    continue;
 
-			nearbyRepairables.Remove(repairable);
-            inventory.RemoveAt(i);
+                foundSomething = true;
+                nearbyRepairables.Remove(repairable);
+                inventory.RemoveAt(i);
+            }
+            if (foundSomething)
+                break;
         }
     }
 

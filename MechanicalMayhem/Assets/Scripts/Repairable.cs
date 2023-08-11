@@ -30,21 +30,24 @@ public class Repairable : MonoBehaviour
 
 	public virtual bool AddItem(GameObject item)
     {
+        if (!ItemLinked(item)) return false;
+
+        linkedItems.Remove(item);
+        Destroy(item);
+        if (linkedItems.Count <= 0)
+        {
+            // Repaired
+            OnRepair();
+        }
+        return true;
+    }
+
+    protected virtual bool ItemLinked(GameObject item)
+    {
         if (linkedItems.Count <= 0)
             return false;
 
-        if (linkedItems.Contains(item))
-        {
-            linkedItems.Remove(item);
-            Destroy(item);
-            if (linkedItems.Count <= 0)
-            {
-                // Repaired
-                OnRepair();
-            }
-            return true;
-        }
-        return false;
+        return linkedItems.Contains(item);
     }
 
     protected virtual void OnRepair()

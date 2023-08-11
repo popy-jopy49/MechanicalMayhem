@@ -6,6 +6,7 @@ public class Turret : Repairable
 {
 
 	[SerializeField] private float range;
+	[SerializeField] private float rotateSpeed = 10f;
 	[SerializeField] private float damage;
 	[SerializeField] private float fireRate;
 	[SerializeField] private LayerMask whatToHit;
@@ -23,14 +24,26 @@ public class Turret : Repairable
 
 	protected override void RepairedUpdate()
 	{
-		Collider2D collider = Physics2D.OverlapCircle(transform.position, range, whatToHit);
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, range, whatToHit);
 
-		if (!collider)
+		if (colliders.Length <= 0)
 			return;
 
-		Vector2 vDir = collider.transform.position - transform.position;
-        float rot = VectorUtils.GetAngleFromVector(vDir, true);
-		transform.eulerAngles = new Vector3(0, 0, VectorUtils.LinearInterpolate(transform.eulerAngles.z, rot, Time.deltaTime * 10));
+		Transform collider = colliders[0].transform;
+		float minDist = Mathf.Infinity;
+		foreach (Collider2D col in colliders)
+		{
+			float sqrDist = (col.transform.position - transform.position).sqrMagnitude;
+            if (sqrDist < minDist)
+			{
+				minDist = sqrDist;
+				collider = col.transform;
+			}
+		}
+
+		Vector2 vDir = collider.position - transform.position;
+        float rot = Mathf.Atan2(vDir.y, vDir.x) * Mathf.Rad2Deg;
+		transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0f, 0f, rot), Time.deltaTime * rotateSpeed);
 
 		if (time < 1 / fireRate)
 		{

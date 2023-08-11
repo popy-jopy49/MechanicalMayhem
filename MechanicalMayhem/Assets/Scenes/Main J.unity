@@ -705,9 +705,9 @@ RectTransform:
   - {fileID: 963959366}
   - {fileID: 1007468101}
   - {fileID: 1600674634}
+  - {fileID: 953879419}
   - {fileID: 453655966}
   - {fileID: 1924473734}
-  - {fileID: 953879419}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1265,7 +1265,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 317395257}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: -0.28, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4326,7 +4326,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1277959986}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.87, y: 0.62, z: 0}
+  m_LocalPosition: {x: 5, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4352,10 +4352,9 @@ MonoBehaviour:
   linkedItems:
   - {fileID: 864297943}
   repairedSprite: {fileID: 21300000, guid: 538c6b53f120f754fa9502ddd219a4f1, type: 3}
-  range: 6
-  rotateSpeed: 10
+  range: 3
   damage: 10
-  fireRate: 5
+  fireRate: 1
   whatToHit:
     serializedVersion: 2
     m_Bits: 64
@@ -5432,7 +5431,7 @@ MonoBehaviour:
   - {fileID: 316274060}
   repairedSprite: {fileID: 0}
   modifier: 1
-  speed: 5
+  speed: 10
 --- !u!212 &1876207048
 SpriteRenderer:
   m_ObjectHideFlags: 0
