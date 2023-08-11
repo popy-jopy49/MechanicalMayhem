@@ -9,10 +9,11 @@ public class GameManager : Singleton<GameManager>
 
     private GameObject escapeMenu;
 
-    private void Awake()
+    private void Start()
     {
         escapeMenu = GameObjectExtensionMethods.FindDeactivatedGameObject(gameObject, "Canvas", "EscapeMenu");
 
+        InputManager.Initialise();
         InputManager.INPUT_ACTIONS.Main.PauseScreen.started += PauseScreenStarted;
     }
 
@@ -25,6 +26,7 @@ public class GameManager : Singleton<GameManager>
     public void Restart()
     {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1;
     }
 
     public void Quit()

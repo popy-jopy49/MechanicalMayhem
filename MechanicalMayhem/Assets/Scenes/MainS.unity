@@ -4352,9 +4352,10 @@ MonoBehaviour:
   linkedItems:
   - {fileID: 864297943}
   repairedSprite: {fileID: 21300000, guid: 538c6b53f120f754fa9502ddd219a4f1, type: 3}
-  range: 3
+  range: 6
+  rotateSpeed: 10
   damage: 10
-  fireRate: 1
+  fireRate: 5
   whatToHit:
     serializedVersion: 2
     m_Bits: 64
