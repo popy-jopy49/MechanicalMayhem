@@ -32,7 +32,6 @@ public class TDPlayerMovement : MonoBehaviour
     
     private void Start()
     {
-        print("start");
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprint = maxSprint;
