@@ -30,7 +30,7 @@ public class TDPlayerMovement : MonoBehaviour
     const string IDLE_STATE = "Idle";
     const string WALK_STATE = "Walk";
     
-    private void Awake()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
