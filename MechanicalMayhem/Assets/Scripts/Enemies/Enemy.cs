@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Unit : MonoBehaviour
+public class Enemy : Attackable
 {
 
 	protected Vector2[] path;
@@ -13,6 +13,11 @@ public class Unit : MonoBehaviour
     [SerializeField] protected float fireRate = 1f;
     protected float time;
     protected Transform target;
+	
+	protected virtual void Awake()
+	{
+		target = GameObject.Find("Player").transform;
+	}
 
     protected virtual void Start()
 	{
@@ -30,8 +35,8 @@ public class Unit : MonoBehaviour
 				targetPositionOld = (Vector2)target.position;
 
 				path = Pathfinding.RequestPath(transform.position, target.position);
-				StopCoroutine("FollowPath");
-				StartCoroutine("FollowPath");
+				StopCoroutine(FollowPath());
+				StartCoroutine(FollowPath());
 			}
 
 			yield return new WaitForSeconds(.25f);

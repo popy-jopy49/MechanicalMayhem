@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RangedEnemy : Unit {
+public class RangedEnemy : Enemy {
     
     [SerializeField] private float distanceToShoot = 5f;
     [SerializeField] private float distanceToStop = 3f;
@@ -12,8 +12,9 @@ public class RangedEnemy : Unit {
     
     private Transform firePoint;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         firePoint = transform.Find("FirePoint");
     }
 

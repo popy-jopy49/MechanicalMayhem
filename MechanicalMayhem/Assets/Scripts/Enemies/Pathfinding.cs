@@ -15,7 +15,12 @@ public class Pathfinding : MonoBehaviour
 		instance = this;
 	}
 
-	public static Vector2[] RequestPath(Vector2 from, Vector2 to) => instance.FindPath(from, to);
+	public static Vector2[] RequestPath(Vector2 from, Vector2 to)
+	{
+		print(instance);
+		print(instance.FindPath(from, to));
+        return instance.FindPath(from, to);
+    }
 	
 	Vector2[] FindPath(Vector2 from, Vector2 to)
 	{
