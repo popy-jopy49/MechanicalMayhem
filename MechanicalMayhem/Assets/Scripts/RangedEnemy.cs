@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RangedEnemy : Enemy {
+public class RangedEnemy : Unit {
     
     [SerializeField] private float distanceToShoot = 5f;
     [SerializeField] private float distanceToStop = 3f;
@@ -12,16 +12,13 @@ public class RangedEnemy : Enemy {
     
     private Transform firePoint;
 
-    protected override void Awake()
+    protected virtual void Awake()
     {
-        base.Awake();
         firePoint = transform.Find("FirePoint");
     }
 
-    protected override void Update()
+    protected virtual void Update()
     {
-        base.Update();
-
         float sqrDist = Vector2.SqrMagnitude(target.position - transform.position);
         if (sqrDist <= distanceToShoot * distanceToShoot)
         {
@@ -47,22 +44,6 @@ public class RangedEnemy : Enemy {
 
         TIME:
         time = 0f;
-    }
-
-    protected override void FixedUpdate()
-    {
-        if (!target)
-            return;
-
-        float sqrDist = Vector2.SqrMagnitude(target.position - transform.position);
-        if (sqrDist >= distanceToStop * distanceToStop)
-        {
-            rb.velocity = transform.up * speed;
-        }
-        else
-        {
-            rb.velocity = Vector2.zero;
-        }
     }
 
 }

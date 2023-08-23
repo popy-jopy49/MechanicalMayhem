@@ -3,18 +3,18 @@ using System.Collections.Generic;
 
 public class Grid : MonoBehaviour
 {
+	
+	[SerializeField] private bool displayGridGizmos;
 
-	public bool displayGridGizmos;
+    [SerializeField] private LayerMask unwalkableMask;
+	[SerializeField] private Vector2 gridWorldSize;
+	[SerializeField] private float nodeRadius;
 
-	public LayerMask unwalkableMask;
-	public Vector2 gridWorldSize;
-	public float nodeRadius;
+	private Node[,] grid;
+	private float nodeDiameter;
+	private int gridSizeX, gridSizeY;
 
-	Node[,] grid;
-	float nodeDiameter;
-	int gridSizeX, gridSizeY;
-
-	void Awake()
+	private void Awake()
 	{
 		nodeDiameter = nodeRadius * 2;
 		gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
@@ -28,24 +28,23 @@ public class Grid : MonoBehaviour
 		get => gridSizeX * gridSizeY;
 	}
 
-	void CreateGrid()
+	private void CreateGrid()
 	{
 		grid = new Node[gridSizeX,gridSizeY];
-		Vector2 worldBottomLeft = (Vector2)transform.position - Vector2.right * gridWorldSize.x / 2 - Vector2.up * gridWorldSize.y  /2;
+		Vector2 worldBottomLeft = (Vector2)transform.position - Vector2.right * gridWorldSize.x / 2 - Vector2.up * gridWorldSize.y / 2;
 
 		for (int x = 0; x < gridSizeX; x ++)
 		{
 			for (int y = 0; y < gridSizeY; y ++)
 			{
 				Vector2 worldPoint = worldBottomLeft + Vector2.right * (x * nodeDiameter + nodeRadius) + Vector2.up * (y * nodeDiameter + nodeRadius);
-				bool walkable = (Physics2D.OverlapCircle(worldPoint,nodeRadius,unwalkableMask) == null); // if no collider2D is returned by overlap circle, then this node is walkable
+				bool walkable = Physics2D.OverlapCircle(worldPoint, nodeRadius, unwalkableMask) == null; // if no collider2D is returned by overlap circle, then this node is walkable
 
 				grid[x,y] = new Node(walkable,worldPoint, x,y);
 			}
 		}
 	}
 	
-
 	public List<Node> GetNeighbours(Node node, int depth = 1)
 	{
 		List<Node> neighbours = new();
@@ -92,7 +91,7 @@ public class Grid : MonoBehaviour
 		return null;
 	}
 
-	Node FindWalkableInRadius(int centreX, int centreY, int radius)
+	private Node FindWalkableInRadius(int centreX, int centreY, int radius)
 	{
 		for (int i = -radius; i <= radius; i ++)
 		{
@@ -140,9 +139,9 @@ public class Grid : MonoBehaviour
 		return null;
 	}
 
-	bool InBounds(int x, int y) => x >= 0 && x < gridSizeX && y >= 0 && y < gridSizeY;
+	private bool InBounds(int x, int y) => x >= 0 && x < gridSizeX && y >= 0 && y < gridSizeY;
 	
-	void OnDrawGizmos()
+	private void OnDrawGizmos()
 	{
 		Gizmos.DrawWireCube(transform.position,new Vector2(gridWorldSize.x,gridWorldSize.y));
 		if (grid == null || !displayGridGizmos)

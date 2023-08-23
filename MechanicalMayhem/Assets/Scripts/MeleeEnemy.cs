@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MeleeEnemy : Enemy
+public class MeleeEnemy : Unit
 {
 
     protected virtual void OnCollisionStay2D(Collision2D other)

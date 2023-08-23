@@ -5,8 +5,9 @@ using System;
 
 public class Pathfinding : MonoBehaviour
 {
-	Grid grid;
-	static Pathfinding instance;
+
+	private Grid grid;
+    private static Pathfinding instance;
 	
 	void Awake()
 	{
@@ -14,11 +15,10 @@ public class Pathfinding : MonoBehaviour
 		instance = this;
 	}
 
-	public static Vector2[] RequestPath(Vector2 from, Vector2 to) => instance.FindPath (from, to);
+	public static Vector2[] RequestPath(Vector2 from, Vector2 to) => instance.FindPath(from, to);
 	
 	Vector2[] FindPath(Vector2 from, Vector2 to)
 	{
-		
 		Stopwatch sw = new();
 		sw.Start();
 		

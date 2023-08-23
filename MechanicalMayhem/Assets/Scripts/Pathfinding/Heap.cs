@@ -3,8 +3,8 @@
 public class Heap<T> where T : IHeapItem<T>
 {
 	
-	T[] items;
-	int currentItemCount;
+	private T[] items;
+    private int currentItemCount;
 	
 	public Heap(int maxHeapSize)
 	{
@@ -49,11 +49,11 @@ public class Heap<T> where T : IHeapItem<T>
 				return;
 
             int swapIndex = childIndexLeft;
-            if (childIndexRight < currentItemCount) {
-				if (items[childIndexLeft].CompareTo(items[childIndexRight]) < 0) {
-					swapIndex = childIndexRight;
-				}
-			}
+            if (childIndexRight < currentItemCount
+				&& items[childIndexLeft].CompareTo(items[childIndexRight]) < 0)
+            {
+                swapIndex = childIndexRight;
+            }
 
 			if (item.CompareTo(items[swapIndex]) >= 0)
 				return;
