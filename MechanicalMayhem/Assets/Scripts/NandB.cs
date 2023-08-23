@@ -18,11 +18,12 @@ public class NandB : MonoBehaviour
 
     }
 
-    void OnTriggerEnter 2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
              if (other.gameObject.CompareTag("Player"))
         {
-        
+            Destroy(gameObject);
+            NandBCounter.Instance.IncreaseNandBS(value);
         }
         
        }
