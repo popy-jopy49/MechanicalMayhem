@@ -22,7 +22,8 @@ public class NandB : MonoBehaviour
     {
              if (other.gameObject.CompareTag("Player"))
         {
-        
+            Destroy(gameObject);
+            NandBCounter.Instance.IncreaseNandBS(value);
         }
         
        }
