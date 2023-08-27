@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
 {
 
     private GameObject escapeMenu;
+    private bool puzzle = false;
 
     private void Start()
     {
@@ -33,5 +34,8 @@ public class GameManager : Singleton<GameManager>
     {
         Application.Quit();
     }
+
+    public bool InPuzzle() => puzzle;
+    public void SetInPuzzle(bool inPuzzle) => puzzle = inPuzzle;
 
 }
