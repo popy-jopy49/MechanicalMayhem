@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class Grid : MonoBehaviour
+public class WorldGrid : MonoBehaviour
 {
 	
 	[SerializeField] private bool displayGridGizmos;

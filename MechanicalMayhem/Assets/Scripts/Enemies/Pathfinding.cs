@@ -6,12 +6,12 @@ using System;
 public class Pathfinding : MonoBehaviour
 {
 
-	private Grid grid;
+	private WorldGrid grid;
     private static Pathfinding instance;
 	
 	void Awake()
 	{
-		grid = GetComponent<Grid>();
+		grid = GetComponent<WorldGrid>();
 		instance = this;
 	}
 
