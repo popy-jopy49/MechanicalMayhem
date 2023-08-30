@@ -1,15 +1,18 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TrafficJamController : MonoBehaviour, IDragHandler
+public class TrafficJamController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
 
     [SerializeField] private bool y = false;
+    [SerializeField] private float speed = 10f;
+    [SerializeField] private bool targetCar = false;
     private Rigidbody2D rb;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.isKinematic = true;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -18,27 +21,33 @@ public class TrafficJamController : MonoBehaviour, IDragHandler
         // 1/s = 
         Vector2 mousePos = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        Vector2 pos = new();
+        Vector2 pos = mousePos - rb.position;
         if (y)
         {
-            print("y");
             float axis = mousePos.y;
-            pos = new(transform.position.x, Mathf.Round(axis));
-            print(Mathf.Round(axis));
+            pos.x = 0;
+            //pos = new(0, Mathf.Round(axis));
         }
         else
         {
-            print("x");
             float axis = mousePos.x;
-            pos = new(Mathf.Round(axis), transform.position.y);
+            pos.y = 0;
+            //pos = new(Mathf.Round(axis), 0);
         }
-        transform.position = pos;
-        print(pos.y);
+        rb.velocity = speed * Time.deltaTime * pos;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnEndDrag(PointerEventData eventData)
     {
-        // Stop dragging?
+        rb.isKinematic = true;
+        rb.velocity = Vector2.zero;
     }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        rb.isKinematic = false;
+    }
+
+    public bool GetTargetCar() => targetCar;
 
 }
