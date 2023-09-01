@@ -5,7 +5,7 @@ public class TrafficJamController : MonoBehaviour, IDragHandler, IBeginDragHandl
 {
 
     [SerializeField] private bool y = false;
-    [SerializeField] private float speed = 10f;
+    [SerializeField] private float speed = 200f;
     [SerializeField] private bool targetCar = false;
     private Rigidbody2D rb;
 
