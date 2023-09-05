@@ -25,6 +25,7 @@ public class Player : Singleton<Player>
 
     private void Awake()
     {
+        print("cook");
         healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
         nbText = GameObject.Find("NutsAndBoltsAmount").GetComponent<TMP_Text>();
         respawnPoint = GameObject.Find("RespawnPoint").transform;

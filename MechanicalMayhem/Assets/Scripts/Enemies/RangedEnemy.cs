@@ -18,10 +18,8 @@ public class RangedEnemy : Enemy {
         firePoint = transform.Find("FirePoint");
     }
 
-    protected override void Update()
+    protected virtual void Update()
     {
-        base.Update();
-
         float sqrDist = Vector2.SqrMagnitude(target.position - transform.position);
         if (sqrDist <= distanceToShoot * distanceToShoot)
         {
@@ -47,22 +45,6 @@ public class RangedEnemy : Enemy {
 
         TIME:
         time = 0f;
-    }
-
-    protected override void FixedUpdate()
-    {
-        if (!target)
-            return;
-
-        float sqrDist = Vector2.SqrMagnitude(target.position - transform.position);
-        if (sqrDist >= distanceToStop * distanceToStop)
-        {
-            rb.velocity = transform.up * speed;
-        }
-        else
-        {
-            rb.velocity = Vector2.zero;
-        }
     }
 
 }
