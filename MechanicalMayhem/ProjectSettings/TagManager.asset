@@ -17,8 +17,8 @@ TagManager:
   - EnemyBullet
   - Player
   - Background
-  - Puzzle
-  - Minimap
+  - Particle
+  - 
   - 
   - 
   - 
@@ -59,7 +59,4 @@ TagManager:
     locked: 0
   - name: Weapons
     uniqueID: 3327209783
-    locked: 0
-  - name: Puzzles
-    uniqueID: 3641256293
     locked: 0
