@@ -18,20 +18,21 @@ public class PuzzleGrid : MonoBehaviour
         StreamReader reader = new(path);
         string text = reader.ReadToEnd().Trim().Replace("\n", "").Replace("\r", "");
         reader.Close();
-        for (int i = 0; i < grid.GetLength(0); i++)
+        int dataIndex = 0;
+        for (int x = 0; x < grid.GetLength(0); x++)
         {
-            for (int j = 0; j < grid.GetLength(1); j++)
+            for (int y = 0; y < grid.GetLength(1); y++)
             {
-                char digit = text[j + (i * grid.GetLength(1))];
-                Vector2 pos = (new Vector2(i, j) * gridObjectSize) - (((gridSize*gridObjectSize)+gridObjectSize) / 2f) + gridObjectSize;
-                grid[i, j] = new GridObject(digit, pos, gridObjectSize, transform.parent.Find("InnerWalls"), wallPrefab, playerPrefab, winPrefab);
+                char digit = text[dataIndex];
+                //Vector2 pos = (new Vector2(y, -x) * gridObjectSize) + (((gridSize * gridObjectSize)+gridObjectSize) / 2f) - gridObjectSize;
+                Vector2 pos = (new Vector2(y, -x) * gridObjectSize);
+                grid[x, y] = new GridObject(digit, pos, gridObjectSize, transform.parent.Find("InnerWalls"), wallPrefab, playerPrefab, winPrefab);
                 print(digit);
-                print(j + (i * grid.GetLength(1)));
+                print(dataIndex);
+                dataIndex++;
             }
         }
     }
-
-
 
     private class GridObject
     {
