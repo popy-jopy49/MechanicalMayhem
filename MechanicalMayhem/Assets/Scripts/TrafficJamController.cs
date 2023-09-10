@@ -6,7 +6,6 @@ public class TrafficJamController : MonoBehaviour, IDragHandler, IBeginDragHandl
 
     [SerializeField] private bool y = false;
     [SerializeField] private float speed = 200f;
-    [SerializeField] private bool targetCar = false;
     private Rigidbody2D rb;
 
     private void Awake()
@@ -47,7 +46,5 @@ public class TrafficJamController : MonoBehaviour, IDragHandler, IBeginDragHandl
     {
         rb.isKinematic = false;
     }
-
-    public bool GetTargetCar() => targetCar;
 
 }

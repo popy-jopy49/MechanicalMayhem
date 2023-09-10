@@ -4,22 +4,17 @@ public class PuzzleWin : MonoBehaviour
 {
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        TrafficJamController tJC = collision.GetComponent<TrafficJamController>();
-        if (!tJC)
+	{
+        if (collision.gameObject.layer != LayerMask.NameToLayer("Puzzle"))
             return;
 
-        if (tJC.GetTargetCar())
-        {
-            // Win
-            Win();
-            transform.parent.gameObject.SetActive(false);
-        }
-    }
+		// Win
+		Win();
+	}
 
     protected void Win()
     {
-
+        print("You win!");
     }
 
 }

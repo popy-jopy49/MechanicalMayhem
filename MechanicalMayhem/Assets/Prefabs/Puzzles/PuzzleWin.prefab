@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 539285494582180981}
   - component: {fileID: 539285494582180982}
-  - component: {fileID: 539285494582180983}
+  - component: {fileID: 118983697652395813}
   m_Layer: 12
   m_Name: PuzzleWin
   m_TagString: Untagged
@@ -78,7 +78,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &539285494582180983
+--- !u!114 &118983697652395813
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
