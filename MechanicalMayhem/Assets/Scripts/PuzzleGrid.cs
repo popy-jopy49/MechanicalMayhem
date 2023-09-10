@@ -55,7 +55,7 @@ public class PuzzleGrid : MonoBehaviour
         if (!IsValidGridPosition(index))
             return false;
 
-        bool free = grid[index.x, index.y].GetDigit() == '1';
+        bool free = grid[index.x, index.y].OpenPos();
         bool neighboursHavePlayer = false;
 
 		List<(int x, int y)> neighbours = new()
@@ -77,6 +77,8 @@ public class PuzzleGrid : MonoBehaviour
 			}
 		}
 
+        print(free);
+        print(neighboursHavePlayer);
 		return free && neighboursHavePlayer;
 	}
 
@@ -111,7 +113,7 @@ public class PuzzleGrid : MonoBehaviour
         {
             for (int x = 0; x < grid.GetLength(0); x++)
             {
-                if (index >= text.Length || grid[x, y].GetDigit() == text[index])
+                if (index >= text.Length || grid[x, y].GetDigit() != text[index])
                     return false;
 
                 index++;
