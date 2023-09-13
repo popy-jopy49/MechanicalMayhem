@@ -64,7 +64,7 @@ MonoBehaviour:
   Puzzle_PlayerPrefab: {fileID: 914361244444690528, guid: 31b42ebde0fb1184aa0d20eb15d5b36e, type: 3}
   Puzzle_WinPrefab: {fileID: 539285494582180981, guid: a1720668126196249921ab231cb979e4, type: 3}
   EnemyPrefabs:
-  - g: {fileID: 7162030105035352118, guid: 6cfbebbf5053986429dafc0824e142be, type: 3}
+  - g: {fileID: 8378483774051485722, guid: 6cfbebbf5053986429dafc0824e142be, type: 3}
     chance: 75
   - g: {fileID: 7819356467655666842, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
     chance: 25

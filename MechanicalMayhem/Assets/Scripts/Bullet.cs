@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
             foreach (Collider2D col in cols)
             {
                 RaycastHit2D hit2D = Physics2D.Raycast(transform.position, col.transform.position - transform.position);
-                if (hit2D.transform.gameObject.layer != LayerMask.NameToLayer("Enemies"))
+                if (!hit2D || hit2D.transform.gameObject.layer != LayerMask.NameToLayer("Enemies"))
                     continue;
 
                 Attackable attackable = col.GetComponent<Attackable>();

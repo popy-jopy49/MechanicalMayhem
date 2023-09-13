@@ -14,9 +14,6 @@ public class GameAssets : Singleton<GameAssets> {
 	[Header("Prefabs")]
 	public GameObject MessagePrefab;
 	public GameObject BulletPrefab;
-	public Transform Puzzle_WallPrefab;
-	public Transform Puzzle_PlayerPrefab;
-	public Transform Puzzle_WinPrefab;
 	public EnemyPrefabData[] EnemyPrefabs;
 
 	void Awake()
