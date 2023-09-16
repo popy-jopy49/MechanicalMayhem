@@ -55,7 +55,7 @@ public class Turret : Repairable
 
 		RaycastHit2D hit = Physics2D.Raycast(firePoint.position, vDir, 50f, whatToHit);
 
-		print(hit.transform.gameObject.layer);
+		//print(hit.transform.gameObject.layer);
 		if (hit.transform.gameObject.layer != LayerMask.NameToLayer("Enemies"))
 			return;
 
