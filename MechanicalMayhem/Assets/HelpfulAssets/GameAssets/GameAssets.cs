@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
 using SWAssets;
+using UnityEngine.Rendering;
 
 public class GameAssets : Singleton<GameAssets> {
 
@@ -15,6 +16,12 @@ public class GameAssets : Singleton<GameAssets> {
 	public GameObject MessagePrefab;
 	public GameObject BulletPrefab;
 	public EnemyPrefabData[] EnemyPrefabs;
+
+    [Header("Post Processing")]
+    public VolumeProfile VolumeProfile;
+
+    [Header("Mixers")]
+    public AudioMixer MainMixer;
 
 	void Awake()
 	{
