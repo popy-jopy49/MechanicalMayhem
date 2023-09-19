@@ -980,10 +980,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1073316512, guid: 2c9d428ab79143d478cf57c594328cc3, type: 3}
-      propertyPath: m_Layer
-      value: 13
-      objectReference: {fileID: 0}
     - target: {fileID: 418985780168701937, guid: 2c9d428ab79143d478cf57c594328cc3, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1142,7 +1138,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 6cfbebbf5053986429dafc0824e142be, type: 3}
 --- !u!4 &95173982 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 7162030105035352115, guid: 6cfbebbf5053986429dafc0824e142be, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8378483774051485727, guid: 6cfbebbf5053986429dafc0824e142be, type: 3}
   m_PrefabInstance: {fileID: 95173981}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &98622388
