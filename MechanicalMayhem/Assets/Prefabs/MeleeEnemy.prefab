@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 8378483774051485721}
   - component: {fileID: 8378483774051485720}
   - component: {fileID: 8701593030225934957}
-  - component: {fileID: 8378483774051485724}
   - component: {fileID: 1499894738830424610}
+  - component: {fileID: 8759379961738586170}
   m_Layer: 6
   m_Name: MeleeEnemy
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8378483774051485722}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.93, y: -4.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -209,23 +209,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8378483774051485724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8378483774051485722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e84ee0b245da6034f8c35520b80b4069, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  speed: 3
-  rotateSpeed: 1
-  damage: 10
-  fireRate: 1
 --- !u!195 &1499894738830424610
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -248,3 +231,20 @@ NavMeshAgent:
   m_BaseOffset: 0.71133333
   m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8759379961738586170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378483774051485722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e84ee0b245da6034f8c35520b80b4069, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  speed: 3
+  rotateSpeed: 1
+  damage: 10
+  fireRate: 1
