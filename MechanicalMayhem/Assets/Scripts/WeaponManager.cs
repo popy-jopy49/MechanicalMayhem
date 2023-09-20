@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using SWAssets.Utils;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -35,6 +36,44 @@ public class WeaponManager : MonoBehaviour
 		thirdWeapon = GameObject.Find("ThirdWeapon").transform.Find("Icon").GetComponent<Image>();
         currentAmmo = GameObject.Find("CurrentAmmo").GetComponent<TMP_Text>();
         totalAmmo = GameObject.Find("TotalAmmo").GetComponent<TMP_Text>();
+    }
+
+    private void Start()
+    {
+		if (!GameManager.I.newGame)
+			return;
+
+		Weapon[] weapons = transform.GetComponentsInChildren<Weapon>();
+
+		for (int i = 0; i < weapons.Length; i++)
+		{
+			WeaponData weaponData = weapons[i].weaponData;
+			print(weaponData.name);
+			print(Resources.Load<WeaponData>("ScriptableObjects/Defaults/" + weaponData.name.Split('_')[0]).name);
+			ChangeWeaponDataValues(ref weaponData, Resources.Load<WeaponData>("ScriptableObjects/Defaults/" + weaponData.name.Split('_')[0]));
+		}
+    }
+
+    private void ChangeWeaponDataValues(ref WeaponData weaponData, WeaponData defaultData)
+    {
+		if (weaponData == null) return;
+
+		weaponData.icon = defaultData.icon;
+		weaponData.fireRate = defaultData.fireRate;
+		weaponData.damage = defaultData.damage;
+		weaponData.range = defaultData.range;
+		weaponData.whatToHit = defaultData.whatToHit;
+		weaponData.melee = defaultData.melee;
+		weaponData.bulletPrefab = defaultData.bulletPrefab;
+		weaponData.bulletSpeed = defaultData.bulletSpeed;
+		weaponData.shotCount = defaultData.shotCount;
+		weaponData.bulletSpread = defaultData.bulletSpread;
+		weaponData.maxAmmo = defaultData.maxAmmo;
+		weaponData.startingMags = defaultData.startingMags;
+		weaponData.reloadTime = defaultData.reloadTime;
+		weaponData.explosionRadius = defaultData.explosionRadius;
+		weaponData.semiAuto = defaultData.semiAuto;
+		weaponData.enemy = defaultData.enemy;
     }
 
     private void SelectWeapon3(InputAction.CallbackContext obj)
@@ -90,15 +129,15 @@ public class WeaponManager : MonoBehaviour
 		if (weapons.Count > 0)
 		{
 			Weapon weapon = weapons[0].GetComponent<Weapon>();
-			equippedWeapon.sprite = weapon.GetWeaponData().icon;
+			equippedWeapon.sprite = weapon.weaponData.icon;
             totalAmmo.text = weapon.GetTotalAmmo().ToString();
             currentAmmo.text = weapon.GetCurrentAmmo().ToString();
-            totalAmmo.gameObject.SetActive(!weapon.GetWeaponData().melee);
-            currentAmmo.gameObject.SetActive(!weapon.GetWeaponData().melee);
+            totalAmmo.gameObject.SetActive(!weapon.weaponData.melee);
+            currentAmmo.gameObject.SetActive(!weapon.weaponData.melee);
 		}
 		if (weapons.Count > 1)
 		{
-			firstWeapon.sprite = weapons[1].GetComponent<Weapon>().GetWeaponData().icon;
+			firstWeapon.sprite = weapons[1].GetComponent<Weapon>().weaponData.icon;
 			firstWeapon.gameObject.SetActive(true);
 		}
 		else
@@ -107,7 +146,7 @@ public class WeaponManager : MonoBehaviour
 		}
 		if (weapons.Count > 2)
 		{
-			secondWeapon.sprite = weapons[2].GetComponent<Weapon>().GetWeaponData().icon;
+			secondWeapon.sprite = weapons[2].GetComponent<Weapon>().weaponData.icon;
 			secondWeapon.gameObject.SetActive(true);
 		}
 		else
@@ -116,7 +155,7 @@ public class WeaponManager : MonoBehaviour
 		}
 		if (weapons.Count > 3)
 		{
-			thirdWeapon.sprite = weapons[3].GetComponent<Weapon>().GetWeaponData().icon;
+			thirdWeapon.sprite = weapons[3].GetComponent<Weapon>().weaponData.icon;
 			thirdWeapon.gameObject.SetActive(true);
 		}
 		else

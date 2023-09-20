@@ -41,6 +41,7 @@ public class MainMenuManager : MonoBehaviour {
     public static void StartGame()
     {
         SceneManager.LoadSceneAsync(1);
+        GameManager.I.newGame = true;
     }
 
 	public static void QuitGame()

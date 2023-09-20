@@ -11,6 +11,7 @@ public class GameManager : Singleton<GameManager>
 
     private GameObject escapeMenu;
     private bool puzzle = false;
+	public bool newGame = false;
 
 	public static int MAINSCENE = 1;
 

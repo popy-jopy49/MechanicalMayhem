@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class Weapon : MonoBehaviour
 {
 
-    [SerializeField] private WeaponData weaponData;
+    public WeaponData weaponData;
 
     private Transform firePoint;
     private float fireTime;
@@ -159,7 +159,5 @@ public class Weapon : MonoBehaviour
 
 	public int GetCurrentAmmo() => currentAmmo;
 	public int GetTotalAmmo() => totalAmmo;
-
-	public WeaponData GetWeaponData() => weaponData;
 
 }

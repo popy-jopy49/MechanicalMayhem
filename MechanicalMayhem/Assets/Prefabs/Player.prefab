@@ -168,7 +168,7 @@ Transform:
   - {fileID: 418985779259637446}
   - {fileID: 1073316513}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &418985780168701936
 MonoBehaviour:
@@ -307,7 +307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2259583f5b40c22449467ad3d4416fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: 63b17a388301666419369ee8c9fbb939, type: 2}
+  weaponData: {fileID: 11400000, guid: 1de9138e886b2ff4a95315d038d3d3a4, type: 2}
 --- !u!1 &3232881283730277105
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2259583f5b40c22449467ad3d4416fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: c7babecfe72ae38488b4b28f6afae155, type: 2}
+  weaponData: {fileID: 11400000, guid: 7afeba781c86d4e4882ff34f6add2bb6, type: 2}
 --- !u!1 &3832458987354859740
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,7 +845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2259583f5b40c22449467ad3d4416fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: 3e50720acd8384c4db709c994efa2679, type: 2}
+  weaponData: {fileID: 11400000, guid: a18530261c13b924bb12ceec6aea527f, type: 2}
 --- !u!1 &8674111333554406415
 GameObject:
   m_ObjectHideFlags: 0
