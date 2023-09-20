@@ -4015,8 +4015,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43f9e4754d7cd1e4c9fc88b9b9cc2eaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenSpawns: 1
-  numberPerSpawn: 1
+  timeBetweenSpawns: 10.12
+  numberPerSpawn: 4
 --- !u!1 &864297943
 GameObject:
   m_ObjectHideFlags: 0
