@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Rendering.Universal;
+using System;
 
 public class MainMenuManager : MonoBehaviour {
 
@@ -13,7 +14,7 @@ public class MainMenuManager : MonoBehaviour {
 
         resolutions = Screen.resolutions;
         resoloutionDropdown.ClearOptions();
-        List<string> options = new List<string>();
+        List<string> options = new();
 
         originalResoloutionIndex = 0;
 
@@ -140,21 +141,21 @@ public class MainMenuManager : MonoBehaviour {
         else if (_frameRate == 2)
             Application.targetFrameRate = 60;
 
-		PlayerPrefs.SetInt("Fullscreen", _isFullscreen ? 1 : 0);
+		PlayerPrefs.SetInt("Fullscreen", Convert.ToByte(_isFullscreen));
 		Screen.fullScreen = _isFullscreen;
 
 
-        PlayerPrefs.SetInt("VSync", _vsync ? 1 : 0);
-        QualitySettings.vSyncCount = _vsync ? 1 : 0;
+        PlayerPrefs.SetInt("VSync", Convert.ToByte(_vsync));
+        QualitySettings.vSyncCount = Convert.ToByte(_vsync);
 
-		PlayerPrefs.SetInt("HDR", _hdr ? 1 : 0);
+		PlayerPrefs.SetInt("HDR", Convert.ToByte(_hdr));
 		((UniversalRenderPipelineAsset)QualitySettings.renderPipeline).supportsHDR = _hdr;
 
 		PlayerPrefs.SetFloat("Brightness", _brightnessLevel);
 
-		PlayerPrefs.SetInt("Bloom", _bloom ? 1 : 0);
+		PlayerPrefs.SetInt("Bloom", Convert.ToByte(_bloom));
 
-		PlayerPrefs.SetInt("ChromaticAberration", _chromaticAberration ? 1 : 0);
+		PlayerPrefs.SetInt("ChromaticAberration", Convert.ToByte(_chromaticAberration));
 
         GameManager.I.SavePPData(_bloom, _chromaticAberration, _brightnessLevel);
 

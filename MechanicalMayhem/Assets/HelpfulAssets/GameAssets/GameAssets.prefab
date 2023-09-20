@@ -60,11 +60,10 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   MessagePrefab: {fileID: 223894602397469670, guid: b62db026fe8d3aa47bd43248c60f93c1, type: 3}
   BulletPrefab: {fileID: 4793002964381020082, guid: 11949ccbe7308914ab3e0d69d906f5ae, type: 3}
-  Puzzle_WallPrefab: {fileID: 1640710698911554171, guid: 9d0a526f69592014791be6bf6c5cca82, type: 3}
-  Puzzle_PlayerPrefab: {fileID: 914361244444690528, guid: 31b42ebde0fb1184aa0d20eb15d5b36e, type: 3}
-  Puzzle_WinPrefab: {fileID: 539285494582180981, guid: a1720668126196249921ab231cb979e4, type: 3}
   EnemyPrefabs:
   - g: {fileID: 8378483774051485722, guid: 6cfbebbf5053986429dafc0824e142be, type: 3}
     chance: 75
   - g: {fileID: 7819356467655666842, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
     chance: 25
+  VolumeProfile: {fileID: 11400000, guid: c093ced569276cc47aa926560dccbd04, type: 2}
+  MainMixer: {fileID: 24100000, guid: 34e78410a0403ca4ea3bf838b3bf2f0a, type: 2}
