@@ -56,4 +56,6 @@ public class Repairable : MonoBehaviour
 		repaired = true;
 	}
 
+    public bool IsRepaired() => repaired;
+
 }

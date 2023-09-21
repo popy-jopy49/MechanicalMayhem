@@ -10,10 +10,10 @@ public class TDPlayerMovement : MonoBehaviour
     [SerializeField] private float sprintSpeed = 4f;
     [SerializeField] private float regainSpeed = 0.5f;
     [SerializeField] private float loseSpeed = 0.5f;
-    [SerializeField] private float maxSprint = 2f;
     [SerializeField] private float minSprint = 0.5f;
+	private float maxSprint = 2f;
 
-    public static event Action<float, float, float> OnSprintChanged;
+	public static event Action<float, float, float> OnSprintChanged;
     
     private float sprint = 0;
     private bool isSprinting = false;
@@ -123,10 +123,6 @@ public class TDPlayerMovement : MonoBehaviour
         currentDir = newDir;
     }
 
-    private bool IsAnimationPlaying(string stateName)
-    {
-        AnimatorStateInfo animStateInfo = anim.GetCurrentAnimatorStateInfo(0);
-        return animStateInfo.IsName(stateName) && animStateInfo.normalizedTime < 1.0f;
-    }
+    public void AddMaxSprint(float maxSprint) => this.maxSprint += maxSprint;
 
 }

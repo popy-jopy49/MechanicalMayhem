@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 public class Player : Singleton<Player>
 {
 
-    [SerializeField] private float maxHealth;
+    private float maxHealth;
 
 	private float health;
 	private HealthBar healthBar;
@@ -17,35 +17,38 @@ public class Player : Singleton<Player>
 
 	private List<GameObject> itemsToPickup = new();
     private List<Repairable> nearbyRepairables = new();
+    private bool workbenchNearby = false;
     private List<GameObject> inventory = new();
 
     private TMP_Text nbText;
     private int nutsAndBolts;
     private GameObject fToInteract;
+    private GameObject hUD;
+    private GameObject workbenchUI;
 
     private void Awake()
     {
-        print("cook");
         healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
         nbText = GameObject.Find("NutsAndBoltsAmount").GetComponent<TMP_Text>();
         respawnPoint = GameObject.Find("RespawnPoint").transform;
         rb = GetComponent<Rigidbody2D>();
 
         fToInteract = GameObject.Find("FToInteract");
-        fToInteract.SetActive(false);
+		workbenchUI = gameObject.FindDeactivatedGameObject("Canvas", "WorkbenchUI");
+        workbenchUI.SetActive(false);
+        hUD = GameObject.Find("HUD");
 
         InputManager.INPUT_ACTIONS.Main.Interact.started += Interact;
     }
 
-    private void Start()
-    {
-        health = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
-    }
-
     private void Update()
     {
-        fToInteract.SetActive(itemsToPickup.Count > 0 || nearbyRepairables.Count > 0);
+#if UNITY_EDITOR
+        if (Keyboard.current.numpadPlusKey.wasPressedThisFrame)
+            nutsAndBolts += 1000000;
+#endif
+
+        fToInteract.SetActive(itemsToPickup.Count > 0 || nearbyRepairables.Count > 0 || workbenchNearby);
 
         Vector3 mousePos = InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>();
         mousePos.z = 0.0f;
@@ -67,8 +70,13 @@ public class Player : Singleton<Player>
         Repairable repairable = collision.GetComponent<Repairable>();
         if (repairable)
         {
-            if (!nearbyRepairables.Contains(repairable))
+            if (!repairable.IsRepaired() && !nearbyRepairables.Contains(repairable))
                 nearbyRepairables.Add(repairable);
+        }
+
+        if (collision.CompareTag("Workbench"))
+        {
+            workbenchNearby = true;
         }
     }
 
@@ -85,8 +93,15 @@ public class Player : Singleton<Player>
         {
             if (nearbyRepairables.Contains(repairable))
                 nearbyRepairables.Remove(repairable);
-        }
-    }
+		}
+
+		if (collision.CompareTag("Workbench"))
+		{
+			workbenchNearby = false;
+            hUD.SetActive(true);
+            workbenchUI.SetActive(false);
+		}
+	}
 
     private void Interact(InputAction.CallbackContext obj)
 	{
@@ -102,25 +117,33 @@ public class Player : Singleton<Player>
         }
 
         // Repair
-        if (nearbyRepairables.Count <= 0)
-            return;
-
-        bool foundSomething = false;
-        foreach (Repairable repairable in nearbyRepairables)
+        if (nearbyRepairables.Count > 0)
         {
-            for (int i = 0; i < inventory.Count; i++)
-            {
-                if (!repairable.AddItem(inventory[i]))
-                    continue;
+			foreach (Repairable repairable in nearbyRepairables)
+			{
+				bool foundSomething = false;
+				for (int i = 0; i < inventory.Count; i++)
+				{
+					if (!repairable.AddItem(inventory[i]))
+						continue;
 
-                foundSomething = true;
-                nearbyRepairables.Remove(repairable);
-                inventory.RemoveAt(i);
-            }
-            if (foundSomething)
-                break;
+					foundSomething = true;
+					nearbyRepairables.Remove(repairable);
+					inventory.RemoveAt(i);
+				}
+				if (foundSomething)
+					break;
+			}
+			return;
+		}
+
+        // Workbench
+        if (workbenchNearby)
+        {
+            hUD.SetActive(!hUD.activeSelf);
+            workbenchUI.SetActive(!workbenchUI.activeSelf);
         }
-    }
+	}
 
     public void Damage(float damage)
 	{
@@ -147,5 +170,12 @@ public class Player : Singleton<Player>
         nbText.text = nutsAndBolts.ToString();
 	}
     public int GetNutsAndBolts() => nutsAndBolts;
+	public void AddMaxHealth(float value) => SetMaxHealth(maxHealth + value);
+	public void SetMaxHealth(float value)
+	{
+        maxHealth = value;
+		health = value;
+		healthBar.SetMaxHealth(value);
+	}
 
 }

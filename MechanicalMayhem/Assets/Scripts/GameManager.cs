@@ -57,7 +57,7 @@ public class GameManager : Singleton<GameManager>
 
 	private void Start()
     {
-        escapeMenu = GameObjectExtensionMethods.FindDeactivatedGameObject(gameObject, "Canvas", "EscapeMenu");
+        escapeMenu = GameObjectExtensionMethods.FindDeactivatedGameObject(gameObject, "HUD", "EscapeMenu");
 
         InputManager.Initialise();
         InputManager.INPUT_ACTIONS.Main.PauseScreen.started += PauseScreenStarted;

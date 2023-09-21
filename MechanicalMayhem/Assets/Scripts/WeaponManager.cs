@@ -3,12 +3,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using SWAssets.Utils;
 
 public class WeaponManager : MonoBehaviour
 {
 
-    private List<Transform> weapons = new List<Transform>();
+    private List<Transform> weapons = new();
     private int currentWeaponIndex = 0;
 
     private Image firstWeapon;
@@ -43,13 +42,9 @@ public class WeaponManager : MonoBehaviour
 		if (!GameManager.I.newGame)
 			return;
 
-		Weapon[] weapons = transform.GetComponentsInChildren<Weapon>();
-
-		for (int i = 0; i < weapons.Length; i++)
+		for (int i = 0; i < weapons.Count; i++)
 		{
-			WeaponData weaponData = weapons[i].weaponData;
-			print(weaponData.name);
-			print(Resources.Load<WeaponData>("ScriptableObjects/Defaults/" + weaponData.name.Split('_')[0]).name);
+			WeaponData weaponData = weapons[i].GetComponent<Weapon>().weaponData;
 			ChangeWeaponDataValues(ref weaponData, Resources.Load<WeaponData>("ScriptableObjects/Defaults/" + weaponData.name.Split('_')[0]));
 		}
     }

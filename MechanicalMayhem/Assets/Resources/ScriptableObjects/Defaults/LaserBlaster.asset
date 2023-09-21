@@ -27,7 +27,7 @@ MonoBehaviour:
   bulletSpeed: 30
   shotCount: 0
   bulletSpread: 0.5
-  maxAmmo: 60
+  maxAmmo: 40
   startingMags: 8
   reloadTime: 1
   explosionRadius: 0.06
