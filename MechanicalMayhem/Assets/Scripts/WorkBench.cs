@@ -1,4 +1,6 @@
+using Mono.CompilerServices.SymbolWriter;
 using SWAssets;
+using System;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
@@ -9,11 +11,13 @@ public class Workbench : MonoBehaviour
 
     [SerializeField] private UpgradeItem[] upgradeItems;
     private Button upgradeButton;
+    private Color affordableColour;
+    [SerializeField] private Color unaffordableColour;
 
     private void Awake()
     {
         upgradeButton = gameObject.FindDeactivatedGameObject("Canvas", "WorkbenchUI").transform.Find("UpgradeButton").GetComponent<Button>();
-
+        affordableColour = upgradeButton.transform.GetChild(0).GetComponent<TMP_Text>().color;
         foreach (UpgradeItem upgradeItem in upgradeItems)
         {
             SetUpgradeDetails(upgradeItem);
@@ -23,9 +27,12 @@ public class Workbench : MonoBehaviour
     private void SetUpgradeDetails(UpgradeItem upgradeItem)
     {
         Transform parent = transform.Find(upgradeItem.item);
+        parent.Find("TabArea").GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = VariableToHuman(upgradeItem.item);
+        parent.Find("Title").GetComponent<TMP_Text>().text = VariableToHuman(upgradeItem.item) + " Upgrades";
         for (int i = 0; i < upgradeItem.upgradeDatas.Length; i++)
 		{
-            Transform upgradeParent = parent.Find(upgradeItem.upgradeDatas[i].name);
+			int tempI = i;
+			Transform upgradeParent = parent.Find(upgradeItem.upgradeDatas[i].name);
 
             upgradeParent.Find("Header").GetComponent<TMP_Text>().text = upgradeItem.upgradeDatas[i].header;
 
@@ -43,20 +50,20 @@ public class Workbench : MonoBehaviour
 				{
 					// Say can't afford
 					print("Can't afford");
+					upgradeButton.transform.GetChild(0).GetComponent<TMP_Text>().color = unaffordableColour;
 					return;
 				}
 
 				// Say can afford
 				print("Can afford");
-				upgradeButton.onClick.AddListener(() => BuyOnClick(upgradeItem, i - 1));
+				upgradeButton.transform.GetChild(0).GetComponent<TMP_Text>().color = affordableColour;
+				upgradeButton.onClick.AddListener(() => BuyOnClick(upgradeItem, tempI));
 			});
 		}
     }
 
     private void BuyOnClick(UpgradeItem item, int i)
     {
-        print(i);
-        print(item.upgradeDatas.Length);
         UpgradeData upgradeData = item.upgradeDatas[i];
         Buy(upgradeData.cost);
 
@@ -65,7 +72,7 @@ public class Workbench : MonoBehaviour
         if (data == null)
         {
             data = PlayerStats.I;
-            data.GetType().GetProperty(upgradeData.name).SetValue(data, upgradeData.incrementAmount);
+			data.GetType().GetProperty(upgradeData.name).SetValue(data, upgradeData.incrementAmount);
         }
         else
 		{
@@ -86,14 +93,27 @@ public class Workbench : MonoBehaviour
         return name.Replace(name[0], char.ToLower(name[0]));
     }
 
-    [System.Serializable]
+    private string VariableToHuman(string inputString)
+    {
+		string final = "";
+		foreach (char c in inputString.Trim())
+		{
+			if (char.IsUpper(c) && final.Length > 0)
+				final += " ";
+
+			final += c;
+		}
+        return final;
+    }
+
+    [Serializable]
     public class UpgradeItem
     {
         public string item;
         public UpgradeData[] upgradeDatas = new UpgradeData[3];
     }
 
-    [System.Serializable]
+    [Serializable]
     public class UpgradeData
 	{
 		public string name;

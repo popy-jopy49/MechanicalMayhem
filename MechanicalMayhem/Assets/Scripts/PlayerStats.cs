@@ -15,8 +15,8 @@ public class PlayerStats : Singleton<PlayerStats>
 
 	private void Start()
 	{
-		if (!GameManager.I.newGame)
-			return;
+		/*if (!GameManager.I.newGame)
+			return;*/ // TODO: Change and uncomment
 
 		MaxSprint = defaultMaxSprint;
 		MaxHealth = defaultMaxHealth;

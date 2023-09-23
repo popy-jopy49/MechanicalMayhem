@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 public class Player : Singleton<Player>
 {
 
-    private float maxHealth;
+    private float maxHealth = 100;
 
 	private float health;
 	private HealthBar healthBar;
@@ -23,7 +23,6 @@ public class Player : Singleton<Player>
     private TMP_Text nbText;
     private int nutsAndBolts;
     private GameObject fToInteract;
-    private GameObject hUD;
     private GameObject workbenchUI;
 
     private void Awake()
@@ -36,7 +35,6 @@ public class Player : Singleton<Player>
         fToInteract = GameObject.Find("FToInteract");
 		workbenchUI = gameObject.FindDeactivatedGameObject("Canvas", "WorkbenchUI");
         workbenchUI.SetActive(false);
-        hUD = GameObject.Find("HUD");
 
         InputManager.INPUT_ACTIONS.Main.Interact.started += Interact;
     }
@@ -45,7 +43,7 @@ public class Player : Singleton<Player>
     {
 #if UNITY_EDITOR
         if (Keyboard.current.numpadPlusKey.wasPressedThisFrame)
-            nutsAndBolts += 1000000;
+            ChangeNutsAndBolts(1000000);
 #endif
 
         fToInteract.SetActive(itemsToPickup.Count > 0 || nearbyRepairables.Count > 0 || workbenchNearby);
@@ -98,7 +96,6 @@ public class Player : Singleton<Player>
 		if (collision.CompareTag("Workbench"))
 		{
 			workbenchNearby = false;
-            hUD.SetActive(true);
             workbenchUI.SetActive(false);
 		}
 	}
@@ -140,7 +137,6 @@ public class Player : Singleton<Player>
         // Workbench
         if (workbenchNearby)
         {
-            hUD.SetActive(!hUD.activeSelf);
             workbenchUI.SetActive(!workbenchUI.activeSelf);
         }
 	}
