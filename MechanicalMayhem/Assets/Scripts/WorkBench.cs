@@ -1,4 +1,3 @@
-using Mono.CompilerServices.SymbolWriter;
 using SWAssets;
 using System;
 using System.Reflection;
@@ -11,13 +10,17 @@ public class Workbench : MonoBehaviour
 
     [SerializeField] private UpgradeItem[] upgradeItems;
     private Button upgradeButton;
+    private TMP_Text upgradeButtonText;
+    private Button prevSelectedButton;
     private Color affordableColour;
     [SerializeField] private Color unaffordableColour;
 
     private void Awake()
     {
         upgradeButton = gameObject.FindDeactivatedGameObject("Canvas", "WorkbenchUI").transform.Find("UpgradeButton").GetComponent<Button>();
-        affordableColour = upgradeButton.transform.GetChild(0).GetComponent<TMP_Text>().color;
+        upgradeButtonText = upgradeButton.transform.GetChild(0).GetComponent<TMP_Text>();
+		affordableColour = upgradeButtonText.color;
+        
         foreach (UpgradeItem upgradeItem in upgradeItems)
         {
             SetUpgradeDetails(upgradeItem);
@@ -31,41 +34,56 @@ public class Workbench : MonoBehaviour
         parent.Find("Title").GetComponent<TMP_Text>().text = VariableToHuman(upgradeItem.item) + " Upgrades";
         for (int i = 0; i < upgradeItem.upgradeDatas.Length; i++)
 		{
-			int tempI = i;
-			Transform upgradeParent = parent.Find(upgradeItem.upgradeDatas[i].name);
-
-            upgradeParent.Find("Header").GetComponent<TMP_Text>().text = upgradeItem.upgradeDatas[i].header;
-
-			int cost = upgradeItem.upgradeDatas[i].cost;
-			upgradeParent.Find("Cost").GetComponent<TMP_Text>().text = cost + " N&B";
-
-			upgradeParent.Find("Level").GetComponent<TMP_Text>().text = 
-                "Lv. " + upgradeItem.upgradeDatas[i].startLevel + "/" + upgradeItem.upgradeDatas[i].maxLevel;
-
-            Transform iconTransform = upgradeParent.Find("Icon");
-            iconTransform.GetComponent<Image>().sprite = upgradeItem.upgradeDatas[i].icon;
-            iconTransform.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				if (!CanAfford(cost))
-				{
-					// Say can't afford
-					print("Can't afford");
-					upgradeButton.transform.GetChild(0).GetComponent<TMP_Text>().color = unaffordableColour;
-					return;
-				}
-
-				// Say can afford
-				print("Can afford");
-				upgradeButton.transform.GetChild(0).GetComponent<TMP_Text>().color = affordableColour;
-				upgradeButton.onClick.AddListener(() => BuyOnClick(upgradeItem, tempI));
-			});
+            SetUpgradeData(i, parent, upgradeItem);
 		}
     }
 
-    private void BuyOnClick(UpgradeItem item, int i)
+    private void SetUpgradeData(int i, Transform parent, UpgradeItem upgradeItem)
+	{
+		int tempI = i;
+        UpgradeData upgradeData = upgradeItem.upgradeDatas[i];
+		Transform upgradeParent = parent.Find(upgradeData.name);
+
+		upgradeParent.Find("Header").GetComponent<TMP_Text>().text = upgradeData.header;
+        upgradeParent.Find("Cost").GetComponent<TMP_Text>().text = upgradeData.cost + " N&B";
+
+        string levelTextString = "Lv. " + upgradeData.startLevel +
+            (upgradeData.maxLevel == 0 ? "" : "/" + upgradeData.maxLevel);
+        TMP_Text levelText = upgradeParent.Find("Level").GetComponent<TMP_Text>();
+		levelText.text = levelTextString;
+
+		Transform iconTransform = upgradeParent.Find("Icon");
+		iconTransform.GetComponent<Image>().sprite = upgradeData.icon;
+
+        Button selector = upgradeParent.Find("Selector").GetComponent<Button>();
+		selector.onClick.AddListener(() =>
+		{
+            Color color = selector.image.color;
+            color.a = 100f / 255f;
+            selector.image.color = color;
+            if (prevSelectedButton && prevSelectedButton != selector)
+            {
+                color.a = 0;
+                prevSelectedButton.image.color = color;
+            }
+            prevSelectedButton = selector;
+            upgradeButton.onClick.RemoveAllListeners();
+
+			if (!CanUpgrade(upgradeItem.upgradeDatas[tempI]))
+			{
+				upgradeButtonText.color = unaffordableColour;
+				return;
+			}
+
+			upgradeButtonText.color = affordableColour;
+			upgradeButton.onClick.AddListener(() => BuyOnClick(upgradeItem, tempI, levelText));
+		});
+	}
+
+    private void BuyOnClick(UpgradeItem item, int i, TMP_Text levelText)
     {
         UpgradeData upgradeData = item.upgradeDatas[i];
-        Buy(upgradeData.cost);
+        Buy(upgradeData, levelText);
 
         object data = Resources.Load<WeaponData>("ScriptableObjects/Current/" + item.item + "_Current"); ;
         
@@ -81,12 +99,23 @@ public class Workbench : MonoBehaviour
 		}
     }
 
-    private bool CanAfford(int cost) => Player.I.GetNutsAndBolts() >= cost;
-
-    private void Buy(int cost)
+    private bool CanUpgrade(UpgradeData upgradeData)
     {
-        if (CanAfford(cost)) Player.I.ChangeNutsAndBolts(-cost);
-    }
+        bool canAfford = Player.I.GetNutsAndBolts() >= upgradeData.cost;
+        bool notMaxLevel = upgradeData.maxLevel == 0 || upgradeData.startLevel < upgradeData.maxLevel;
+        return canAfford && notMaxLevel;
+	}
+
+    private void Buy(UpgradeData upgradeData, TMP_Text levelText)
+    {
+        if (!CanUpgrade(upgradeData))
+            return;
+        Player.I.ChangeNutsAndBolts(-upgradeData.cost);
+        upgradeData.startLevel++;
+		string levelTextString = "Lv. " + upgradeData.startLevel +
+			(upgradeData.maxLevel == 0 ? "" : "/" + upgradeData.maxLevel);
+        levelText.text = levelTextString;
+	}
 
     private string ToCamelCase(string name)
     {
@@ -106,7 +135,19 @@ public class Workbench : MonoBehaviour
         return final;
     }
 
-    [Serializable]
+	private void OnDisable()
+	{
+		if (prevSelectedButton)
+		{
+			Color color = prevSelectedButton.image.color;
+			color.a = 0;
+			prevSelectedButton.image.color = color;
+            prevSelectedButton = null;
+		}
+		upgradeButton.onClick.RemoveAllListeners();
+	}
+
+	[Serializable]
     public class UpgradeItem
     {
         public string item;

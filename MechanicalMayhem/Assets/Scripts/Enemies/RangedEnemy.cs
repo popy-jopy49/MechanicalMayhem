@@ -18,8 +18,9 @@ public class RangedEnemy : Enemy {
         firePoint = transform.Find("FirePoint");
     }
 
-    protected virtual void Update()
+    protected override void Update()
     {
+        base.Update();
         float sqrDist = Vector2.SqrMagnitude(target.position - transform.position);
         if (sqrDist <= distanceToShoot * distanceToShoot)
         {
@@ -33,17 +34,13 @@ public class RangedEnemy : Enemy {
             return;
 
         RaycastHit2D hit2D = Physics2D.Raycast(transform.position, transform.up, 50f, everthingButSelf);
-        if (!hit2D.transform)
-            goto TIME;
-
-        if (hit2D.transform.gameObject.CompareTag("Player"))
+        if (hit2D.transform && hit2D.transform.gameObject.CompareTag("Player"))
         {
             GameObject bullet = Instantiate(GameAssets.I.BulletPrefab, firePoint.position, firePoint.rotation);
             bullet.GetComponent<Bullet>().Setup(firePoint.up * bulletSpeed, damage, explosionRadius, whatToHit, "EnemyBullet");
             Destroy(bullet, 5f);
         }
 
-        TIME:
         time = 0f;
     }
 

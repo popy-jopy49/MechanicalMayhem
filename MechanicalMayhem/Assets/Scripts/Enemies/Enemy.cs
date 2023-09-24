@@ -1,37 +1,43 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.AI;
 
 public class Enemy : Attackable
 {
 
-    [SerializeField] protected float speed = 3f;
-    [SerializeField] protected float rotateSpeed = 1f;
     [SerializeField] protected float damage = 10f;
     [SerializeField] protected float fireRate = 1f;
+    [SerializeField] protected float stopDistance = 2.25f;
+    [SerializeField] protected float seekDistance = 3.5f;
 
     protected float time;
     protected Transform target;
-    protected Vector2[] path;
-    protected int targetIndex;
     protected NavMeshAgent agent;
 
     protected virtual void Awake()
 	{
 		target = GameObject.Find("Player").transform;
+		agent = GetComponent<NavMeshAgent>();
+		agent.updateRotation = false;
+		agent.updateUpAxis = false;
 	}
 
-    void Start()
+    protected virtual void Update()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
-    }
+        Vector2 playerVDist = target.position - transform.position;
+		float sqrDist = (playerVDist).sqrMagnitude;
+        if (sqrDist > seekDistance * seekDistance)
+            return;
 
-    private void Update()
-    {
+        agent.isStopped = sqrDist <= stopDistance * stopDistance;
         agent.SetDestination(target.position);
-    }
+
+        Vector3 vDir = agent.desiredVelocity;
+        if (agent.isStopped)
+            vDir = playerVDist;
+
+		float rot = Mathf.Atan2(vDir.y, vDir.x) * Mathf.Rad2Deg;
+		transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0f, 0f, rot - 90f), Time.deltaTime * agent.angularSpeed);
+	}
 
     protected virtual void Attack()
     {

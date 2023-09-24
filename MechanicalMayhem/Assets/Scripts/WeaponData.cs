@@ -16,7 +16,7 @@ public class WeaponData : ScriptableObject
     public float bulletSpeed = 30f;
     public float shotCount;
     public float bulletSpread;
-	public int maxAmmo;
+	public float maxAmmo;
 	public int startingMags;
     public float reloadTime;
     public float explosionRadius = 0;

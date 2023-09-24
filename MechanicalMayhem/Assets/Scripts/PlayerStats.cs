@@ -20,7 +20,7 @@ public class PlayerStats : Singleton<PlayerStats>
 
 		MaxSprint = defaultMaxSprint;
 		MaxHealth = defaultMaxHealth;
-		MinimapSize = defaultMinimapSize;
+		minimapCamera.orthographicSize = defaultMinimapSize; // Doesn't start at 0
 	}
 
 	public float MaxSprint 

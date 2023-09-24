@@ -22,8 +22,8 @@ public class Weapon : MonoBehaviour
         InputManager.INPUT_ACTIONS.Main.Fire.canceled += FireCanceled;
 		InputManager.INPUT_ACTIONS.Main.Reload.started += Reload;
 
-        currentAmmo = weaponData.maxAmmo;
-        totalAmmo = weaponData.maxAmmo * weaponData.startingMags;
+        currentAmmo = (int)weaponData.maxAmmo;
+        totalAmmo = (int)weaponData.maxAmmo * weaponData.startingMags;
 
         firePoint = GameObject.Find("Player").transform;
     }
@@ -139,7 +139,7 @@ public class Weapon : MonoBehaviour
     {
 		reloading = false;
 
-		int amountToReload = weaponData.maxAmmo - currentAmmo;
+		int amountToReload = (int)weaponData.maxAmmo - currentAmmo;
 		if (amountToReload > totalAmmo) 
 		{
 			currentAmmo += totalAmmo;
@@ -148,7 +148,7 @@ public class Weapon : MonoBehaviour
 		else
 		{
 			totalAmmo -= amountToReload;
-			currentAmmo = weaponData.maxAmmo;
+			currentAmmo = (int)weaponData.maxAmmo;
 		}
     }
 
