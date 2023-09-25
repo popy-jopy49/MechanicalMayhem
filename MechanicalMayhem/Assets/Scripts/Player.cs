@@ -174,4 +174,11 @@ public class Player : Singleton<Player>
 		healthBar.SetMaxHealth(value);
 	}
 
+    public bool HoveringWorkbench()
+    {
+        return workbenchUI.activeSelf &&
+		    InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>().x 
+            < workbenchUI.GetComponent<RectTransform>().sizeDelta.x * 2f + 110f;
+	}
+
 }

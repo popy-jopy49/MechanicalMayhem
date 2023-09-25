@@ -18,7 +18,7 @@ MonoBehaviour:
   range: 3
   whatToHit:
     serializedVersion: 2
-    m_Bits: 375
+    m_Bits: 321
   enemy:
     serializedVersion: 2
     m_Bits: 320

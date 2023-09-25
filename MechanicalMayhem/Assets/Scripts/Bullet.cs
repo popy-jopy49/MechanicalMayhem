@@ -20,52 +20,65 @@ public class Bullet : MonoBehaviour
 		Destroy(gameObject);
 		if (explosionRadius > 0)
         {
-            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius, whatToHit);
-            if (cols.Length <= 0)
-				return;
-
-            foreach (Collider2D col in cols)
-            {
-                RaycastHit2D hit2D = Physics2D.Raycast(transform.position, col.transform.position - transform.position);
-                if (!hit2D || hit2D.transform.gameObject.layer != LayerMask.NameToLayer("Enemies"))
-                    continue;
-
-                Attackable attackable = col.GetComponent<Attackable>();
-                if (!attackable)
-                    continue;
-
-                attackable.Damage(damage);
-            }
-
-            // Spawn explosion effect
-
+            Explode();
 			return;
         }
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemies"))
-        {
-            // Hit an enemy
-            Attackable attackable = collision.transform.GetComponent<Attackable>();
-            if (!attackable)
-                return;
+		if (HitEnemy(collision.gameObject))
+			return;
 
-            attackable.Damage(damage);
-            // Spawn hit effect
+		if (HitPlayer(collision.gameObject))
+			return;
 
-        }
-        else if (collision.gameObject.CompareTag("Player"))
-        {
-            Player player = collision.gameObject.GetComponent<Player>();
-            if (!player) 
-                return;
+		// TODO: Spawn a wall hit effect
 
-            player.Damage(damage);
+	}
+
+	private void Explode()
+	{
+		Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius, whatToHit);
+		if (cols.Length <= 0)
+			return;
+
+		foreach (Collider2D col in cols)
+		{
+			RaycastHit2D hit2D = Physics2D.Raycast(transform.position, col.transform.position - transform.position);
+			if (!hit2D)
+				continue;
+			
+			if (gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
+				HitEnemy(col.gameObject);
+			if (gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
+				HitPlayer(col.gameObject);
 		}
-        else
-        {
-            // Spawn wall hit effect
 
-        }
-    }
+		// TODO: Spawn an explosion effect
+
+	}
+
+    private bool HitPlayer(GameObject gameObject)
+	{
+		Player player = gameObject.GetComponent<Player>();
+		if (!player)
+			return false;
+
+		player.Damage(damage);
+		// TODO: Spawn player hit affect
+
+		return true;
+	}
+
+    private bool HitEnemy(GameObject gameObject)
+	{
+		Attackable attackable = gameObject.GetComponent<Attackable>();
+		print(gameObject.name);
+		if (!attackable)
+			return false;
+
+		attackable.Damage(damage);
+		// TODO: Spawn an enemy hit effect
+
+		return true;
+	}
 
 }

@@ -81,16 +81,12 @@ public class Weapon : MonoBehaviour
 		mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
 		Vector2 fireDirection = GetFireDirection(mousePos);
-        RaycastHit2D hit = Physics2D.Raycast(firePoint.position, fireDirection, weaponData.range, weaponData.whatToHit);
 
 		if (weaponData.melee)
 		{
-			// Do animation
-
+			// TODO: Do melee attack animation
+			RaycastHit2D hit = Physics2D.Raycast(firePoint.position, fireDirection, weaponData.range, weaponData.whatToHit);
 			if (!hit.transform)
-				return;
-
-            if (hit.transform.gameObject.layer != LayerMask.NameToLayer("Enemies"))
                 return;
 
             Attackable attackable = hit.transform.GetComponent<Attackable>();
@@ -98,13 +94,13 @@ public class Weapon : MonoBehaviour
 				return;
 
 			attackable.Damage(weaponData.damage);
-			// Spawn hit affect
+			// TODO: Spawn melee hit affect
 
 			isFiring = false;
 		}
 		else
 		{
-			// Spawn Muzzle Flash
+			// TODO: Spawn Muzzle Flash effect
 
 			// Spawn Bullet
 			Quaternion bulletDirection = Quaternion.Euler(new Vector3(0, 0, VectorUtils.GetAngleFromVector(fireDirection) - 90f));
@@ -118,7 +114,7 @@ public class Weapon : MonoBehaviour
 
     private void FireStarted(InputAction.CallbackContext obj)
     {
-        isFiring = true;
+		if (!Player.I.HoveringWorkbench()) isFiring = true;
     }
 
     private void FireCanceled(InputAction.CallbackContext obj)
