@@ -1,3 +1,4 @@
+using SWAssets;
 using SWAssets.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,16 +17,14 @@ public class Weapon : MonoBehaviour
     private int currentAmmo;
     private int totalAmmo;
 
-    private void Start()
-    {
-        InputManager.INPUT_ACTIONS.Main.Fire.started += FireStarted;
-        InputManager.INPUT_ACTIONS.Main.Fire.canceled += FireCanceled;
-		InputManager.INPUT_ACTIONS.Main.Reload.started += Reload;
+	GameObject workbenchUI;
 
+	private void Awake()
+    {
         currentAmmo = (int)weaponData.maxAmmo;
         totalAmmo = (int)weaponData.maxAmmo * weaponData.startingMags;
 
-        firePoint = GameObject.Find("Player").transform;
+		firePoint = GameObject.Find("Player").transform;
     }
 
 	private void Update()
@@ -113,8 +112,13 @@ public class Weapon : MonoBehaviour
 	}
 
     private void FireStarted(InputAction.CallbackContext obj)
-    {
-		if (!Player.I.HoveringWorkbench()) isFiring = true;
+	{
+		if (!workbenchUI)
+			return;
+
+		if (!workbenchUI.activeSelf ||
+			InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>().x
+			> workbenchUI.GetComponent<RectTransform>().sizeDelta.x * 2f + 110f) isFiring = true;
     }
 
     private void FireCanceled(InputAction.CallbackContext obj)
@@ -146,11 +150,22 @@ public class Weapon : MonoBehaviour
 			totalAmmo -= amountToReload;
 			currentAmmo = (int)weaponData.maxAmmo;
 		}
-    }
+	}
 
 	private void OnDisable()
 	{
 		reloadTime = 0;
+		InputManager.INPUT_ACTIONS.Main.Fire.started -= FireStarted;
+		InputManager.INPUT_ACTIONS.Main.Fire.canceled -= FireCanceled;
+		InputManager.INPUT_ACTIONS.Main.Reload.started -= Reload;
+	}
+
+	private void OnEnable()
+	{
+		workbenchUI = gameObject.FindDeactivatedGameObject("Canvas", "WorkbenchUI");
+		InputManager.INPUT_ACTIONS.Main.Fire.started += FireStarted;
+		InputManager.INPUT_ACTIONS.Main.Fire.canceled += FireCanceled;
+		InputManager.INPUT_ACTIONS.Main.Reload.started += Reload;
 	}
 
 	public int GetCurrentAmmo() => currentAmmo;

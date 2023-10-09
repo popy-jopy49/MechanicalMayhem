@@ -15,6 +15,7 @@ public class GameAssets : Singleton<GameAssets> {
 	[Header("Prefabs")]
 	public GameObject MessagePrefab;
 	public GameObject BulletPrefab;
+	public GameObject DronePrefab;
 	public EnemyPrefabData[] EnemyPrefabs;
 
     [Header("Post Processing")]

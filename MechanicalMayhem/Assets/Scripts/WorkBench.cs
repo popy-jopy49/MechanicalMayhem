@@ -47,6 +47,10 @@ public class Workbench : MonoBehaviour
 		upgradeParent.Find("Header").GetComponent<TMP_Text>().text = upgradeData.header;
         upgradeParent.Find("Cost").GetComponent<TMP_Text>().text = upgradeData.cost + " N&B";
 
+        int sLPP = PlayerPrefs.GetInt(upgradeItem.item + "_" + upgradeData.name, 0);
+        if (sLPP >= upgradeData.startLevel)
+            upgradeData.startLevel = sLPP;
+
         string levelTextString = "Lv. " + upgradeData.startLevel +
             (upgradeData.maxLevel == 0 ? "" : "/" + upgradeData.maxLevel);
         TMP_Text levelText = upgradeParent.Find("Level").GetComponent<TMP_Text>();
@@ -83,7 +87,7 @@ public class Workbench : MonoBehaviour
     private void BuyOnClick(UpgradeItem item, int i, TMP_Text levelText)
     {
         UpgradeData upgradeData = item.upgradeDatas[i];
-        Buy(upgradeData, levelText);
+        Buy(upgradeData, levelText, item.item);
 
         object data = Resources.Load<WeaponData>("ScriptableObjects/Current/" + item.item + "_Current"); ;
         
@@ -101,20 +105,21 @@ public class Workbench : MonoBehaviour
 
     private bool CanUpgrade(UpgradeData upgradeData)
     {
-        bool canAfford = Player.I.GetNutsAndBolts() >= upgradeData.cost;
+        bool canAfford = PlayerStats.I.GetNutsAndBolts() >= upgradeData.cost;
         bool notMaxLevel = upgradeData.maxLevel == 0 || upgradeData.startLevel < upgradeData.maxLevel;
         return canAfford && notMaxLevel;
 	}
 
-    private void Buy(UpgradeData upgradeData, TMP_Text levelText)
+    private void Buy(UpgradeData upgradeData, TMP_Text levelText, string item)
     {
         if (!CanUpgrade(upgradeData))
             return;
-        Player.I.ChangeNutsAndBolts(-upgradeData.cost);
+		PlayerStats.I.ChangeNutsAndBolts(-upgradeData.cost);
         upgradeData.startLevel++;
 		string levelTextString = "Lv. " + upgradeData.startLevel +
 			(upgradeData.maxLevel == 0 ? "" : "/" + upgradeData.maxLevel);
         levelText.text = levelTextString;
+        PlayerPrefs.SetInt(item + "_" + upgradeData.name, upgradeData.startLevel);
 	}
 
     private string ToCamelCase(string name)
@@ -146,6 +151,8 @@ public class Workbench : MonoBehaviour
 		}
 		upgradeButton.onClick.RemoveAllListeners();
 	}
+
+    public UpgradeItem[] GetUpgradeItems() => upgradeItems;
 
 	[Serializable]
     public class UpgradeItem

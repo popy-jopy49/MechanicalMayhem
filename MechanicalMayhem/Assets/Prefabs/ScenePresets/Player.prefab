@@ -142,7 +142,6 @@ GameObject:
   - component: {fileID: 418985780168701943}
   - component: {fileID: 418985780168701936}
   - component: {fileID: 2240107287887508589}
-  - component: {fileID: 8815771567236847767}
   - component: {fileID: 418985780168701942}
   - component: {fileID: 8416887993803959741}
   - component: {fileID: 1298717466959314540}
@@ -169,7 +168,7 @@ Transform:
   - {fileID: 418985779259637446}
   - {fileID: 1073316513}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &418985780168701936
 MonoBehaviour:
@@ -200,23 +199,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cce8ee3ee6a4e1418c4193e78b0a1e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 0
---- !u!114 &8815771567236847767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 418985780168701937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70ec7c4fcd7515c4b924316519efcf66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 0
-  defaultMaxSprint: 2
-  defaultMaxHealth: 100
-  defaultMinimapSize: 10
 --- !u!50 &418985780168701942
 Rigidbody2D:
   serializedVersion: 4

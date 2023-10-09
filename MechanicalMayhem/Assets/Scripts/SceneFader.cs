@@ -4,42 +4,56 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public class SceneFader : Singleton<SceneFader>
 {
 
-	[SerializeField] private Image panel;
-	[SerializeField] private int fadeTime;
+	private Image panel;
+	[SerializeField] private float fadeTime;
+	private bool fading = false;
 
 	private void Awake()
 	{
+		DontDestroyOnLoad(gameObject);
+		DontDestroyOnLoad(transform.parent);
+
 		panel = GetComponent<Image>();
+		panel.enabled = false;
+	}
+	private void Update()
+	{
+		panel.enabled = fading;
 	}
 
 	public async void FadeToScene(int buildIndex)
 	{
+		if (fading || buildIndex < 0)
+			return;
+
+		fading = true; panel.enabled = true;
 		AsyncOperation operation = SceneManager.LoadSceneAsync(buildIndex);
 		operation.allowSceneActivation = false;
 		await Fade(1f);
 		operation.allowSceneActivation = true;
-		operation.completed += SceneFaderCompleted;
-	}
-
-	private async void SceneFaderCompleted(AsyncOperation obj)
-	{
-		await Fade(0f);
+		operation.completed += async _ =>
+		{
+			await Fade(0f);
+			fading = false;
+		};
 	}
 
 	private async Task Fade(float targetAlpha)
 	{
-		float time = 0;
-		while (panel.color.a != targetAlpha)
+		float originalAlpha = panel.color.a;
+		Color colour = panel.color;
+		for (float time = 0; time < fadeTime; time += Time.deltaTime)
 		{
-			Color colour = panel.color;
-			colour.a = Mathf.Lerp(panel.color.a, targetAlpha, time);
+			colour.a = Mathf.Lerp(originalAlpha, targetAlpha, time / fadeTime);
 			panel.color = colour;
-			time += 1f / fadeTime;
-			await Task.Delay(fadeTime / 50);
+			await Task.Yield();
 		}
+		colour.a = targetAlpha;
+		panel.color = colour;
 	}
 
 }

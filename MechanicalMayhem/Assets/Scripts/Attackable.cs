@@ -4,6 +4,7 @@ public class Attackable : MonoBehaviour
 {
 
     protected float health;
+    [Header("Health")]
     [SerializeField] protected float maxHealth;
 
     private void Start()

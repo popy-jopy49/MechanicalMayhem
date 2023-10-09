@@ -71,7 +71,6 @@ public class Bullet : MonoBehaviour
     private bool HitEnemy(GameObject gameObject)
 	{
 		Attackable attackable = gameObject.GetComponent<Attackable>();
-		print(gameObject.name);
 		if (!attackable)
 			return false;
 

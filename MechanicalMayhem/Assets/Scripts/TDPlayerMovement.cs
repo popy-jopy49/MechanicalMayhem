@@ -60,7 +60,7 @@ public class TDPlayerMovement : MonoBehaviour
     private void HandlePlayerMovement()
     {
         input = InputManager.INPUT_ACTIONS.Main.Movement.ReadValue<Vector2>();
-        if (input.y == 0 && input.x == 0)
+        if (input == Vector2.zero)
         {
             ChangeAnimationState(IDLE_STATE, currentDir);
             return;
@@ -89,7 +89,7 @@ public class TDPlayerMovement : MonoBehaviour
     {
         speed = movementSpeed;
 
-        if (isSprinting)
+        if (isSprinting && input != Vector2.zero)
         {
             sprint -= Time.deltaTime * loseSpeed;
             speed = sprintSpeed;
