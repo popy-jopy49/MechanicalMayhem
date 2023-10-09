@@ -107,7 +107,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -17721577
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -135,11 +135,11 @@ MonoBehaviour:
   maxHealth: 100
   damage: 30
   fireRate: 0.75
-  distanceToStop: 3
-  distanceToSeek: 3.5
+  distanceToStop: 5
+  distanceToSeek: 10
   bulletSpread: 0.15
   bulletSpeed: 30
-  explosionRadius: 0.1
+  explosionRadius: 0
   everthingButSelf:
     serializedVersion: 2
     m_Bits: 641

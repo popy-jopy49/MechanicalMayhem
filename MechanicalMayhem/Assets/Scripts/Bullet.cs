@@ -5,14 +5,17 @@ public class Bullet : MonoBehaviour
     private float damage;
     private float explosionRadius;
     private LayerMask whatToHit;
+	private Repairable repairable;
+	private bool killedTarget = false;
 
-    public void Setup(Vector2 dir, float damage, float explosionRadius, LayerMask whatToHit, string layer)
+    public void Setup(Vector2 dir, float damage, float explosionRadius, LayerMask whatToHit, string layer, Repairable repairable = null)
     {
         this.damage = damage;
         this.explosionRadius = explosionRadius;
         this.whatToHit = whatToHit;
         gameObject.layer = LayerMask.NameToLayer(layer);
         GetComponent<Rigidbody2D>().velocity = dir;
+		this.repairable = repairable;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -74,10 +77,16 @@ public class Bullet : MonoBehaviour
 		if (!attackable)
 			return false;
 
-		attackable.Damage(damage);
+		killedTarget = attackable.Damage(damage);
 		// TODO: Spawn an enemy hit effect
 
 		return true;
+	}
+
+	private void OnDestroy()
+	{
+		if (repairable && killedTarget)
+			repairable.Use();
 	}
 
 }

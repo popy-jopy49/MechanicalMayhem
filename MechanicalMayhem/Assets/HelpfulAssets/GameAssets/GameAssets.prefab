@@ -60,10 +60,25 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   MessagePrefab: {fileID: 223894602397469670, guid: b62db026fe8d3aa47bd43248c60f93c1, type: 3}
   BulletPrefab: {fileID: 4793002964381020082, guid: 11949ccbe7308914ab3e0d69d906f5ae, type: 3}
+  DronePrefabs:
+  - g: {fileID: 4067816641110796322, guid: 99d7e237c975b3b4695a94c7a7be669f, type: 3}
+    chance: 50
+  - g: {fileID: 2543118363805132036, guid: 9663a3de7d7c0354c90ee64c7e4ff0dd, type: 3}
+    chance: 50
   EnemyPrefabs:
   - g: {fileID: 8378483774051485722, guid: 6cfbebbf5053986429dafc0824e142be, type: 3}
     chance: 75
-  - g: {fileID: 7819356467655666842, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
+  - g: {fileID: 8378483774051485722, guid: 711d043d71baa714cab9913ce8908cb1, type: 3}
     chance: 25
+  - g: {fileID: 4020476106726824087, guid: d87e0ca36b0da9847a85da65dd2ffc26, type: 3}
+    chance: 50
+  - g: {fileID: 4020476106726824087, guid: 2e1b82c03f66636449986019a1331a46, type: 3}
+    chance: 20
+  - g: {fileID: 8378483774051485722, guid: 0cdd6a79aded80d4f96c9889cbb31e97, type: 3}
+    chance: 10
+  - g: {fileID: 4020476106726824087, guid: 5f4c547a3a1c88246b32bce1425bd8c1, type: 3}
+    chance: 15
+  DroneExplosionPrefab: {fileID: 7327131175272848395, guid: 31ef95f309b7ab04789975b3d0bf28fd, type: 3}
+  EnemyDeathEffect: {fileID: 7327131175272848395, guid: cdc0e41053231b741b06517803479bd0, type: 3}
   VolumeProfile: {fileID: 11400000, guid: c093ced569276cc47aa926560dccbd04, type: 2}
   MainMixer: {fileID: 24100000, guid: 34e78410a0403ca4ea3bf838b3bf2f0a, type: 2}

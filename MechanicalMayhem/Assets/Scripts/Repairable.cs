@@ -4,9 +4,11 @@ using UnityEngine;
 public class Repairable : MonoBehaviour
 {
 
-    [SerializeField] protected List<GameObject> linkedItems = new List<GameObject>();
+    [SerializeField] protected List<GameObject> linkedItems = new();
 	[SerializeField] protected Sprite repairedSprite;
+    [SerializeField] protected int maxNumberOfUses = 10;
 	protected bool repaired = false;
+    protected int numberOfUses = 0;
 
 	protected virtual void Update()
 	{
@@ -52,10 +54,22 @@ public class Repairable : MonoBehaviour
 
     protected virtual void OnRepair()
 	{
-		transform.Find("GFX").GetComponent<SpriteRenderer>().sprite = repairedSprite;
+		transform.Find("Base").GetComponent<SpriteRenderer>().sprite = repairedSprite;
 		repaired = true;
 	}
 
     public bool IsRepaired() => repaired;
+
+    public void Use()
+    {
+        if (numberOfUses >= maxNumberOfUses)
+		{
+            Destroy(gameObject);
+            // TODO: spawn repairable death effect
+			return;
+		}
+
+        numberOfUses++;
+    }
 
 }

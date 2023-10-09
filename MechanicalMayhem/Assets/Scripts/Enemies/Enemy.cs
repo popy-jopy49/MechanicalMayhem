@@ -12,7 +12,7 @@ public class Enemy : Attackable
 
     [Header("Navigation Values")]
     [SerializeField] protected float distanceToStop = 2.25f;
-    [SerializeField] protected float distanceToSeek = 3.5f;
+    [SerializeField] protected float distanceToSeek = 10f;
 
     protected float time;
     protected Transform target;
@@ -36,19 +36,13 @@ public class Enemy : Attackable
         agent.isStopped = sqrDist <= distanceToStop * distanceToStop;
         agent.SetDestination(target.position);
 
-        if (!agent.isStopped)
-            playerVDist = agent.desiredVelocity;
-
 		float rot = Mathf.Atan2(playerVDist.y, playerVDist.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0f, 0f, rot - 90f), Time.deltaTime * agent.angularSpeed);
 
-		if (agent.isStopped)
-		{
-			if (!CheckForFireRate())
+		if (!agent.isStopped || !CheckForFireRate())
 				return;
 
-			Attack();
-		}
+		Attack();
 	}
 
     protected virtual void Attack()
@@ -56,7 +50,7 @@ public class Enemy : Attackable
         target.GetComponent<Player>().Damage(damage);
     }
 
-    protected bool CheckForFireRate()
+    protected virtual bool CheckForFireRate()
     {
         if (time < 1 / fireRate)
         {
@@ -67,5 +61,11 @@ public class Enemy : Attackable
         time = 0;
         return true;
     }
+
+	protected override void Die()
+	{
+        Destroy(Instantiate(GameAssets.I.EnemyDeathEffect, transform.position, transform.rotation), 3f); ;
+        base.Die();
+	}
 
 }

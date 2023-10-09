@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
 
         for (int i = 0; i < numberPerSpawn; i++)
         {
-            GameObject enemyPrefab = GameAssets.I.GetRandomEnemyPrefab();
+            GameObject enemyPrefab = GameAssets.I.GetRandomPrefab(GameAssets.I.EnemyPrefabs);
             if (!enemyPrefab)
                 break;
 

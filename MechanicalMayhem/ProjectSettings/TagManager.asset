@@ -22,7 +22,7 @@ TagManager:
   - Puzzle
   - Minimap
   - Interactable
-  - 
+  - Repairable
   - 
   - 
   - 
@@ -51,6 +51,9 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Repairables
+    uniqueID: 119998981
     locked: 0
   - name: Player
     uniqueID: 3213020831
