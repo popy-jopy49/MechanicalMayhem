@@ -52,6 +52,9 @@ public class TDPlayerMovement : MonoBehaviour
 
 	private void Update()
     {
+        if (GameManager.I.InPuzzle())
+            return;
+
         HandlePlayerMovement();
 
         Sprint();

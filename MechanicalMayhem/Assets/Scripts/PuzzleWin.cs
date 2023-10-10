@@ -13,7 +13,7 @@ public class PuzzleWin : MonoBehaviour
 
         // Win
         winFunc();
-	}
+    }
 
     public void SetWinFunc(Action winFunc) => this.winFunc = winFunc;
 

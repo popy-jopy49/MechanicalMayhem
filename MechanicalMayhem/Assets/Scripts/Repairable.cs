@@ -88,7 +88,8 @@ public class Repairable : MonoBehaviour
 		transform.Find("Base").GetComponent<SpriteRenderer>().sprite = repairedSprite;
 		repaired = true;
         GameManager.I.SetInPuzzle(false);
-	}
+        Destroy(Camera.main.transform.Find("Puzzles").GetChild(0).gameObject);
+    }
 
     public bool IsRepaired() => repaired;
 
