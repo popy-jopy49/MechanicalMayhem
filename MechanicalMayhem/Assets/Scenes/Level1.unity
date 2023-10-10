@@ -745,6 +745,8 @@ MonoBehaviour:
   linkedItems:
   - {fileID: 1485379090}
   repairedSprite: {fileID: 21300000, guid: 799cca3ce1d1bed4eb225958591345ea, type: 3}
+  maxNumberOfUses: 10
+  puzzle: 0
   modifier: -1
   speed: 10
 --- !u!212 &188028199
@@ -2353,6 +2355,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 880944606619427103, guid: 19e3b5c0d00e81343b5002fae182087f, type: 3}
+      propertyPath: upgradeItems.Array.data[0].upgradeDatas.Array.data[0].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 3009a792b32e03f4e988181eed77efd2, type: 3}
+    - target: {fileID: 880944607175501460, guid: 19e3b5c0d00e81343b5002fae182087f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2982,6 +2992,8 @@ MonoBehaviour:
   linkedItems:
   - {fileID: 1603929247}
   repairedSprite: {fileID: 21300000, guid: 538c6b53f120f754fa9502ddd219a4f1, type: 3}
+  maxNumberOfUses: 10
+  puzzle: 0
   range: 9
   rotateSpeed: 10
   damage: 4
@@ -12303,6 +12315,8 @@ MonoBehaviour:
   linkedItems:
   - {fileID: 989404344}
   repairedSprite: {fileID: 0}
+  maxNumberOfUses: 10
+  puzzle: 0
   modifier: 1
   speed: 10
 --- !u!114 &1609858199

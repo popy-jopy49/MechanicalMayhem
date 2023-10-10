@@ -7682,7 +7682,7 @@ RectTransform:
   - {fileID: 880944607175501461}
   - {fileID: 859305966014150644}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8884,7 +8884,7 @@ MonoBehaviour:
     upgradeDatas:
     - name: Damage
       header: Increased Damage
-      icon: {fileID: 21300000, guid: 92b39b09990a42d439242a14b0418feb, type: 3}
+      icon: {fileID: 21300000, guid: 3009a792b32e03f4e988181eed77efd2, type: 3}
       cost: 10
       incrementAmount: 30
       startLevel: 1
@@ -8898,7 +8898,7 @@ MonoBehaviour:
       maxLevel: 2
     - name: Range
       header: Extended End
-      icon: {fileID: 0}
+      icon: {fileID: 21300000, guid: 159d5f378f3444940a29aced797e0835, type: 3}
       cost: 10
       incrementAmount: 0.5
       startLevel: 1
@@ -8920,8 +8920,8 @@ MonoBehaviour:
       startLevel: 1
       maxLevel: 4
     - name: BulletSpread
-      header: Red Dot
-      icon: {fileID: 0}
+      header: Optics
+      icon: {fileID: 21300000, guid: 237e434f0d67d054982617a7eeefaa3e, type: 3}
       cost: 10
       incrementAmount: -0.1
       startLevel: 1
@@ -8943,8 +8943,8 @@ MonoBehaviour:
       startLevel: 1
       maxLevel: 3
     - name: BulletSpread
-      header: Holographic Sight
-      icon: {fileID: 0}
+      header: Optics
+      icon: {fileID: 21300000, guid: 237e434f0d67d054982617a7eeefaa3e, type: 3}
       cost: 10
       incrementAmount: -0.1
       startLevel: 1
@@ -11886,7 +11886,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &880944607175501461
 RectTransform:
   m_ObjectHideFlags: 0
