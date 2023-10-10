@@ -14,7 +14,6 @@ public class SceneFader : Singleton<SceneFader>
 
 	private void Awake()
 	{
-		DontDestroyOnLoad(gameObject);
 		DontDestroyOnLoad(transform.parent);
 
 		panel = GetComponent<Image>();
@@ -27,7 +26,7 @@ public class SceneFader : Singleton<SceneFader>
 
 	public async void FadeToScene(int buildIndex)
 	{
-		if (fading || buildIndex < 0)
+		if (fading || buildIndex < 0 || GameManager.I.InPuzzle())
 			return;
 
 		fading = true; panel.enabled = true;

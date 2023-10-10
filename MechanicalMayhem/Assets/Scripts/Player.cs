@@ -14,8 +14,9 @@ public class Player : MonoBehaviour
 	private HealthBar healthBar;
     private Transform respawnPoint;
     private Rigidbody2D rb;
+    private Transform weaponManager;
 
-	private List<GameObject> itemsToPickup = new();
+    private List<GameObject> itemsToPickup = new();
     private List<Repairable> nearbyRepairables = new();
     private bool workbenchNearby = false;
     private List<GameObject> inventory = new();
@@ -32,12 +33,16 @@ public class Player : MonoBehaviour
         fToInteract = GameObject.Find("FToInteract");
 		workbenchUI = gameObject.FindDeactivatedGameObject("Canvas", "WorkbenchUI");
         workbenchUI.SetActive(false);
+        weaponManager = transform.Find("WeaponManager");
 
         InputManager.INPUT_ACTIONS.Main.Interact.started += Interact;
     }
 
     private void Update()
     {
+        if (GameManager.I.InPuzzle())
+            return;
+
         fToInteract.SetActive(itemsToPickup.Count > 0 || nearbyRepairables.Count > 0 || workbenchNearby);
 
         Vector3 mousePos = InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>();
@@ -45,12 +50,15 @@ public class Player : MonoBehaviour
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
         mousePos -= transform.position;
         float rot = VectorUtils.GetAngleFromVector(mousePos);
-        transform.Find("WeaponManager").eulerAngles = new Vector3(0, 0, rot);
-        transform.Find("WeaponManager").localScale = new Vector3(1, rot + 90 < 0 || rot + 90 >= 180 ? -1 : 1, 1);
+        weaponManager.eulerAngles = new Vector3(0, 0, rot);
+        weaponManager.localScale = new Vector3(1, rot + 90 < 0 || rot + 90 >= 180 ? -1 : 1, 1);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (GameManager.I.InPuzzle())
+            return;
+
         if (collision.CompareTag("Item"))
         {
             if (!itemsToPickup.Contains(collision.gameObject))
@@ -72,6 +80,9 @@ public class Player : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (GameManager.I.InPuzzle())
+            return;
+
         if (collision.CompareTag("Item"))
         {
             if (itemsToPickup.Contains(collision.gameObject))
@@ -93,9 +104,12 @@ public class Player : MonoBehaviour
 	}
 
     private void Interact(InputAction.CallbackContext obj)
-	{
-		// Pick up
-		if (itemsToPickup.Count > 0)
+    {
+        if (GameManager.I.InPuzzle())
+            return;
+
+        // Pick up
+        if (itemsToPickup.Count > 0)
         {
 			GameObject temp = itemsToPickup[0];
 			inventory.Add(temp);

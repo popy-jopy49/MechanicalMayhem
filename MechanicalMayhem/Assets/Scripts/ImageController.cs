@@ -47,7 +47,7 @@ public class ImageController : MonoBehaviour, IDragHandler
 		{
 			// Win
 			winFunc();
-		}
+        }
 	}
 
 	public void SetWinFunc(Action winFunc) => this.winFunc = winFunc;
