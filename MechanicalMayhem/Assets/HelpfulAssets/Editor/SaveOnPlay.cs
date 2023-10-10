@@ -3,6 +3,8 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using SWAssets;
+using System.Security.AccessControl;
 
 [InitializeOnLoad]
 public class SaveOnPlay
@@ -45,5 +47,23 @@ public class ToggleSaveOnPlay : Editor
     {
         On = true;
     }
+}
+
+public class PlayerPrefEditorTools : Editor
+{
+
+    [MenuItem("SWAssets/PlayerPrefs/Clear Upgrade Cashe")]
+    public static void ClearUpgradePrefs()
+    {
+        Workbench.UpgradeItem[] upgradeItems = GameObject.Find("Canvas").transform.Find("WorkbenchUI").Find("Upgrades").GetComponent<Workbench>().GetUpgradeItems();
+        foreach (Workbench.UpgradeItem item in upgradeItems)
+        {
+            foreach (Workbench.UpgradeData data in item.upgradeDatas)
+            {
+                PlayerPrefs.DeleteKey(item.item + "_" + data.name);
+            }
+        }
+    }
+
 }
 #endif  // #if UNITY_EDITOR

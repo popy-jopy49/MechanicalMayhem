@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Wrench
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 7eb8fa640a227f442afcaaf25d86a371, type: 3}
-  fireRate: 1
+  fireRate: 2
   damage: 100
   range: 3
   whatToHit:
     serializedVersion: 2
-    m_Bits: 321
+    m_Bits: 65
   enemy:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 64
   melee: 1
   bulletPrefab: {fileID: 4793002964381020082, guid: 11949ccbe7308914ab3e0d69d906f5ae, type: 3}
   bulletSpeed: 30

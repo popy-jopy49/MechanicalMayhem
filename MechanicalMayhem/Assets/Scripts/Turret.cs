@@ -29,20 +29,28 @@ public class Turret : Repairable
 		if (colliders.Length <= 0)
 			return;
 
-		Transform collider = colliders[0].transform;
+		Vector2 vDist = Vector2.zero;
 		float minDist = Mathf.Infinity;
 		foreach (Collider2D col in colliders)
 		{
-			float sqrDist = (col.transform.position - transform.position).sqrMagnitude;
-            if (sqrDist < minDist)
-			{
-				minDist = sqrDist;
-				collider = col.transform;
-			}
+			Vector2 vDistT = col.transform.position - transform.position;
+			float sqrDist = vDistT.sqrMagnitude;
+			if (sqrDist >= minDist)
+				continue;
+
+			RaycastHit2D hit = Physics2D.Raycast(transform.position, vDistT, range, whatToHit);
+
+			if (hit.transform.gameObject.layer != LayerMask.NameToLayer("Enemies"))
+				continue;
+
+			vDist = vDistT;
+			minDist = sqrDist;
 		}
 
-		Vector2 vDir = collider.position - transform.position;
-        float rot = Mathf.Atan2(vDir.y, vDir.x) * Mathf.Rad2Deg;
+		if (minDist > range)
+			return;
+
+        float rot = Mathf.Atan2(vDist.y, vDist.x) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0f, 0f, rot), Time.deltaTime * rotateSpeed);
 
 		if (time < 1 / fireRate)
@@ -50,16 +58,7 @@ public class Turret : Repairable
 			time += Time.deltaTime;
 			return;
 		}
-
 		time = 0;
-
-		RaycastHit2D hit = Physics2D.Raycast(firePoint.position, vDir, 50f, whatToHit);
-
-		//print(hit.transform.gameObject.layer);
-		if (hit.transform.gameObject.layer != LayerMask.NameToLayer("Enemies"))
-			return;
-
-		// Spawn muzzle flash
 
 		// Spawn bullet
 		Quaternion bulletDirection = Quaternion.Euler(new Vector3(0, 0, VectorUtils.GetAngleFromVector(firePoint.right) - 90f));

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class MeleeEnemy : Enemy
 {
 
@@ -7,7 +8,6 @@ public class MeleeEnemy : Enemy
     {
         if (other.gameObject == target.gameObject)
         {
-
             Attack();
             return;
         }

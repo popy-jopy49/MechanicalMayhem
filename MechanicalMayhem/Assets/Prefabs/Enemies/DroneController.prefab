@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2459507620049113870}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41,12 +41,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4020476106726824082}
   - component: {fileID: 4020476106726824083}
+  - component: {fileID: 7822359397013054652}
   - component: {fileID: 6295312645375765167}
   - component: {fileID: 5517093365521735922}
-  - component: {fileID: 8814974155898647078}
   - component: {fileID: 7025747621628547514}
   m_Layer: 6
-  m_Name: RangedEnemy
+  m_Name: DroneController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f2998caffbf73754487c0c9f8a77e751, type: 2}
+  - {fileID: 2100000, guid: 3e68b5e8b1731c848ba812ba506a041b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,7 +107,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -17721577
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -120,6 +120,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7822359397013054652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020476106726824087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049ee99716427d249919d4eec4abc02b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  damage: 10
+  fireRate: 1
+  distanceToStop: 8
+  distanceToSeek: 15
+  maxDroneCount: 5
 --- !u!195 &6295312645375765167
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -138,7 +156,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1
+  m_Height: 1.3
   m_BaseOffset: 0.3
   m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
@@ -169,33 +187,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 3
---- !u!114 &8814974155898647078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4020476106726824087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40175c4cf77723499dd1169da5514f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  damage: 10
-  fireRate: 1
-  stopDistance: 5
-  seekDistance: 10
-  distanceToShoot: 5
-  distanceToStop: 3
-  bulletSpeed: 30
-  explosionRadius: 0
-  everthingButSelf:
-    serializedVersion: 2
-    m_Bits: 641
-  whatToHit:
-    serializedVersion: 2
-    m_Bits: 640
 --- !u!60 &7025747621628547514
 PolygonCollider2D:
   m_ObjectHideFlags: 0

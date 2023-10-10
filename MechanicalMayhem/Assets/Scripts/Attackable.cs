@@ -4,6 +4,7 @@ public class Attackable : MonoBehaviour
 {
 
     protected float health;
+    [Header("Health")]
     [SerializeField] protected float maxHealth;
 
     private void Start()
@@ -11,13 +12,14 @@ public class Attackable : MonoBehaviour
         health = maxHealth;
     }
 
-    public virtual void Damage(float damage)
+    public virtual bool Damage(float damage)
     {
         health -= damage;
-        if (health <= 0)
-        {
-            Die();
-        }
+        if (health > 0)
+            return false;
+
+        Die();
+        return true;
     }
 
     protected virtual void Die()

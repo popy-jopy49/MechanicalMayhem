@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class Enemy : Attackable
 {
 
+    [Header("Basic Enemy Values")]
     [SerializeField] protected float damage = 10f;
     [SerializeField] protected float fireRate = 1f;
-    [SerializeField] protected float stopDistance = 2.25f;
-    [SerializeField] protected float seekDistance = 3.5f;
+
+    [Header("Navigation Values")]
+    [SerializeField] protected float distanceToStop = 2.25f;
+    [SerializeField] protected float distanceToSeek = 10f;
 
     protected float time;
     protected Transform target;
@@ -24,41 +29,43 @@ public class Enemy : Attackable
     protected virtual void Update()
     {
         Vector2 playerVDist = target.position - transform.position;
-		float sqrDist = (playerVDist).sqrMagnitude;
-        if (sqrDist > seekDistance * seekDistance)
+		float sqrDist = playerVDist.sqrMagnitude;
+        if (sqrDist > distanceToSeek * distanceToSeek)
             return;
 
-        agent.isStopped = sqrDist <= stopDistance * stopDistance;
+        agent.isStopped = sqrDist <= distanceToStop * distanceToStop;
         agent.SetDestination(target.position);
 
-        Vector3 vDir = agent.desiredVelocity;
-        if (agent.isStopped)
-            vDir = playerVDist;
+		float rot = Mathf.Atan2(playerVDist.y, playerVDist.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0f, 0f, rot - 90f), Time.deltaTime * agent.angularSpeed);
 
-		float rot = Mathf.Atan2(vDir.y, vDir.x) * Mathf.Rad2Deg;
-		transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0f, 0f, rot - 90f), Time.deltaTime * agent.angularSpeed);
+		if (!agent.isStopped || !CheckForFireRate())
+				return;
+
+		Attack();
 	}
 
     protected virtual void Attack()
     {
-        if (!CheckForFireRate())
-            return;
-
         target.GetComponent<Player>().Damage(damage);
     }
 
-    protected bool CheckForFireRate()
+    protected virtual bool CheckForFireRate()
     {
         if (time < 1 / fireRate)
         {
             time += Time.deltaTime;
             return false;
         }
-        else
-        {
-            time = 0;
-            return true;
-        }
+
+        time = 0;
+        return true;
     }
+
+	protected override void Die()
+	{
+        Destroy(Instantiate(GameAssets.I.EnemyDeathEffect, transform.position, transform.rotation), 3f); ;
+        base.Die();
+	}
 
 }

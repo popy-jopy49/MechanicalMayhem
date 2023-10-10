@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class LevelLoad : MonoBehaviour
 {
 
@@ -9,10 +10,10 @@ public class LevelLoad : MonoBehaviour
 		if (!collision.CompareTag("Player"))
 			return;
 
-		int bi = SceneManager.GetActiveScene().buildIndex + 1;
+		int buildIndex = SceneManager.GetActiveScene().buildIndex + 1;
 		/*if (SceneManager.GetSceneByBuildIndex(bi).buildIndex < 0)
 			return;*/
-		SceneManager.LoadSceneAsync(bi);
+		SceneFader.I.FadeToScene(buildIndex);
 	}
 
 }

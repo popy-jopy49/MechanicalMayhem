@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 public class GameAssets : Singleton<GameAssets> {
 
     [System.Serializable]
-    public class EnemyPrefabData
+    public class PrefabData
     {
         public GameObject g;
         public float chance;
@@ -15,9 +15,17 @@ public class GameAssets : Singleton<GameAssets> {
 	[Header("Prefabs")]
 	public GameObject MessagePrefab;
 	public GameObject BulletPrefab;
-	public EnemyPrefabData[] EnemyPrefabs;
+    public PrefabData[] DronePrefabs;
+	public PrefabData[] EnemyPrefabs;
+    public Transform MazePuzzle;
+    public Transform ImagePuzzle;
+    public Transform RushHourPuzzle;
 
-    [Header("Post Processing")]
+    [Header("Effects")]
+	public GameObject DroneExplosionPrefab;
+	public GameObject EnemyDeathEffect;
+
+	[Header("Post Processing")]
     public VolumeProfile VolumeProfile;
 
     [Header("Mixers")]
@@ -28,10 +36,10 @@ public class GameAssets : Singleton<GameAssets> {
 		RegisterSingleton(this);
 	}
 
-	public GameObject GetRandomEnemyPrefab()
+	public GameObject GetRandomPrefab(PrefabData[] prefabDatas)
 	{
         float totalSpawnChance = 0f;
-        foreach (EnemyPrefabData enemyPrefabData in EnemyPrefabs)
+        foreach (PrefabData enemyPrefabData in prefabDatas)
         {
             totalSpawnChance += enemyPrefabData.chance;
         }
@@ -41,7 +49,7 @@ public class GameAssets : Singleton<GameAssets> {
         
         // Find the first gameobject that has the chance
         GameObject selectedEnemyPrefab = null;
-        foreach (var enemyData in EnemyPrefabs)
+        foreach (var enemyData in prefabDatas)
         {
             if (randomValue < enemyData.chance)
             {
@@ -57,7 +65,7 @@ public class GameAssets : Singleton<GameAssets> {
             return selectedEnemyPrefab;
         }
 
-        return EnemyPrefabs[0] == null ? EnemyPrefabs[0].g : null;
+        return prefabDatas[0] == null ? prefabDatas[0].g : null;
 	}
 
 }

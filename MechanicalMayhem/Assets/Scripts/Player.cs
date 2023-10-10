@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : Singleton<Player>
+public class Player : MonoBehaviour
 {
 
     private float maxHealth = 100;
@@ -20,15 +20,12 @@ public class Player : Singleton<Player>
     private bool workbenchNearby = false;
     private List<GameObject> inventory = new();
 
-    private TMP_Text nbText;
-    private int nutsAndBolts;
     private GameObject fToInteract;
     private GameObject workbenchUI;
 
     private void Awake()
     {
         healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
-        nbText = GameObject.Find("NutsAndBoltsAmount").GetComponent<TMP_Text>();
         respawnPoint = GameObject.Find("RespawnPoint").transform;
         rb = GetComponent<Rigidbody2D>();
 
@@ -41,11 +38,6 @@ public class Player : Singleton<Player>
 
     private void Update()
     {
-#if UNITY_EDITOR
-        if (Keyboard.current.numpadPlusKey.wasPressedThisFrame)
-            ChangeNutsAndBolts(1000000);
-#endif
-
         fToInteract.SetActive(itemsToPickup.Count > 0 || nearbyRepairables.Count > 0 || workbenchNearby);
 
         Vector3 mousePos = InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>();
@@ -160,25 +152,12 @@ public class Player : Singleton<Player>
         healthBar.SetHealth(health);
     }
 
-    public void ChangeNutsAndBolts(int amount)
-    {
-		nutsAndBolts += amount;
-        nbText.text = nutsAndBolts.ToString();
-	}
-    public int GetNutsAndBolts() => nutsAndBolts;
 	public void AddMaxHealth(float value) => SetMaxHealth(maxHealth + value);
 	public void SetMaxHealth(float value)
 	{
         maxHealth = value;
 		health = value;
 		healthBar.SetMaxHealth(value);
-	}
-
-    public bool HoveringWorkbench()
-    {
-        return workbenchUI.activeSelf &&
-		    InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>().x 
-            < workbenchUI.GetComponent<RectTransform>().sizeDelta.x * 2f + 110f;
 	}
 
 }

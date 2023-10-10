@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class ImageController : MonoBehaviour, IDragHandler
 {
+
+	private Action winFunc;
 
 	PuzzleGrid grid;
 	private (int x, int y) prevIndex = default;
@@ -42,13 +45,11 @@ public class ImageController : MonoBehaviour, IDragHandler
 		transform.position = grid.GridToWorldPos(targetIndex);
 		if (grid.CompareGrid())
 		{
-			Win();
+			// Win
+			winFunc();
 		}
 	}
 
-	private void Win()
-	{
-		print("you win");
-	}
+	public void SetWinFunc(Action winFunc) => this.winFunc = winFunc;
 
 }
