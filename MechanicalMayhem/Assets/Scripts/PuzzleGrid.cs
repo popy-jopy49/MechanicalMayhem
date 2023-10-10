@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Collections.Generic;
+using UnityEditor.Rendering.Universal.ShaderGraph;
 
 public class PuzzleGrid : MonoBehaviour
 {
@@ -14,10 +15,16 @@ public class PuzzleGrid : MonoBehaviour
     [SerializeField] private TextPrefabDigit[] textPrefabDigits;
     private Vector2 gridOffset;
 
-    private void Awake()
+    private Action winFunc;
+
+    public static PuzzleGrid Setup(Transform prefab, Action winFunc)
     {
-        string text = GetTextAtPath(fileName);
-        InitialiseGrid(text);
+        PuzzleGrid grid = Instantiate(prefab, Camera.main.transform.Find("Puzzles")).Find("Grid").GetComponent<PuzzleGrid>();
+
+        grid.SetWinFunc(winFunc);
+        string text = grid.GetTextAtPath(grid.fileName);
+        grid.InitialiseGrid(text);
+        return grid;
     }
 
     private void InitialiseGrid(string text)
@@ -36,7 +43,7 @@ public class PuzzleGrid : MonoBehaviour
 			{
 				char digit = text[dataIndex];
 				Vector2 pos = GridToWorldPos((x, y));
-				grid[x, y] = new GridObject(digit, pos, gridObjectSize, parent, textPrefabDigits);
+				grid[x, y] = new GridObject(digit, pos, gridObjectSize, parent, textPrefabDigits, winFunc);
 				dataIndex++;
 			}
 		}
@@ -129,13 +136,15 @@ public class PuzzleGrid : MonoBehaviour
 			   index.y >= 0 && index.y < grid.GetLength(1);
 	}
 
+    public void SetWinFunc(Action func) => winFunc = func;
+
 	public class GridObject
     {
         public bool hasPlayer = false;
 		readonly bool wall = false;
 		char digit;
 
-        public GridObject(char digit, Vector2 pos, Vector2 size, Transform parent, TextPrefabDigit[] textPrefabDigits)
+        public GridObject(char digit, Vector2 pos, Vector2 size, Transform parent, TextPrefabDigit[] textPrefabDigits, Action winFunc)
         {
             this.digit = digit;
             Transform prefab = null;
@@ -144,7 +153,7 @@ public class PuzzleGrid : MonoBehaviour
                 if (digit != tPD.digit)
                     continue;
 
-                hasPlayer = tPD.player;
+				hasPlayer = tPD.player;
                 wall = tPD.wall;
                 prefab = tPD.prefab;
                 break;
@@ -154,7 +163,13 @@ public class PuzzleGrid : MonoBehaviour
 
             Transform obj = Instantiate(prefab, pos, Quaternion.identity, parent);
             obj.localScale = size;
-        }
+
+			PuzzleWin win = obj.GetComponent<PuzzleWin>();
+			if (win) win.SetWinFunc(winFunc);
+
+			ImageController iC = obj.GetComponent<ImageController>();
+			if (iC) iC.SetWinFunc(winFunc);
+		}
 
         public bool OpenPos() => !wall;
         public char GetDigit() => digit;

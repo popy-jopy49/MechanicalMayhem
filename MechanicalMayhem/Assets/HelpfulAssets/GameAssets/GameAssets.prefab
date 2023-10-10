@@ -78,6 +78,9 @@ MonoBehaviour:
     chance: 10
   - g: {fileID: 4020476106726824087, guid: 5f4c547a3a1c88246b32bce1425bd8c1, type: 3}
     chance: 15
+  MazePuzzle: {fileID: 955784384864218661, guid: 025052b0c186b8e40b7fd9b4dab86489, type: 3}
+  ImagePuzzle: {fileID: 492163658829573205, guid: 8110557db723a6e4c94f4c647712b123, type: 3}
+  RushHourPuzzle: {fileID: 116386391382700447, guid: 1bbaadca0f2198a4394a140b2388217c, type: 3}
   DroneExplosionPrefab: {fileID: 7327131175272848395, guid: 31ef95f309b7ab04789975b3d0bf28fd, type: 3}
   EnemyDeathEffect: {fileID: 7327131175272848395, guid: cdc0e41053231b741b06517803479bd0, type: 3}
   VolumeProfile: {fileID: 11400000, guid: c093ced569276cc47aa926560dccbd04, type: 2}

@@ -52,7 +52,7 @@ public class Weapon : MonoBehaviour
             }
 		}
 
-		if (!isFiring)
+		if (!isFiring || GameManager.I.InPuzzle())
 			return;
 
 		Shoot();

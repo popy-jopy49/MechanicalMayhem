@@ -7,8 +7,17 @@ public class Repairable : MonoBehaviour
     [SerializeField] protected List<GameObject> linkedItems = new();
 	[SerializeField] protected Sprite repairedSprite;
     [SerializeField] protected int maxNumberOfUses = 10;
+    [SerializeField] protected Puzzle puzzle;
 	protected bool repaired = false;
     protected int numberOfUses = 0;
+
+    protected enum Puzzle
+	{
+		None,
+		Maze,
+        RushHour,
+        ImagePuzzle,
+    }
 
 	protected virtual void Update()
 	{
@@ -32,30 +41,53 @@ public class Repairable : MonoBehaviour
 
 	public virtual bool AddItem(GameObject item)
     {
-        if (!ItemLinked(item)) return false;
-
-        linkedItems.Remove(item);
-        Destroy(item);
+        bool itemAdded = false;
+        if (ItemLinked(item))
+		{
+			linkedItems.Remove(item);
+			Destroy(item);
+            itemAdded = true;
+		}
         if (linkedItems.Count <= 0)
         {
-            // Repaired
-            OnRepair();
+			// Repaired
+			AllItemsCollected();
         }
-        return true;
+        return itemAdded;
     }
 
-    protected virtual bool ItemLinked(GameObject item)
-    {
-        if (linkedItems.Count <= 0)
-            return false;
+    protected virtual bool ItemLinked(GameObject item) => linkedItems.Contains(item);
 
-        return linkedItems.Contains(item);
+    protected virtual void AllItemsCollected()
+    {
+        if (GameManager.I.InPuzzle())
+            return;
+
+        switch (puzzle)
+		{
+			default:
+			case Puzzle.None:
+				OnRepair();
+                return;
+            case Puzzle.Maze:
+                PuzzleGrid.Setup(GameAssets.I.MazePuzzle, OnRepair);
+                break;
+            case Puzzle.RushHour:
+                Instantiate(GameAssets.I.RushHourPuzzle, Camera.main.transform.Find("Puzzles")).Find("PuzzleWin").GetComponent<PuzzleWin>().SetWinFunc(OnRepair);
+                break;
+            case Puzzle.ImagePuzzle:
+                PuzzleGrid.Setup(GameAssets.I.ImagePuzzle, OnRepair);
+                break;
+        }
+
+        GameManager.I.SetInPuzzle(true);
     }
 
     protected virtual void OnRepair()
 	{
 		transform.Find("Base").GetComponent<SpriteRenderer>().sprite = repairedSprite;
 		repaired = true;
+        GameManager.I.SetInPuzzle(false);
 	}
 
     public bool IsRepaired() => repaired;

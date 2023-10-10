@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
 
+    private GameObject hiddenHUD;
     private GameObject escapeMenu;
     private bool puzzle = false;
 	public bool newGame = false;
@@ -21,6 +22,11 @@ public class GameManager : Singleton<GameManager>
 
 	void OnEnable()
 	{
+		hiddenHUD = GameObject.Find("Canvas").transform.Find("HiddenHUD").gameObject;
+		escapeMenu = GameObjectExtensionMethods.FindDeactivatedGameObject(gameObject, "HUD", "EscapeMenu");
+
+		InputManager.Initialise();
+		InputManager.INPUT_ACTIONS.Main.PauseScreen.started += PauseScreenStarted;
 		SceneManager.sceneLoaded += OnSceneLoaded;
 	}
 
@@ -55,14 +61,6 @@ public class GameManager : Singleton<GameManager>
 		brightness.postExposure = new FloatParameter(this.brightness);
 	}
 
-	private void Start()
-    {
-        escapeMenu = GameObjectExtensionMethods.FindDeactivatedGameObject(gameObject, "HUD", "EscapeMenu");
-
-        InputManager.Initialise();
-        InputManager.INPUT_ACTIONS.Main.PauseScreen.started += PauseScreenStarted;
-    }
-
     private void PauseScreenStarted(InputAction.CallbackContext obj)
     {
         Time.timeScale = Convert.ToSingle(escapeMenu.activeSelf);
@@ -81,6 +79,10 @@ public class GameManager : Singleton<GameManager>
     }
 
     public bool InPuzzle() => puzzle;
-    public void SetInPuzzle(bool inPuzzle) => puzzle = inPuzzle;
+    public void SetInPuzzle(bool inPuzzle)
+	{
+		puzzle = inPuzzle;
+		hiddenHUD.SetActive(!inPuzzle);
+	}
 
 }

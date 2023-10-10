@@ -2075,6 +2075,7 @@ MonoBehaviour:
   - {fileID: 316274060}
   repairedSprite: {fileID: 0}
   maxNumberOfUses: 10
+  puzzle: 1
   modifier: 1
   speed: 5
 --- !u!212 &1876207048

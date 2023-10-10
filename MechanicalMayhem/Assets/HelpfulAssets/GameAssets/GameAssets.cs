@@ -17,6 +17,9 @@ public class GameAssets : Singleton<GameAssets> {
 	public GameObject BulletPrefab;
     public PrefabData[] DronePrefabs;
 	public PrefabData[] EnemyPrefabs;
+    public Transform MazePuzzle;
+    public Transform ImagePuzzle;
+    public Transform RushHourPuzzle;
 
     [Header("Effects")]
 	public GameObject DroneExplosionPrefab;
