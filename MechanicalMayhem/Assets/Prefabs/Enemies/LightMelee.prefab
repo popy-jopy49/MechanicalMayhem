@@ -101,8 +101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
-  damage: 20
-  fireRate: 1
+  damage: 40
+  fireRate: 0.8
   nutsAndBoltsOnDrop: 5
   distanceToStop: 2.25
   distanceToSeek: 8
