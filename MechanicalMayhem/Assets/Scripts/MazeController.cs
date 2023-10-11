@@ -21,7 +21,6 @@ public class MazeController : MonoBehaviour, IDragHandler
 			return;
 		prevIndex = index;
 
-		print(grid.ValidMovePosition(index));
 		if (!grid.ValidMovePosition(index))
 			return;
 

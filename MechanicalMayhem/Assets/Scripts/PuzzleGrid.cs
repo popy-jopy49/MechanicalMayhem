@@ -2,7 +2,6 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Collections.Generic;
-using UnityEditor.Rendering.Universal.ShaderGraph;
 
 public class PuzzleGrid : MonoBehaviour
 {
@@ -130,8 +129,6 @@ public class PuzzleGrid : MonoBehaviour
 
 	public bool IsValidGridPosition((int x, int y) index)
 	{
-		print(index.x >= 0 && index.x < grid.GetLength(0) &&
-			   index.y >= 0 && index.y < grid.GetLength(1));
 		return index.x >= 0 && index.x < grid.GetLength(0) &&
 			   index.y >= 0 && index.y < grid.GetLength(1);
 	}
