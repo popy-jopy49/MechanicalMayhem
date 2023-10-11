@@ -8,9 +8,8 @@ public class Door : Repairable
 	[SerializeField] private float speed = 10;
 	private Vector2 newPos;
 
-	protected override void OnRepair()
+	protected override void OnRepairGFX()
 	{
-		repaired = true;
 		newPos = transform.position + (modifier * transform.localScale.x * transform.right);
 	}
 

@@ -79,13 +79,11 @@ public class PuzzleGrid : MonoBehaviour
 
 			if (grid[neighbour.x, neighbour.y].hasPlayer)
 			{
-				neighboursHavePlayer = true;
+				neighboursHavePlayer = true; // Think it's not detecting player?
 				break;
 			}
 		}
 
-        print(free);
-        print(neighboursHavePlayer);
 		return free && neighboursHavePlayer;
 	}
 
@@ -132,6 +130,8 @@ public class PuzzleGrid : MonoBehaviour
 
 	public bool IsValidGridPosition((int x, int y) index)
 	{
+		print(index.x >= 0 && index.x < grid.GetLength(0) &&
+			   index.y >= 0 && index.y < grid.GetLength(1));
 		return index.x >= 0 && index.x < grid.GetLength(0) &&
 			   index.y >= 0 && index.y < grid.GetLength(1);
 	}
@@ -161,8 +161,9 @@ public class PuzzleGrid : MonoBehaviour
             if (!prefab)
                 return;
 
-            Transform obj = Instantiate(prefab, pos, Quaternion.identity, parent);
-            obj.localScale = size;
+            Transform obj = Instantiate(prefab, parent);
+            obj.localPosition = pos;
+			obj.localScale = size;
 
 			PuzzleWin win = obj.GetComponent<PuzzleWin>();
 			if (win) win.SetWinFunc(winFunc);

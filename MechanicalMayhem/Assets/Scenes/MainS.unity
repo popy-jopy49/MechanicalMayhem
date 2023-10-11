@@ -1806,7 +1806,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1486499433
 Transform:
   m_ObjectHideFlags: 0
@@ -2075,7 +2075,7 @@ MonoBehaviour:
   - {fileID: 316274060}
   repairedSprite: {fileID: 0}
   maxNumberOfUses: 10
-  puzzle: 2
+  puzzle: 3
   modifier: 1
   speed: 5
 --- !u!212 &1876207048
@@ -3052,11 +3052,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6844103620770877912, guid: f6c3a3071bc491e49b65d0a74aa52fad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.21
+      value: 5.47
       objectReference: {fileID: 0}
     - target: {fileID: 6844103620770877912, guid: f6c3a3071bc491e49b65d0a74aa52fad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.54
+      value: -0.47
       objectReference: {fileID: 0}
     - target: {fileID: 6844103620770877912, guid: f6c3a3071bc491e49b65d0a74aa52fad, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3156,6 +3156,10 @@ PrefabInstance:
       value: Tank
       objectReference: {fileID: 0}
     - target: {fileID: 6855848267393712839, guid: cbfdff8e51598654ca42d8edeb0adb9b, type: 3}
+      propertyPath: puzzle
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6855848267393712839, guid: cbfdff8e51598654ca42d8edeb0adb9b, type: 3}
       propertyPath: linkedItems.Array.data[0]
       value: 
       objectReference: {fileID: 1778934479}
@@ -3239,11 +3243,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7413692790588111426, guid: 6b820350fbca17d45a306b94933259d7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.87
+      value: -4.51
       objectReference: {fileID: 0}
     - target: {fileID: 7413692790588111426, guid: 6b820350fbca17d45a306b94933259d7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.62
+      value: -4.16
       objectReference: {fileID: 0}
     - target: {fileID: 7413692790588111426, guid: 6b820350fbca17d45a306b94933259d7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3280,6 +3284,10 @@ PrefabInstance:
     - target: {fileID: 7413692790588111427, guid: 6b820350fbca17d45a306b94933259d7, type: 3}
       propertyPath: m_Name
       value: Turret
+      objectReference: {fileID: 0}
+    - target: {fileID: 7413692790588111429, guid: 6b820350fbca17d45a306b94933259d7, type: 3}
+      propertyPath: puzzle
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7413692790588111429, guid: 6b820350fbca17d45a306b94933259d7, type: 3}
       propertyPath: linkedItems.Array.data[0]

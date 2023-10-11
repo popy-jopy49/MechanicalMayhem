@@ -11,8 +11,8 @@ public class LevelLoad : MonoBehaviour
 			return;
 
 		int buildIndex = SceneManager.GetActiveScene().buildIndex + 1;
-		/*if (SceneManager.GetSceneByBuildIndex(bi).buildIndex < 0)
-			return;*/
+		if (SceneManager.GetSceneByBuildIndex(buildIndex).buildIndex < 0)
+			return;
 		SceneFader.I.FadeToScene(buildIndex);
 	}
 

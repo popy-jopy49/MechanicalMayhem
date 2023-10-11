@@ -51,18 +51,20 @@ public class TDPlayerMovement : MonoBehaviour
 	}
 
 	private void Update()
-    {
-        if (GameManager.I.InPuzzle())
-            return;
+	{
+		input = InputManager.INPUT_ACTIONS.Main.Movement.ReadValue<Vector2>();
+		Sprint();
+		if (GameManager.I.InPuzzle())
+		{
+			ChangeAnimationState(IDLE_STATE, LEFTRIGHT);
+			return;
+		}
 
-        HandlePlayerMovement();
-
-        Sprint();
+		HandlePlayerAnimation();
     }
 
-    private void HandlePlayerMovement()
+    private void HandlePlayerAnimation()
     {
-        input = InputManager.INPUT_ACTIONS.Main.Movement.ReadValue<Vector2>();
         if (input == Vector2.zero)
         {
             ChangeAnimationState(IDLE_STATE, currentDir);
@@ -92,7 +94,7 @@ public class TDPlayerMovement : MonoBehaviour
     {
         speed = movementSpeed;
 
-        if (isSprinting && input != Vector2.zero)
+        if (isSprinting && input != Vector2.zero && !GameManager.I.InPuzzle())
         {
             sprint -= Time.deltaTime * loseSpeed;
             speed = sprintSpeed;
@@ -110,8 +112,10 @@ public class TDPlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        Vector2 newPos = speed * Time.fixedDeltaTime * input;
+	{
+		if (GameManager.I.InPuzzle())
+			return;
+		Vector2 newPos = speed * Time.fixedDeltaTime * input;
         rb.MovePosition(rb.position + newPos);
     }
 

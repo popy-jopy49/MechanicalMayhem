@@ -104,47 +104,69 @@ public class Player : MonoBehaviour
 	}
 
     private void Interact(InputAction.CallbackContext obj)
-    {
-        if (GameManager.I.InPuzzle())
-            return;
-
-        // Pick up
-        if (itemsToPickup.Count > 0)
-        {
-			GameObject temp = itemsToPickup[0];
-			inventory.Add(temp);
-            temp.SetActive(false);
-			itemsToPickup.Remove(temp);
-            temp.transform.parent = transform;
-            return;
-        }
-
+	{
         // Repair
-        if (nearbyRepairables.Count > 0)
-        {
-			foreach (Repairable repairable in nearbyRepairables)
-			{
-				bool foundSomething = false;
-				for (int i = 0; i < inventory.Count; i++)
-				{
-					if (!repairable.AddItem(inventory[i]))
-						continue;
-
-					foundSomething = true;
-					nearbyRepairables.Remove(repairable);
-					inventory.RemoveAt(i);
-				}
-				if (foundSomething)
-					break;
-			}
+		if (nearbyRepairables.Count > 0)
+		{
+            InteractWithRepairables();
 			return;
 		}
 
-        // Workbench
-        if (workbenchNearby)
+		if (GameManager.I.InPuzzle())
+            return;
+
+		// Workbench
+		if (workbenchNearby)
+		{
+			workbenchUI.SetActive(!workbenchUI.activeSelf);
+		}
+
+		// Pick up
+		if (itemsToPickup.Count > 0)
         {
-            workbenchUI.SetActive(!workbenchUI.activeSelf);
+            InteractWithItems();
+            return;
         }
+	}
+
+    private void InteractWithRepairables()
+    {
+		foreach (Repairable repairable in nearbyRepairables)
+		{
+			if (repairable.ThisPuzzle())
+			{
+				// Stop puzzle
+				repairable.ExitPuzzle(false);
+				return;
+			}
+
+			if (repairable.ReadyToBeRepaired())
+			{
+				repairable.AddItem(null);
+				return;
+			}
+
+			bool foundSomething = false;
+			for (int i = 0; i < inventory.Count; i++)
+			{
+				if (!repairable.AddItem(inventory[i]))
+					continue;
+
+				foundSomething = true;
+				inventory.RemoveAt(i);
+			}
+			if (foundSomething)
+				break;
+		}
+	}
+
+    private void InteractWithItems()
+	{
+		GameObject temp = itemsToPickup[0];
+		inventory.Add(temp);
+		temp.SetActive(false);
+		itemsToPickup.Remove(temp);
+		temp.transform.parent = transform;
 	}
 
     public void Damage(float damage)
@@ -165,6 +187,8 @@ public class Player : MonoBehaviour
         health = maxHealth;
         healthBar.SetHealth(health);
     }
+
+    public void RemoveRepairable(Repairable repairable) => nearbyRepairables.Remove(repairable);
 
 	public void AddMaxHealth(float value) => SetMaxHealth(maxHealth + value);
 	public void SetMaxHealth(float value)

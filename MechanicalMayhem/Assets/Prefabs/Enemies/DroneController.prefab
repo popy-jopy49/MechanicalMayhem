@@ -135,6 +135,7 @@ MonoBehaviour:
   maxHealth: 50
   damage: 10
   fireRate: 1
+  nutsAndBoltsOnDrop: 20
   distanceToStop: 8
   distanceToSeek: 15
   maxDroneCount: 5

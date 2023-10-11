@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -40,7 +39,7 @@ public class MainMenuManager : MonoBehaviour {
 	#region Button Methods
     public static void StartGame()
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneFader.I.FadeToScene(1);
         GameManager.I.newGame = true;
     }
 

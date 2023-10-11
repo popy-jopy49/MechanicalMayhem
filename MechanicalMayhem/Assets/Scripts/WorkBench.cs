@@ -20,6 +20,9 @@ public class Workbench : MonoBehaviour
         upgradeButton = gameObject.FindDeactivatedGameObject("Canvas", "WorkbenchUI").transform.Find("UpgradeButton").GetComponent<Button>();
         upgradeButtonText = upgradeButton.transform.GetChild(0).GetComponent<TMP_Text>();
 		affordableColour = upgradeButtonText.color;
+
+        if (GameManager.I.newGame)
+            ClearUpgradePrefs();
         
         foreach (UpgradeItem upgradeItem in upgradeItems)
         {
@@ -89,7 +92,7 @@ public class Workbench : MonoBehaviour
         UpgradeData upgradeData = item.upgradeDatas[i];
         Buy(upgradeData, levelText, item.item);
 
-        object data = Resources.Load<WeaponData>("ScriptableObjects/Current/" + item.item + "_Current"); ;
+        object data = Resources.Load<WeaponData>("ScriptableObjects/Current/" + item.item + "_Current");
         
         if (data == null)
         {
@@ -152,7 +155,16 @@ public class Workbench : MonoBehaviour
 		upgradeButton.onClick.RemoveAllListeners();
 	}
 
-    public UpgradeItem[] GetUpgradeItems() => upgradeItems;
+	public void ClearUpgradePrefs()
+	{
+		foreach (UpgradeItem item in upgradeItems)
+		{
+			foreach (UpgradeData data in item.upgradeDatas)
+			{
+				PlayerPrefs.DeleteKey(item.item + "_" + data.name);
+			}
+		}
+	}
 
 	[Serializable]
     public class UpgradeItem

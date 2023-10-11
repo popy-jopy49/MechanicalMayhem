@@ -10,6 +10,9 @@ public class Repairable : MonoBehaviour
     [SerializeField] protected Puzzle puzzle;
 	protected bool repaired = false;
     protected int numberOfUses = 0;
+    protected bool inPuzzle = false;
+
+    private Transform puzzlesParent;
 
     protected enum Puzzle
 	{
@@ -18,6 +21,11 @@ public class Repairable : MonoBehaviour
         RushHour,
         ImagePuzzle,
     }
+
+    protected virtual void Awake()
+    {
+        puzzlesParent = Camera.main.transform.Find("Puzzles");
+	}
 
 	protected virtual void Update()
 	{
@@ -48,7 +56,7 @@ public class Repairable : MonoBehaviour
 			Destroy(item);
             itemAdded = true;
 		}
-        if (linkedItems.Count <= 0)
+        if (ReadyToBeRepaired())
         {
 			// Repaired
 			AllItemsCollected();
@@ -73,7 +81,7 @@ public class Repairable : MonoBehaviour
                 PuzzleGrid.Setup(GameAssets.I.MazePuzzle, OnRepair);
                 break;
             case Puzzle.RushHour:
-                Instantiate(GameAssets.I.RushHourPuzzle, Camera.main.transform.Find("Puzzles")).Find("PuzzleWin").GetComponent<PuzzleWin>().SetWinFunc(OnRepair);
+                Instantiate(GameAssets.I.RushHourPuzzle, puzzlesParent).Find("PuzzleWin").GetComponent<PuzzleWin>().SetWinFunc(OnRepair);
                 break;
             case Puzzle.ImagePuzzle:
                 PuzzleGrid.Setup(GameAssets.I.ImagePuzzle, OnRepair);
@@ -81,17 +89,33 @@ public class Repairable : MonoBehaviour
         }
 
         GameManager.I.SetInPuzzle(true);
+        inPuzzle = true;
     }
 
-    protected virtual void OnRepair()
+    public void ExitPuzzle(bool removeRepairable)
+	{
+		inPuzzle = false;
+		GameManager.I.SetInPuzzle(false);
+		if (puzzlesParent.childCount > 0) Destroy(puzzlesParent.GetChild(0).gameObject);
+        if (removeRepairable) GameObject.Find("Player").GetComponent<Player>().RemoveRepairable(this);
+	}
+
+    protected void OnRepair()
+	{
+		repaired = true;
+        ExitPuzzle(true);
+        OnRepairGFX();
+    }
+
+    protected virtual void OnRepairGFX()
 	{
 		transform.Find("Base").GetComponent<SpriteRenderer>().sprite = repairedSprite;
-		repaired = true;
-        GameManager.I.SetInPuzzle(false);
-        Destroy(Camera.main.transform.Find("Puzzles").GetChild(0).gameObject);
-    }
+	}
+
+    public bool ThisPuzzle() => inPuzzle;
 
     public bool IsRepaired() => repaired;
+    public bool ReadyToBeRepaired() => linkedItems.Count <= 0;
 
     public void Use()
     {

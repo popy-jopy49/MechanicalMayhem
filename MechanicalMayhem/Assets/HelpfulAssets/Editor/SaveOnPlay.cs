@@ -52,18 +52,17 @@ public class ToggleSaveOnPlay : Editor
 public class PlayerPrefEditorTools : Editor
 {
 
-    [MenuItem("SWAssets/PlayerPrefs/Clear Upgrade Cashe")]
-    public static void ClearUpgradePrefs()
-    {
-        Workbench.UpgradeItem[] upgradeItems = GameObject.Find("Canvas").transform.Find("WorkbenchUI").Find("Upgrades").GetComponent<Workbench>().GetUpgradeItems();
-        foreach (Workbench.UpgradeItem item in upgradeItems)
-        {
-            foreach (Workbench.UpgradeData data in item.upgradeDatas)
-            {
-                PlayerPrefs.DeleteKey(item.item + "_" + data.name);
-            }
-        }
-    }
+	[MenuItem("SWAssets/PlayerPrefs/Clear Upgrade Cashe")]
+	public static void ClearUpgradePrefs()
+	{
+		GameObject.Find("Canvas").transform.Find("WorkbenchUI").Find("Upgrades").GetComponent<Workbench>().ClearUpgradePrefs();
+	}
+
+	[MenuItem("SWAssets/PlayerPrefs/Update Weapon Values")]
+	public static void UpdateWeaponValues()
+	{
+		GameObject.Find("Player").transform.Find("WeaponManager").GetComponent<WeaponManager>().UpdateWeaponValues();
+	}
 
 }
 #endif  // #if UNITY_EDITOR

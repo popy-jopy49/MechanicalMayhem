@@ -12,9 +12,9 @@ public class GameManager : Singleton<GameManager>
     private GameObject hiddenHUD;
     private GameObject escapeMenu;
     private bool puzzle = false;
-	public bool newGame = false;
+	[HideInInspector] public bool newGame = false;
 
-	public static int MAINSCENE = 1;
+	public readonly static int MAINSCENE = 1;
 
 	private bool bloom;
 	private bool chromaticAberration;
@@ -40,6 +40,10 @@ public class GameManager : Singleton<GameManager>
 		if (scene.buildIndex == MAINSCENE)
 		{
 			ApplyPPData();
+		}
+		if (scene.buildIndex > MAINSCENE)
+		{
+			newGame = false;
 		}
 	}
 

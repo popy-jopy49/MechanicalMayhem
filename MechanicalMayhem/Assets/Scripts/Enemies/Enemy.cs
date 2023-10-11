@@ -9,6 +9,7 @@ public class Enemy : Attackable
     [Header("Basic Enemy Values")]
     [SerializeField] protected float damage = 10f;
     [SerializeField] protected float fireRate = 1f;
+    [SerializeField] protected int nutsAndBoltsOnDrop = 10;
 
     [Header("Navigation Values")]
     [SerializeField] protected float distanceToStop = 2.25f;
@@ -64,7 +65,8 @@ public class Enemy : Attackable
 
 	protected override void Die()
 	{
-        Destroy(Instantiate(GameAssets.I.EnemyDeathEffect, transform.position, transform.rotation), 3f); ;
+        Destroy(Instantiate(GameAssets.I.EnemyDeathEffect, transform.position, transform.rotation), 3f);
+        PlayerStats.I.ChangeNutsAndBolts(nutsAndBoltsOnDrop);
         base.Die();
 	}
 

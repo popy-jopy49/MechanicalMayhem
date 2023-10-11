@@ -21,15 +21,16 @@ public class MazeController : MonoBehaviour, IDragHandler
 			return;
 		prevIndex = index;
 
+		print(grid.ValidMovePosition(index));
 		if (!grid.ValidMovePosition(index))
 			return;
 
 		// Valid move position
 		// Find current player position
-		(int x, int y) playerIndex = grid.WorldToGridPos(transform.position);
+		(int x, int y) = grid.WorldToGridPos(transform.position);
 
 		// Switch hasPlayer around
-		grid.grid[playerIndex.x, playerIndex.y].hasPlayer = false;
+		grid.grid[x, y].hasPlayer = false;
 		grid.grid[index.x, index.y].hasPlayer = true;
 
 		transform.position = grid.GridToWorldPos(index);

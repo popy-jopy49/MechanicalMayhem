@@ -23,8 +23,9 @@ public class Tank : Repairable
 	private Transform firePoint;
 	protected NavMeshAgent agent;
 
-	protected void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
 		GetFirePoint();
 		agent = GetComponent<NavMeshAgent>();
 		agent.updateRotation = false;

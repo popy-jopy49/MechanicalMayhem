@@ -17,8 +17,9 @@ public class Turret : Repairable
 	private float time = 0;
 	private Transform firePoint;
 
-	protected void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
 		firePoint = transform.Find("FirePoint");
 	}
 
@@ -40,7 +41,7 @@ public class Turret : Repairable
 
 			RaycastHit2D hit = Physics2D.Raycast(transform.position, vDistT, range, whatToHit);
 
-			if (hit.transform.gameObject.layer != LayerMask.NameToLayer("Enemies"))
+			if (!hit || hit.transform.gameObject.layer != LayerMask.NameToLayer("Enemies"))
 				continue;
 
 			vDist = vDistT;
