@@ -4,13 +4,13 @@ using UnityEngine;
 public class Door : Repairable
 {
 
-	[SerializeField] private float modifier = 1;
+	[SerializeField] private Vector2 moveDirection = Vector2.right;
 	[SerializeField] private float speed = 10;
 	private Vector2 newPos;
-
+	
 	protected override void OnRepairGFX()
 	{
-		newPos = transform.position + (modifier * transform.localScale.x * transform.right);
+		newPos = (Vector2)transform.position + moveDirection * Mathf.Max(transform.localScale.x, transform.localScale.y);//(moveDirection * transform.localScale.x * transform.right);
 	}
 
 	protected override void RepairedUpdate()

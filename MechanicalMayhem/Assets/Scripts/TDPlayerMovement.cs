@@ -52,7 +52,7 @@ public class TDPlayerMovement : MonoBehaviour
 
 	private void Update()
 	{
-		input = InputManager.INPUT_ACTIONS.Main.Movement.ReadValue<Vector2>();
+		input = InputManager.INPUT_ACTIONS.Main.Movement.ReadValue<Vector2>().normalized;
 		Sprint();
 		if (GameManager.I.InPuzzle())
 		{

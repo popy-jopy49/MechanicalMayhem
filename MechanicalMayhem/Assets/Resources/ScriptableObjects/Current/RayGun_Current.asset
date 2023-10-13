@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8844a08333d0e4f968379ada559eed, type: 3}
   m_Name: RayGun_Current
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 155d56e3806da60408398da5ed398eea, type: 3}
+  icon: {fileID: -1648708385, guid: bbfa7bc476eb36a4f94e9be19bb81cd3, type: 3}
   fireRate: 0.8
   damage: 50
   range: 30
