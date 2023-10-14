@@ -29,7 +29,7 @@ public class Repairable : MonoBehaviour
 
 	protected virtual void Update()
 	{
-        ConstantUpdate();
+		ConstantUpdate();
 
         if (!repaired)
             return;
@@ -94,6 +94,9 @@ public class Repairable : MonoBehaviour
 
     public void ExitPuzzle(bool removeRepairable)
 	{
+        if (!inPuzzle)
+            return;
+
 		inPuzzle = false;
 		GameManager.I.SetInPuzzle(false);
 		if (puzzlesParent.childCount > 0) Destroy(puzzlesParent.GetChild(0).gameObject);

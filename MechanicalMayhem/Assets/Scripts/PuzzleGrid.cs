@@ -15,12 +15,14 @@ public class PuzzleGrid : MonoBehaviour
     private Vector2 gridOffset;
 
     private Action winFunc;
+    private Transform cameraParent;
 
     public static PuzzleGrid Setup(Transform prefab, Action winFunc)
-    {
-        PuzzleGrid grid = Instantiate(prefab, Camera.main.transform.Find("Puzzles")).Find("Grid").GetComponent<PuzzleGrid>();
+	{
+		PuzzleGrid grid = Instantiate(prefab, Camera.main.transform.Find("Puzzles")).Find("Grid").GetComponent<PuzzleGrid>();
 
-        grid.SetWinFunc(winFunc);
+        grid.cameraParent = Camera.main.transform;
+		grid.SetWinFunc(winFunc);
         string text = grid.GetTextAtPath(grid.fileName);
         grid.InitialiseGrid(text);
         return grid;
@@ -78,7 +80,7 @@ public class PuzzleGrid : MonoBehaviour
 
 			if (grid[neighbour.x, neighbour.y].hasPlayer)
 			{
-				neighboursHavePlayer = true; // Think it's not detecting player?
+				neighboursHavePlayer = true;
 				break;
 			}
 		}
@@ -99,6 +101,7 @@ public class PuzzleGrid : MonoBehaviour
 	{
 		Vector2 index = pos;
 		index -= gridOffset;
+        index -= (Vector2)cameraParent.position;
 		index /= gridObjectSize;
 		index.y *= -1;
 		return (Mathf.RoundToInt(index.x), Mathf.RoundToInt(index.y));
@@ -106,7 +109,7 @@ public class PuzzleGrid : MonoBehaviour
 
 	public Vector2 GridToWorldPos((int x, int y) index)
 	{
-		return new Vector2(index.x, -index.y) * gridObjectSize + gridOffset;
+		return new Vector2(index.x, -index.y) * gridObjectSize + gridOffset + (Vector2)cameraParent.position;
 	}
 
     public bool CompareGrid()
@@ -159,7 +162,7 @@ public class PuzzleGrid : MonoBehaviour
                 return;
 
             Transform obj = Instantiate(prefab, parent);
-            obj.localPosition = pos;
+            obj.position = pos;
 			obj.localScale = size;
 
 			PuzzleWin win = obj.GetComponent<PuzzleWin>();

@@ -212,42 +212,70 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11c887687d43634495ddf96258f6d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: {x: 3, y: 3}
+  gridSize: {x: 4, y: 4}
   gridObjectSize: {x: 2, y: 2}
   fileName: ImageBinary.txt
   comparisonFileName: ImageBinaryComplete.txt
   parent: {fileID: 492163658108380428}
   textPrefabDigits:
-  - digit: 48
+  - digit: 49
     prefab: {fileID: 3318625697424258413, guid: e72a48eedc808ba42a8b348309a8ea8b, type: 3}
     wall: 1
     player: 0
-  - digit: 49
+  - digit: 50
     prefab: {fileID: 6517510388642921504, guid: 0e2a1e512fb117a439ab8738b96a3b06, type: 3}
     wall: 1
     player: 0
-  - digit: 50
+  - digit: 51
     prefab: {fileID: 8655755017985894307, guid: eb0e7cbb9b01bce4f9ab62f404679e31, type: 3}
     wall: 1
     player: 0
-  - digit: 51
+  - digit: 52
     prefab: {fileID: 2608465820403996899, guid: 80defcc674732d14faab46449c42543b, type: 3}
     wall: 1
     player: 0
-  - digit: 52
+  - digit: 53
     prefab: {fileID: 3480203900124023861, guid: 47dc55f39d6df4d459a4826c6ddf7e84, type: 3}
     wall: 1
     player: 0
-  - digit: 53
+  - digit: 54
     prefab: {fileID: 6960114330298670026, guid: f8e51a72c2b92004786ac836931bf570, type: 3}
     wall: 1
     player: 0
-  - digit: 54
+  - digit: 55
     prefab: {fileID: 3043084535539206027, guid: e60388687ffd12947909db917ab798ee, type: 3}
     wall: 1
     player: 0
-  - digit: 55
+  - digit: 56
     prefab: {fileID: 4784329510947200781, guid: 0edc25faab4706342bf7553f15867399, type: 3}
+    wall: 1
+    player: 0
+  - digit: 57
+    prefab: {fileID: 6848859292096093745, guid: d6b67ca690acb7046961f36fcca88083, type: 3}
+    wall: 1
+    player: 0
+  - digit: 97
+    prefab: {fileID: 6848859292096093745, guid: ff10b459ca0f46d4b8944fc869e3751a, type: 3}
+    wall: 1
+    player: 0
+  - digit: 98
+    prefab: {fileID: 6848859292096093745, guid: 1484eab7e7f7a4a45b831ce13b04a091, type: 3}
+    wall: 1
+    player: 0
+  - digit: 99
+    prefab: {fileID: 6848859292096093745, guid: f4a45f3055d7cb94db2c46bd8ac063d6, type: 3}
+    wall: 1
+    player: 0
+  - digit: 100
+    prefab: {fileID: 6848859292096093745, guid: 34084a838254f0847b4e5e9cfa73268e, type: 3}
+    wall: 1
+    player: 0
+  - digit: 101
+    prefab: {fileID: 6848859292096093745, guid: 47f72a20eac1cf14c80670e8b22f73fe, type: 3}
+    wall: 1
+    player: 0
+  - digit: 102
+    prefab: {fileID: 6848859292096093745, guid: afeb3bba5aadd9d45897cf02cf6698b6, type: 3}
     wall: 1
     player: 0
 --- !u!1 &492163658108380429
