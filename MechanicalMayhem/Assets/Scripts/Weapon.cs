@@ -1,5 +1,6 @@
 using SWAssets;
 using SWAssets.Utils;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,16 +20,22 @@ public class Weapon : MonoBehaviour
 
 	GameObject workbenchUI;
 
+	private bool pickedUp = false;
+
 	private void Awake()
     {
         currentAmmo = (int)weaponData.maxAmmo;
         totalAmmo = (int)weaponData.maxAmmo * weaponData.startingMags;
 
 		firePoint = GameObject.Find("Player").transform;
+		pickedUp = !CompareTag("Weapon");
     }
 
 	private void Update()
     {
+		if (!pickedUp)
+			return;
+
         if (fireTime < 1 / weaponData.fireRate)
         {
             fireTime += Time.deltaTime;
@@ -60,7 +67,7 @@ public class Weapon : MonoBehaviour
 
     private Vector2 GetFireDirection(Vector3 target)
     {
-		float bulletSpread = Random.Range(-weaponData.bulletSpread, weaponData.bulletSpread);
+		float bulletSpread = UnityEngine.Random.Range(-weaponData.bulletSpread, weaponData.bulletSpread);
         Vector3 targetPos = new(
             target.x + bulletSpread,
             target.y + bulletSpread
@@ -83,6 +90,7 @@ public class Weapon : MonoBehaviour
 
 		if (weaponData.melee)
 		{
+			print("melee");
 			// TODO: Do melee attack animation
 			RaycastHit2D hit = Physics2D.Raycast(firePoint.position, fireDirection, weaponData.range, weaponData.whatToHit);
 			if (!hit.transform)
@@ -101,6 +109,7 @@ public class Weapon : MonoBehaviour
 		{
 			// TODO: Spawn Muzzle Flash effect
 
+			print("Ranged");
 			// Spawn Bullet
 			Quaternion bulletDirection = Quaternion.Euler(new Vector3(0, 0, VectorUtils.GetAngleFromVector(fireDirection) - 90f));
 			GameObject bullet = Instantiate(weaponData.bulletPrefab, firePoint.position, bulletDirection);
@@ -113,7 +122,7 @@ public class Weapon : MonoBehaviour
 
     private void FireStarted(InputAction.CallbackContext obj)
 	{
-		if (!workbenchUI)
+		if (!pickedUp)
 			return;
 
 		if (!workbenchUI.activeSelf ||
@@ -128,7 +137,7 @@ public class Weapon : MonoBehaviour
 
 	private void Reload(InputAction.CallbackContext obj)
 	{
-		if (totalAmmo <= 0 || reloading || currentAmmo >= weaponData.maxAmmo)
+		if (totalAmmo <= 0 || reloading || currentAmmo >= weaponData.maxAmmo || !pickedUp)
 			return;
 
         reloading = true;
@@ -166,6 +175,13 @@ public class Weapon : MonoBehaviour
 		InputManager.INPUT_ACTIONS.Main.Fire.started += FireStarted;
 		InputManager.INPUT_ACTIONS.Main.Fire.canceled += FireCanceled;
 		InputManager.INPUT_ACTIONS.Main.Reload.started += Reload;
+	}
+
+	public void PickUp()
+	{
+		pickedUp = true;
+		transform.parent = GameObject.Find("Player").transform.Find("WeaponManager");
+		transform.parent.GetComponent<WeaponManager>().PickUpWeapon(transform);
 	}
 
 	public int GetCurrentAmmo() => currentAmmo;

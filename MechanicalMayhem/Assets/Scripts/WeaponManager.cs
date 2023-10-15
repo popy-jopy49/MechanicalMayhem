@@ -35,6 +35,7 @@ public class WeaponManager : MonoBehaviour
 		thirdWeapon = GameObject.Find("ThirdWeapon").transform.Find("Icon").GetComponent<Image>();
         currentAmmo = GameObject.Find("CurrentAmmo").GetComponent<TMP_Text>();
         totalAmmo = GameObject.Find("TotalAmmo").GetComponent<TMP_Text>();
+		UpdateWeaponUI();
     }
 
     private void Start()
@@ -102,7 +103,7 @@ public class WeaponManager : MonoBehaviour
 
 	private void Update()
 	{
-		UpdateWeaponUI();
+		//UpdateWeaponUI();
 	}
 
 	private void UpdateCurrentWeapon()
@@ -135,33 +136,33 @@ public class WeaponManager : MonoBehaviour
             totalAmmo.gameObject.SetActive(!weapon.weaponData.melee);
             currentAmmo.gameObject.SetActive(!weapon.weaponData.melee);
 		}
-		if (weapons.Count > 1)
+		WeaponUI(1, ref firstWeapon);
+		WeaponUI(2, ref secondWeapon);
+		WeaponUI(3, ref thirdWeapon);
+	}
+
+	private void WeaponUI(int count, ref Image weapon)
+	{
+		if (weapons.Count > count)
 		{
-			firstWeapon.sprite = weapons[1].GetComponent<Weapon>().weaponData.icon;
-			firstWeapon.gameObject.SetActive(true);
+			weapon.sprite = weapons[count].GetComponent<Weapon>().weaponData.icon;
+			weapon.gameObject.SetActive(true);
 		}
 		else
 		{
-			firstWeapon.gameObject.SetActive(false);
+			weapon.gameObject.SetActive(false);
 		}
-		if (weapons.Count > 2)
-		{
-			secondWeapon.sprite = weapons[2].GetComponent<Weapon>().weaponData.icon;
-			secondWeapon.gameObject.SetActive(true);
-		}
-		else
-		{
-			secondWeapon.gameObject.SetActive(false);
-		}
-		if (weapons.Count > 3)
-		{
-			thirdWeapon.sprite = weapons[3].GetComponent<Weapon>().weaponData.icon;
-			thirdWeapon.gameObject.SetActive(true);
-		}
-		else
-		{
-			thirdWeapon.gameObject.SetActive(false);
-		}
+	}
+
+	public void PickUpWeapon(Transform weapon)
+	{
+		weapons.Add(weapon);
+		weapon.localPosition = Vector2.zero + new Vector2(0.5f, 0);
+		weapon.gameObject.SetActive(false);
+		weapon.Find("GFX").GetComponent<SpriteRenderer>().sortingLayerName = "Weapons";
+		weapon.tag = "Player";
+		weapon.gameObject.layer = LayerMask.NameToLayer("Player");
+		UpdateWeaponUI();
 	}
 
 }

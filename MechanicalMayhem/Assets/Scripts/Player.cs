@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     private List<GameObject> itemsToPickup = new();
     private List<Repairable> nearbyRepairables = new();
     private bool workbenchNearby = false;
+    private Weapon nearbyWeapon = null;
     private List<GameObject> inventory = new();
 
     private GameObject fToInteract;
@@ -43,7 +44,7 @@ public class Player : MonoBehaviour
         if (GameManager.I.InPuzzle())
             return;
 
-        fToInteract.SetActive(itemsToPickup.Count > 0 || nearbyRepairables.Count > 0 || workbenchNearby);
+        fToInteract.SetActive(itemsToPickup.Count > 0 || nearbyRepairables.Count > 0 || workbenchNearby || nearbyWeapon);
 
         Vector3 mousePos = InputManager.INPUT_ACTIONS.Main.MousePosition.ReadValue<Vector2>();
         mousePos.z = 0.0f;
@@ -70,13 +71,19 @@ public class Player : MonoBehaviour
         {
             if (!repairable.IsRepaired() && !nearbyRepairables.Contains(repairable))
                 nearbyRepairables.Add(repairable);
-        }
+		}
 
-        if (collision.CompareTag("Workbench"))
-        {
-            workbenchNearby = true;
-        }
-    }
+		if (collision.CompareTag("Workbench"))
+		{
+			workbenchNearby = true;
+		}
+
+		if (collision.CompareTag("Weapon"))
+		{
+            print("weapon");
+			nearbyWeapon = collision.GetComponent<Weapon>();
+		}
+	}
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -101,6 +108,11 @@ public class Player : MonoBehaviour
 			workbenchNearby = false;
             workbenchUI.SetActive(false);
 		}
+
+		if (collision.CompareTag("Weapon"))
+		{
+			nearbyWeapon = null;
+		}
 	}
 
     private void Interact(InputAction.CallbackContext obj)
@@ -114,6 +126,12 @@ public class Player : MonoBehaviour
 
 		if (GameManager.I.InPuzzle())
             return;
+
+        // Weapons
+        if (nearbyWeapon)
+        {
+            nearbyWeapon.PickUp();
+		}
 
 		// Workbench
 		if (workbenchNearby)
@@ -182,6 +200,14 @@ public class Player : MonoBehaviour
 
     private void Respawn()
     {
+        foreach(Repairable repairable in nearbyRepairables)
+        {
+            if (repairable.ThisPuzzle())
+            {
+                repairable.ExitPuzzle(false);
+            }
+        }
+
         rb.position = respawnPoint.position;
         rb.velocity = Vector2.zero;
         health = maxHealth;
