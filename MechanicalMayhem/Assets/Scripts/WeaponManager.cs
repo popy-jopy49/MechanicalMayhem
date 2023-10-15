@@ -101,11 +101,6 @@ public class WeaponManager : MonoBehaviour
         UpdateCurrentWeapon();
 	}
 
-	private void Update()
-	{
-		//UpdateWeaponUI();
-	}
-
 	private void UpdateCurrentWeapon()
     {
         if (!weapons[currentWeaponIndex] || currentWeaponIndex <= 0)
@@ -125,7 +120,7 @@ public class WeaponManager : MonoBehaviour
 		UpdateWeaponUI();
 	}
 
-    private void UpdateWeaponUI()
+    public void UpdateWeaponUI()
 	{
 		if (weapons.Count > 0)
 		{

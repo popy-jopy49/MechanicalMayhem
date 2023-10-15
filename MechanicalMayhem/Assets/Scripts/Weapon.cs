@@ -9,6 +9,7 @@ public class Weapon : MonoBehaviour
 
     public WeaponData weaponData;
 
+	private WeaponManager weaponManager;
     private Transform firePoint;
     private float fireTime;
     private bool isFiring;
@@ -29,6 +30,7 @@ public class Weapon : MonoBehaviour
 
 		firePoint = GameObject.Find("Player").transform;
 		pickedUp = !CompareTag("Weapon");
+		weaponManager = transform.parent.GetComponent<WeaponManager>();
     }
 
 	private void Update()
@@ -110,8 +112,9 @@ public class Weapon : MonoBehaviour
 			// TODO: Spawn Muzzle Flash effect
 
 			print("Ranged");
-			// Spawn Bullet
-			Quaternion bulletDirection = Quaternion.Euler(new Vector3(0, 0, VectorUtils.GetAngleFromVector(fireDirection) - 90f));
+            // Spawn Bullet
+            weaponManager.UpdateWeaponUI();
+            Quaternion bulletDirection = Quaternion.Euler(new Vector3(0, 0, VectorUtils.GetAngleFromVector(fireDirection) - 90f));
 			GameObject bullet = Instantiate(weaponData.bulletPrefab, firePoint.position, bulletDirection);
 			bullet.GetComponent<Bullet>().Setup(fireDirection * weaponData.bulletSpeed, weaponData.damage, weaponData.explosionRadius, weaponData.whatToHit, "PlayerBullet");
 			Destroy(bullet, 5f);
@@ -122,7 +125,7 @@ public class Weapon : MonoBehaviour
 
     private void FireStarted(InputAction.CallbackContext obj)
 	{
-		if (!pickedUp)
+		if (!pickedUp || !workbenchUI)
 			return;
 
 		if (!workbenchUI.activeSelf ||
@@ -159,6 +162,8 @@ public class Weapon : MonoBehaviour
 			totalAmmo -= amountToReload;
 			currentAmmo = (int)weaponData.maxAmmo;
 		}
+
+		weaponManager.UpdateWeaponUI();
 	}
 
 	private void OnDisable()
@@ -181,7 +186,8 @@ public class Weapon : MonoBehaviour
 	{
 		pickedUp = true;
 		transform.parent = GameObject.Find("Player").transform.Find("WeaponManager");
-		transform.parent.GetComponent<WeaponManager>().PickUpWeapon(transform);
+        weaponManager = transform.parent.GetComponent<WeaponManager>();
+        weaponManager.PickUpWeapon(transform);
 	}
 
 	public int GetCurrentAmmo() => currentAmmo;

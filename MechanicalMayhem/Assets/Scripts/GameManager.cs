@@ -20,23 +20,26 @@ public class GameManager : Singleton<GameManager>
 	private bool chromaticAberration;
 	private float brightness;
 
-	void OnEnable()
+	void Awake()
 	{
-		hiddenHUD = GameObject.Find("Canvas").transform.Find("HiddenHUD").gameObject;
-		escapeMenu = GameObjectExtensionMethods.FindDeactivatedGameObject(gameObject, "HUD", "EscapeMenu");
-
 		InputManager.Initialise();
 		InputManager.INPUT_ACTIONS.Main.PauseScreen.started += PauseScreenStarted;
 		SceneManager.sceneLoaded += OnSceneLoaded;
 	}
 
-	void OnDisable()
+    private void OnEnable()
+    {
+		Awake();
+    }
+
+    void OnDisable()
 	{
 		SceneManager.sceneLoaded -= OnSceneLoaded;
 	}
 
 	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 	{
+		Awake();
 		if (scene.buildIndex == MAINSCENE)
 		{
 			ApplyPPData();
@@ -47,7 +50,16 @@ public class GameManager : Singleton<GameManager>
 		}
 	}
 
-	public void SavePPData(bool bloom, bool chromaticAberration, float brightness)
+    private void Update()
+    {
+		if (hiddenHUD || escapeMenu)
+			return;
+
+        hiddenHUD = GameObject.Find("Canvas").transform.Find("HiddenHUD").gameObject;
+        escapeMenu = GameObjectExtensionMethods.FindDeactivatedGameObject(gameObject, "HUD", "EscapeMenu");
+    }
+
+    public void SavePPData(bool bloom, bool chromaticAberration, float brightness)
 	{
 		this.bloom = bloom;
 		this.chromaticAberration = chromaticAberration;
