@@ -131,5 +131,6 @@ public class TDPlayerMovement : MonoBehaviour
     }
 
     public void AddMaxSprint(float maxSprint) => this.maxSprint += maxSprint;
+    public void SetMaxSprint(float maxSprint) => this.maxSprint = maxSprint;
 
 }

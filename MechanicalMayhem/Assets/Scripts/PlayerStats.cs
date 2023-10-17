@@ -20,6 +20,9 @@ public class PlayerStats : Singleton<PlayerStats>
 			minimapCamera = GameObject.Find("MinimapCamera").GetComponent<Camera>();
 			nbText = GameObject.Find("NutsAndBoltsAmount").GetComponent<TMP_Text>();
 			ChangeNutsAndBolts(0);
+			player.SetMaxHealth(MaxHealth);
+			playerMovement.SetMaxSprint(MaxSprint);
+			minimapCamera.orthographicSize = MinimapSize;
 		};
 	}
 
@@ -41,12 +44,15 @@ public class PlayerStats : Singleton<PlayerStats>
 #endif
 	}
 
-	public float MaxSprint 
-		{ get { return MaxSprint; } set { playerMovement.AddMaxSprint(value); } }
+    private float _maxSprint;
+    private float _maxHealth;
+    private float _minimapSize;
+    public float MaxSprint 
+		{ get { return _maxSprint; } set { playerMovement.AddMaxSprint(value); _maxSprint = value; } }
 	public float MaxHealth
-		{ get { return MaxHealth; } set { player.AddMaxHealth(value); } }
+		{ get { return _maxHealth; } set { player.AddMaxHealth(value); _maxHealth = value; } }
 	public float MinimapSize
-		{ get { return MinimapSize; } set { minimapCamera.orthographicSize += value; } }
+		{ get { return _minimapSize; } set { minimapCamera.orthographicSize += value; _minimapSize = value; } }
 
 	[SerializeField] private float defaultMaxSprint;
 	[SerializeField] private float defaultMaxHealth;
