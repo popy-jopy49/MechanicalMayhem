@@ -5,11 +5,11 @@ public class Drone : Tank
 {
 
 	private Transform[] firePoints;
-	private int currentTurret = 0;
+	private byte currentTurret = 0;
 
 	protected override void Attack()
 	{
-		currentTurret = Mathf.Abs(currentTurret - 1);
+		currentTurret = (byte)Mathf.Abs(currentTurret - 1);
 		// Spawn bullet
 		Quaternion bulletDirection = Quaternion.Euler(new Vector3(0, 0, VectorUtils.GetAngleFromVector(firePoints[currentTurret].right) - 90f));
 		GameObject bullet = Instantiate(bulletPrefab, firePoints[currentTurret].position, bulletDirection);

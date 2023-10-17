@@ -80,7 +80,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSize: {x: 21, y: 11}
   gridObjectSize: {x: 0.5, y: 0.5}
-  fileName: MazeBinary.txt
+  fileName: MazeBinary3.txt
   comparisonFileName: 
   parent: {fileID: 955784386274889457}
   textPrefabDigits:

@@ -78,13 +78,13 @@ public class Repairable : MonoBehaviour
 				OnRepair();
                 return;
             case Puzzle.Maze:
-                PuzzleGrid.Setup(GameAssets.I.MazePuzzle, OnRepair);
+                PuzzleGrid.Setup(GameAssets.I.MazePuzzle, GameAssets.I.MazeFiles, OnRepair);
                 break;
             case Puzzle.RushHour:
-                Instantiate(GameAssets.I.RushHourPuzzle, puzzlesParent).Find("PuzzleWin").GetComponent<PuzzleWin>().SetWinFunc(OnRepair);
+                Instantiate(GameAssets.I.GetRandomPrefab(GameAssets.I.RushHourPuzzles), puzzlesParent).Find("PuzzleWin").GetComponent<PuzzleWin>().SetWinFunc(OnRepair);
                 break;
             case Puzzle.ImagePuzzle:
-                PuzzleGrid.Setup(GameAssets.I.ImagePuzzle, OnRepair);
+                PuzzleGrid.Setup(GameAssets.I.ImagePuzzle, GameAssets.I.ImageFiles, OnRepair, GameAssets.I.ImageComparisonFiles);
                 break;
         }
 

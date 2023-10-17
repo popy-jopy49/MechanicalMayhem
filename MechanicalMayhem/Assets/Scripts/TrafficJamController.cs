@@ -12,6 +12,7 @@ public class TrafficJamController : MonoBehaviour, IDragHandler, IBeginDragHandl
     {
         rb = GetComponent<Rigidbody2D>();
         rb.isKinematic = true;
+        rb.constraints = (y ? RigidbodyConstraints2D.FreezePositionX : RigidbodyConstraints2D.FreezePositionY) | RigidbodyConstraints2D.FreezeRotation;
     }
 
     public void OnDrag(PointerEventData eventData)

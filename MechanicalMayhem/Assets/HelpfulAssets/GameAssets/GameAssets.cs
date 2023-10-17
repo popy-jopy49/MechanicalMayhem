@@ -6,20 +6,23 @@ using UnityEngine.Rendering;
 public class GameAssets : Singleton<GameAssets> {
 
     [System.Serializable]
-    public class PrefabData
+    public class PrefabData<T>
     {
-        public GameObject g;
+        public T obj;
         public float chance;
     }
 
 	[Header("Prefabs")]
 	public GameObject MessagePrefab;
 	public GameObject BulletPrefab;
-    public PrefabData[] DronePrefabs;
-	public PrefabData[] EnemyPrefabs;
-    public Transform MazePuzzle;
+    public PrefabData<GameObject>[] DronePrefabs;
+	public PrefabData<GameObject>[] EnemyPrefabs;
+	public PrefabData<string>[] MazeFiles;
+	public PrefabData<string>[] ImageFiles;
+	public PrefabData<string>[] ImageComparisonFiles;
+    public PrefabData<Transform>[] RushHourPuzzles;
     public Transform ImagePuzzle;
-    public Transform RushHourPuzzle;
+    public Transform MazePuzzle;
 
     [Header("Effects")]
 	public GameObject DroneExplosionPrefab;
@@ -36,10 +39,10 @@ public class GameAssets : Singleton<GameAssets> {
 		RegisterSingleton(this);
 	}
 
-	public GameObject GetRandomPrefab(PrefabData[] prefabDatas)
+	public T GetRandomPrefab<T>(PrefabData<T>[] prefabDatas)
 	{
         float totalSpawnChance = 0f;
-        foreach (PrefabData enemyPrefabData in prefabDatas)
+        foreach (PrefabData<T> enemyPrefabData in prefabDatas)
         {
             totalSpawnChance += enemyPrefabData.chance;
         }
@@ -48,24 +51,18 @@ public class GameAssets : Singleton<GameAssets> {
         float randomValue = Random.Range(0f, totalSpawnChance);
         
         // Find the first gameobject that has the chance
-        GameObject selectedEnemyPrefab = null;
-        foreach (var enemyData in prefabDatas)
+        T selectedEnemyPrefab = default;
+        foreach (PrefabData<T> enemyData in prefabDatas)
         {
             if (randomValue < enemyData.chance)
             {
-                selectedEnemyPrefab = enemyData.g;
+                selectedEnemyPrefab = enemyData.obj;
                 break;
             }
             randomValue -= enemyData.chance;
         }
 
-        // Spawn the selected enemy
-        if (selectedEnemyPrefab)
-        {
-            return selectedEnemyPrefab;
-        }
-
-        return prefabDatas[0] == null ? prefabDatas[0].g : null;
+		return selectedEnemyPrefab;
 	}
 
 }

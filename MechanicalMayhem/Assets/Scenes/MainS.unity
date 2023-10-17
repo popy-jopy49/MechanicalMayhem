@@ -3307,6 +3307,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1729222158}
     m_Modifications:
     - target: {fileID: 4392724471168186692, guid: 24ebe2e6c21e83344b05b5d9c1c5ff41, type: 3}
+      propertyPath: puzzle
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392724471168186692, guid: 24ebe2e6c21e83344b05b5d9c1c5ff41, type: 3}
       propertyPath: linkedItems.Array.data[0]
       value: 
       objectReference: {fileID: 1972307648}
