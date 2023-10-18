@@ -1,4 +1,5 @@
 using SWAssets;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,34 +8,38 @@ using UnityEngine.SceneManagement;
 public class PlayerStats : Singleton<PlayerStats>
 {
 
-	private TDPlayerMovement playerMovement;
-	private Camera minimapCamera;
-	private Player player;
+	public event EventHandler MaxHealthChanged;
+	public event EventHandler MaxSprintChanged;
+	public event EventHandler MinimapSizeChanged;
+
+	//private TDPlayerMovement playerMovement;
+	//private Camera minimapCamera;
+	//private Player player;
 
 	private void Awake()
 	{
 		SceneManager.sceneLoaded += (_, _) =>
 		{
-			player = GameObject.Find("Player").GetComponent<Player>();
-			playerMovement = player.GetComponent<TDPlayerMovement>();
-			minimapCamera = GameObject.Find("MinimapCamera").GetComponent<Camera>();
+			//player = GameObject.Find("Player").GetComponent<Player>();
+			//playerMovement = player.GetComponent<TDPlayerMovement>();
+			//minimapCamera = GameObject.Find("MinimapCamera").GetComponent<Camera>();
 			nbText = GameObject.Find("NutsAndBoltsAmount").GetComponent<TMP_Text>();
 			ChangeNutsAndBolts(0);
-			player.SetMaxHealth(MaxHealth);
-			playerMovement.SetMaxSprint(MaxSprint);
-			minimapCamera.orthographicSize = MinimapSize;
+			//player.SetMaxHealth(MaxHealth);
+			//playerMovement.SetMaxSprint(MaxSprint);
+			//minimapCamera.orthographicSize = MinimapSize;
 		};
-	}
+	}/*
 
 	private void Start()
 	{
-		/*if (!GameManager.I.newGame)
-			return;*/ // TODO: Change and uncomment
+		*//*if (!GameManager.I.newGame)
+			return;*//* // TODO: Change and uncomment
 
 		MaxSprint = defaultMaxSprint;
 		MaxHealth = defaultMaxHealth;
 		minimapCamera.orthographicSize = defaultMinimapSize; // Doesn't start at 0
-	}
+	}*/
 
 	private void Update()
 	{
@@ -42,7 +47,7 @@ public class PlayerStats : Singleton<PlayerStats>
 		if (Keyboard.current.numpadPlusKey.wasPressedThisFrame)
 			ChangeNutsAndBolts(1000000);
 #endif
-	}
+	}/*
 
     private float _maxSprint;
     private float _maxHealth;
@@ -56,7 +61,7 @@ public class PlayerStats : Singleton<PlayerStats>
 
 	[SerializeField] private float defaultMaxSprint;
 	[SerializeField] private float defaultMaxHealth;
-	[SerializeField] private float defaultMinimapSize;
+	[SerializeField] private float defaultMinimapSize;*/
 
 	private int nutsAndBolts;
 	private TMP_Text nbText;

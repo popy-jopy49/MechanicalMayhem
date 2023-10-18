@@ -93,17 +93,18 @@ public class Workbench : MonoBehaviour
         Buy(upgradeData, levelText, item.item);
 
         object data = Resources.Load<WeaponData>("ScriptableObjects/Current/" + item.item + "_Current");
-        
+
         if (data == null)
         {
             data = PlayerStats.I;
-			data.GetType().GetProperty(upgradeData.name).SetValue(data, upgradeData.incrementAmount);
+            //EventInfo eventInfo = data.GetType().GetEvent(upgradeData.name + "Changed");
+            //Delegate d = Delegate.CreateDelegate(eventInfo.EventHandlerType, )
+            //data.GetType().GetEvent(upgradeData.name + "Changed").AddEventHandler(data, d);
+            return;
         }
-        else
-		{
-            FieldInfo info = data.GetType().GetField(ToCamelCase(upgradeData.name));
-			info.SetValue(data, (float)info.GetValue(data) + upgradeData.incrementAmount);
-		}
+        
+        FieldInfo info = data.GetType().GetField(ToCamelCase(upgradeData.name));
+        info.SetValue(data, (float)info.GetValue(data) + upgradeData.incrementAmount);
     }
 
     private bool CanUpgrade(UpgradeData upgradeData)
