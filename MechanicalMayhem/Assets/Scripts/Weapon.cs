@@ -92,7 +92,6 @@ public class Weapon : MonoBehaviour
 
 		if (weaponData.melee)
 		{
-			print("melee");
 			// TODO: Do melee attack animation
 			RaycastHit2D hit = Physics2D.Raycast(firePoint.position, fireDirection, weaponData.range, weaponData.whatToHit);
 			if (!hit.transform)
@@ -111,7 +110,6 @@ public class Weapon : MonoBehaviour
 		{
 			// TODO: Spawn Muzzle Flash effect
 
-			print("Ranged");
             // Spawn Bullet
             weaponManager.UpdateWeaponUI();
             Quaternion bulletDirection = Quaternion.Euler(new Vector3(0, 0, VectorUtils.GetAngleFromVector(fireDirection) - 90f));

@@ -10,7 +10,7 @@ public class Door : Repairable
 	
 	protected override void OnRepairGFX()
 	{
-		newPos = (Vector2)transform.position + moveDirection * Mathf.Max(transform.localScale.x, transform.localScale.y);//(moveDirection * transform.localScale.x * transform.right);
+		newPos = (Vector2)transform.position + moveDirection * Mathf.Max(transform.localScale.x, transform.localScale.y);
 	}
 
 	protected override void RepairedUpdate()

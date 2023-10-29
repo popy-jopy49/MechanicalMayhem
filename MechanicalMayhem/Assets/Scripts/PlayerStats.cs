@@ -1,5 +1,4 @@
 using SWAssets;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,38 +7,77 @@ using UnityEngine.SceneManagement;
 public class PlayerStats : Singleton<PlayerStats>
 {
 
-	public event EventHandler MaxHealthChanged;
-	public event EventHandler MaxSprintChanged;
-	public event EventHandler MinimapSizeChanged;
+	private TDPlayerMovement playerMovement;
+	private Camera minimapCamera;
+	private Player player;
 
-	//private TDPlayerMovement playerMovement;
-	//private Camera minimapCamera;
-	//private Player player;
+	[SerializeField] private float defaultMaxSprint;
+	[SerializeField] private float defaultMaxHealth;
+	[SerializeField] private float defaultMinimapSize;
 
 	private void Awake()
 	{
+		if (GameManager.I.newGame)
+		{
+			PlayerPrefs.DeleteKey("Player_MaxHealth_Value");
+			PlayerPrefs.DeleteKey("Player_MaxSprint_Value");
+			PlayerPrefs.DeleteKey("Player_MinimapSize_Value");
+		}
+
 		SceneManager.sceneLoaded += (_, _) =>
 		{
-			//player = GameObject.Find("Player").GetComponent<Player>();
-			//playerMovement = player.GetComponent<TDPlayerMovement>();
-			//minimapCamera = GameObject.Find("MinimapCamera").GetComponent<Camera>();
-			nbText = GameObject.Find("NutsAndBoltsAmount").GetComponent<TMP_Text>();
-			ChangeNutsAndBolts(0);
-			//player.SetMaxHealth(MaxHealth);
-			//playerMovement.SetMaxSprint(MaxSprint);
-			//minimapCamera.orthographicSize = MinimapSize;
+			print("Start");
+			NBSceneLoaded();
+
+			player = GameObject.Find("Player").GetComponent<Player>();
+			playerMovement = player.GetComponent<TDPlayerMovement>();
+			minimapCamera = GameObject.Find("MinimapCamera").GetComponent<Camera>();
+
+			SetMaxHealth(20, "Player", "MaxHealth");
+			SetMaxSprint(1, "Player", "MaxSprint");
+			SetMinimapSize(1, "Player", "MinimapSize");
+
+			InitialisePlayerUpgrades();
 		};
-	}/*
+	}
 
-	private void Start()
+	private void InitialisePlayerUpgrades()
 	{
-		*//*if (!GameManager.I.newGame)
-			return;*//* // TODO: Change and uncomment
+		player.SetMaxHealth(PlayerPrefs.GetFloat("Player_MaxHealth_Value"));
+		playerMovement.SetMaxSprint(PlayerPrefs.GetFloat("Player_MaxSprint_Value"));
+		minimapCamera.orthographicSize = PlayerPrefs.GetFloat("Player_MinimapSize_Value");
+	}
 
-		MaxSprint = defaultMaxSprint;
-		MaxHealth = defaultMaxHealth;
-		minimapCamera.orthographicSize = defaultMinimapSize; // Doesn't start at 0
-	}*/
+	public void SetMaxSprint(float incrementAmount, string item, string upgradeName)
+	{
+		int level = PlayerPrefs.GetInt($"{item}_{upgradeName}", 0);
+		PlayerPrefs.SetFloat($"{item}_{upgradeName}_Value", (incrementAmount * level) + defaultMaxSprint);
+		InitialisePlayerUpgrades();
+	}
+
+	public void SetMaxHealth(float incrementAmount, string item, string upgradeName)
+	{
+		int level = PlayerPrefs.GetInt($"{item}_{upgradeName}", 0);
+		PlayerPrefs.SetFloat($"{item}_{upgradeName}_Value", (incrementAmount * level) + defaultMaxHealth);
+		InitialisePlayerUpgrades();
+	}
+
+	public void SetMinimapSize(float incrementAmount, string item, string upgradeName)
+	{
+		int level = PlayerPrefs.GetInt($"{item}_{upgradeName}", 0);
+		PlayerPrefs.SetFloat($"{item}_{upgradeName}_Value", (incrementAmount * level) + defaultMinimapSize);
+		InitialisePlayerUpgrades();
+	}
+
+	#region Nuts And Bolts
+	private int nutsAndBolts;
+	private TMP_Text nbText;
+
+	private void NBSceneLoaded()
+	{
+		nbText = GameObject.Find("NutsAndBoltsAmount").GetComponent<TMP_Text>();
+		ChangeNutsAndBolts(0);
+	}
 
 	private void Update()
 	{
@@ -47,29 +85,14 @@ public class PlayerStats : Singleton<PlayerStats>
 		if (Keyboard.current.numpadPlusKey.wasPressedThisFrame)
 			ChangeNutsAndBolts(1000000);
 #endif
-	}/*
+	}
 
-    private float _maxSprint;
-    private float _maxHealth;
-    private float _minimapSize;
-    public float MaxSprint 
-		{ get { return _maxSprint; } set { playerMovement.AddMaxSprint(value); _maxSprint = value; } }
-	public float MaxHealth
-		{ get { return _maxHealth; } set { player.AddMaxHealth(value); _maxHealth = value; } }
-	public float MinimapSize
-		{ get { return _minimapSize; } set { minimapCamera.orthographicSize += value; _minimapSize = value; } }
-
-	[SerializeField] private float defaultMaxSprint;
-	[SerializeField] private float defaultMaxHealth;
-	[SerializeField] private float defaultMinimapSize;*/
-
-	private int nutsAndBolts;
-	private TMP_Text nbText;
 	public void ChangeNutsAndBolts(int amount)
 	{
 		nutsAndBolts += amount;
 		nbText.text = nutsAndBolts.ToString();
 	}
 	public int GetNutsAndBolts() => nutsAndBolts;
+	#endregion
 
 }

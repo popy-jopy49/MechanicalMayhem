@@ -216,7 +216,6 @@ public class Player : MonoBehaviour
 
     public void RemoveRepairable(Repairable repairable) => nearbyRepairables.Remove(repairable);
 
-	public void AddMaxHealth(float value) => SetMaxHealth(maxHealth + value);
 	public void SetMaxHealth(float value)
 	{
         maxHealth = value;

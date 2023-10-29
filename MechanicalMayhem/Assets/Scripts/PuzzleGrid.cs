@@ -56,7 +56,7 @@ public class PuzzleGrid : MonoBehaviour
 
     private string GetTextAtPath(string path)
 	{
-		StreamReader reader = new("Assets/Resources/" + path);
+		StreamReader reader = new($"Assets/Resources/{path}");
 		string text = reader.ReadToEnd().Trim().Replace("\n", "").Replace("\r", "");
 		reader.Close();
 		return text;

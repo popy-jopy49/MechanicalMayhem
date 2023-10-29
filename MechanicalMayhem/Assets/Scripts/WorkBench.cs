@@ -34,7 +34,7 @@ public class Workbench : MonoBehaviour
     {
         Transform parent = transform.Find(upgradeItem.item);
         parent.Find("TabArea").GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = VariableToHuman(upgradeItem.item);
-        parent.Find("Title").GetComponent<TMP_Text>().text = VariableToHuman(upgradeItem.item) + " Upgrades";
+        parent.Find("Title").GetComponent<TMP_Text>().text = $"{VariableToHuman(upgradeItem.item)} Upgrades";
         for (int i = 0; i < upgradeItem.upgradeDatas.Length; i++)
 		{
             SetUpgradeData(i, parent, upgradeItem);
@@ -48,14 +48,13 @@ public class Workbench : MonoBehaviour
 		Transform upgradeParent = parent.Find(upgradeData.name);
 
 		upgradeParent.Find("Header").GetComponent<TMP_Text>().text = upgradeData.header;
-        upgradeParent.Find("Cost").GetComponent<TMP_Text>().text = upgradeData.cost + " N&B";
+        upgradeParent.Find("Cost").GetComponent<TMP_Text>().text = $"{upgradeData.cost} N&B";
 
-        int sLPP = PlayerPrefs.GetInt(upgradeItem.item + "_" + upgradeData.name, 0);
+        int sLPP = PlayerPrefs.GetInt($"{upgradeItem.item}_{upgradeData.name}", 0);
         if (sLPP >= upgradeData.startLevel)
             upgradeData.startLevel = sLPP;
 
-        string levelTextString = "Lv. " + upgradeData.startLevel +
-            (upgradeData.maxLevel == 0 ? "" : "/" + upgradeData.maxLevel);
+        string levelTextString = $"Lv. {upgradeData.startLevel}{(upgradeData.maxLevel == 0 ? "" : $"/{upgradeData.maxLevel}")}";
         TMP_Text levelText = upgradeParent.Find("Level").GetComponent<TMP_Text>();
 		levelText.text = levelTextString;
 
@@ -92,15 +91,12 @@ public class Workbench : MonoBehaviour
         UpgradeData upgradeData = item.upgradeDatas[i];
         Buy(upgradeData, levelText, item.item);
 
-        object data = Resources.Load<WeaponData>("ScriptableObjects/Current/" + item.item + "_Current");
+        object data = Resources.Load<WeaponData>($"ScriptableObjects/Current/{item.item}_Current");
 
         if (data == null)
         {
-            data = PlayerStats.I;
-            //EventInfo eventInfo = data.GetType().GetEvent(upgradeData.name + "Changed");
-            //Delegate d = Delegate.CreateDelegate(eventInfo.EventHandlerType, )
-            //data.GetType().GetEvent(upgradeData.name + "Changed").AddEventHandler(data, d);
-            return;
+            PlayerStats.I.GetType().GetMethod($"Set{upgradeData.name}").Invoke(PlayerStats.I, new object[] { upgradeData.incrementAmount, item.item, upgradeData.name });
+			return;
         }
         
         FieldInfo info = data.GetType().GetField(ToCamelCase(upgradeData.name));
@@ -120,10 +116,9 @@ public class Workbench : MonoBehaviour
             return;
 		PlayerStats.I.ChangeNutsAndBolts(-upgradeData.cost);
         upgradeData.startLevel++;
-		string levelTextString = "Lv. " + upgradeData.startLevel +
-			(upgradeData.maxLevel == 0 ? "" : "/" + upgradeData.maxLevel);
+		string levelTextString = $"Lv. {upgradeData.startLevel}{(upgradeData.maxLevel == 0 ? "" : $"/{upgradeData.maxLevel}")}";
         levelText.text = levelTextString;
-        PlayerPrefs.SetInt(item + "_" + upgradeData.name, upgradeData.startLevel);
+        PlayerPrefs.SetInt($"{item}_{upgradeData.name}", upgradeData.startLevel);
 	}
 
     private string ToCamelCase(string name)
@@ -162,7 +157,7 @@ public class Workbench : MonoBehaviour
 		{
 			foreach (UpgradeData data in item.upgradeDatas)
 			{
-				PlayerPrefs.DeleteKey(item.item + "_" + data.name);
+				PlayerPrefs.DeleteKey($"{item.item}_{data.name}");
 			}
 		}
 	}

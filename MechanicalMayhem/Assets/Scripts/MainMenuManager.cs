@@ -19,7 +19,7 @@ public class MainMenuManager : MonoBehaviour {
 
 		for (int i = 0; i < resolutions.Length; i++)
 		{
-            string option = resolutions[i].width + " x " + resolutions[i].height;
+            string option = $"{resolutions[i].width} x {resolutions[i].height}";
             options.Add(option);
 
             if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
@@ -165,15 +165,15 @@ public class MainMenuManager : MonoBehaviour {
     void LoadGraphics()
 	{
         SetBrightness(PlayerPrefs.GetFloat("Brightness", defaultBrightness));
-        SetFullscreen(PlayerPrefs.GetInt("Fullscreen", 1) == 1);
+        SetFullscreen(Convert.ToBoolean(PlayerPrefs.GetInt("Fullscreen", 1)));
         SetQuality(PlayerPrefs.GetInt("Quality", 2));
         SetResoloution(PlayerPrefs.GetInt("Resoloution", 0));
         SetAntiAliasing(PlayerPrefs.GetInt("AntiAliasing", 1));
         SetFrameRate(PlayerPrefs.GetInt("FrameRate", 0));
-        SetVSync(PlayerPrefs.GetInt("VSync", 1) == 1);
-        SetHDR(PlayerPrefs.GetInt("HDR", 0) == 1);
-        SetBloom(PlayerPrefs.GetInt("Bloom", 1) == 1);
-		SetChromaticAberration(PlayerPrefs.GetInt("ChromaticAberration", 1) == 1);
+        SetVSync(Convert.ToBoolean(PlayerPrefs.GetInt("VSync", 1)));
+        SetHDR(Convert.ToBoolean(PlayerPrefs.GetInt("HDR", 0)));
+        SetBloom(Convert.ToBoolean(PlayerPrefs.GetInt("Bloom", 1)));
+		SetChromaticAberration(Convert.ToBoolean(PlayerPrefs.GetInt("ChromaticAberration", 1)));
         ApplyGraphics();
         UpdateGraphicsUI();
     }

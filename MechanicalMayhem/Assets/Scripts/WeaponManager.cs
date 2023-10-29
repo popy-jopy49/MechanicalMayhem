@@ -51,7 +51,7 @@ public class WeaponManager : MonoBehaviour
 		for (int i = 0; i < weapons.Count; i++)
 		{
 			WeaponData weaponData = weapons[i].GetComponent<Weapon>().weaponData;
-			ChangeWeaponDataValues(ref weaponData, Resources.Load<WeaponData>("ScriptableObjects/Defaults/" + weaponData.name.Split('_')[0]));
+			ChangeWeaponDataValues(ref weaponData, Resources.Load<WeaponData>($"ScriptableObjects/Defaults/{weaponData.name.Split('_')[0]}"));
 		}
 	}
 

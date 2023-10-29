@@ -130,4 +130,6 @@ public class TDPlayerMovement : MonoBehaviour
         currentDir = newDir;
     }
 
+    public void SetMaxSprint(float value) => maxSprint = value;
+
 }
