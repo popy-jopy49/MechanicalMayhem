@@ -11,6 +11,7 @@ public class Door : Repairable
 	protected override void OnRepairGFX()
 	{
 		newPos = (Vector2)transform.position + moveDirection * Mathf.Max(transform.localScale.x, transform.localScale.y);
+		SoundManager.I.PlaySound("DoorOpening");
 	}
 
 	protected override void RepairedUpdate()

@@ -185,6 +185,7 @@ public class Player : MonoBehaviour
 		temp.SetActive(false);
 		itemsToPickup.Remove(temp);
 		temp.transform.parent = transform;
+        SoundManager.I.PlaySound("PickUpItem");
 	}
 
     public void Damage(float damage)
