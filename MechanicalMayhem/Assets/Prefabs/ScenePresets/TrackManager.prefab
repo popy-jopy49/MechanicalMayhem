@@ -157,7 +157,7 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   tracks:
   - sceneTracks:
-    - clip: {fileID: 8300000, guid: 0a731618eddb02a40ad0e9754464a7b2, type: 3}
+    - clip: {fileID: 8300000, guid: a0f6f7ced883a71438538c80c86d84a5, type: 3}
       once: 0
   - sceneTracks:
     - clip: {fileID: 8300000, guid: 8df3fa764e95cfa42bb86087efac7a3f, type: 3}

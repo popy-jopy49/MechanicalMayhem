@@ -29,7 +29,6 @@ public class ImageController : MonoBehaviour, IDragHandler
 
 		(int x, int y) currentIndex = grid.WorldToGridPos(transform.position);
 
-		//print(grid.AreNeighbours(index, currentImageIndex));
 		// Check for valid move position
 		if (!grid.IsValidGridPosition(targetIndex) 
 			|| !grid.AreNeighbours(targetIndex, currentIndex) 

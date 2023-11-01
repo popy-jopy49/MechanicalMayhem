@@ -138,6 +138,9 @@ MonoBehaviour:
   nutsAndBoltsOnDrop: 20
   distanceToStop: 8
   distanceToSeek: 15
+  everthingButSelf:
+    serializedVersion: 2
+    m_Bits: 641
   maxDroneCount: 5
 --- !u!195 &6295312645375765167
 NavMeshAgent:

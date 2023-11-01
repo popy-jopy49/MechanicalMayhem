@@ -15,7 +15,10 @@ public class Enemy : Attackable
     [SerializeField] protected float distanceToStop = 2.25f;
     [SerializeField] protected float distanceToSeek = 10f;
 
-    protected float time;
+    [Header("Layers")]
+	[SerializeField] private LayerMask everthingButSelf;
+
+	protected float time;
     protected Transform target;
     protected NavMeshAgent agent;
 
@@ -33,9 +36,13 @@ public class Enemy : Attackable
 		float sqrDist = playerVDist.sqrMagnitude;
         if (sqrDist > distanceToSeek * distanceToSeek)
             return;
+		RaycastHit2D hit2D = Physics2D.Raycast(transform.position, playerVDist, 50f, everthingButSelf);
+		if (!hit2D.transform || !hit2D.transform.gameObject.CompareTag("Player"))
+			return;
 
-        agent.isStopped = sqrDist <= distanceToStop * distanceToStop;
         agent.SetDestination(target.position);
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+		agent.isStopped = sqrDist <= distanceToStop * distanceToStop;
 
 		float rot = Mathf.Atan2(playerVDist.y, playerVDist.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0f, 0f, rot - 90f), Time.deltaTime * agent.angularSpeed);

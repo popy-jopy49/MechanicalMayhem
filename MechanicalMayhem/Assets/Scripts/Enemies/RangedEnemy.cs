@@ -2,14 +2,12 @@ using UnityEngine;
 
 public class RangedEnemy : Enemy {
 
-    [Header("Bullet Values")]
+	[SerializeField] private LayerMask whatToHit;
+
+	[Header("Bullet Values")]
 	[SerializeField] private float bulletSpread = 0.5f;
 	[SerializeField] private float bulletSpeed = 30f;
     [SerializeField] private float explosionRadius = 0f;
-
-    [Header("Layers")]
-    [SerializeField] private LayerMask everthingButSelf;
-    [SerializeField] private LayerMask whatToHit;
 
 	protected Transform firePoint;
 
@@ -21,10 +19,6 @@ public class RangedEnemy : Enemy {
 
     protected override void Attack()
     {
-        RaycastHit2D hit2D = Physics2D.Raycast(transform.position, transform.up, 50f, everthingButSelf);
-        if (!hit2D.transform || !hit2D.transform.gameObject.CompareTag("Player"))
-            return;
-
         GameObject bullet = Instantiate(GameAssets.I.BulletPrefab, firePoint.position, firePoint.rotation);
         bullet.GetComponent<Bullet>().Setup(GetFireDirection() * bulletSpeed, damage, explosionRadius, whatToHit, "EnemyBullet");
         Destroy(bullet, 5f);

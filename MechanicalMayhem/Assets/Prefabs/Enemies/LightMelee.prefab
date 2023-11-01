@@ -138,6 +138,9 @@ MonoBehaviour:
   nutsAndBoltsOnDrop: 5
   distanceToStop: 2.25
   distanceToSeek: 8
+  everthingButSelf:
+    serializedVersion: 2
+    m_Bits: 641
 --- !u!195 &1499894738830424610
 NavMeshAgent:
   m_ObjectHideFlags: 0

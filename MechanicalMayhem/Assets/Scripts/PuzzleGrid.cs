@@ -21,9 +21,9 @@ public class PuzzleGrid : MonoBehaviour
     public static PuzzleGrid Setup(Transform prefab, GameAssets.PrefabData<string>[] files, Action winFunc, GameAssets.PrefabData<string>[] comparisonFiles = null)
 	{
 		PuzzleGrid grid = Instantiate(prefab, Camera.main.transform.Find("Puzzles")).Find("Grid").GetComponent<PuzzleGrid>();
-        grid.fileName = GameAssets.I.GetRandomPrefab(files);
+        grid.fileName = GameAssets.I.GetRandomPrefab(files, out int index);
         if (comparisonFiles != null)
-            grid.comparisonFileName = comparisonFiles[files.ToList().IndexOf(new GameAssets.PrefabData<string>() { chance = 50, obj = grid.fileName})].obj;
+            grid.comparisonFileName = comparisonFiles[index].obj;
 
         grid.cameraParent = Camera.main.transform;
 		grid.SetWinFunc(winFunc);
