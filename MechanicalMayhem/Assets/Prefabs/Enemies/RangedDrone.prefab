@@ -135,18 +135,18 @@ MonoBehaviour:
   maxHealth: 20
   damage: 10
   fireRate: 1.5
-  nutsAndBoltsOnDrop: 3
+  nutsAndBoltsOnDrop: 1
   distanceToStop: 5
   distanceToSeek: 10
-  bulletSpread: 0.1
-  bulletSpeed: 30
-  explosionRadius: 0
   everthingButSelf:
     serializedVersion: 2
     m_Bits: 641
   whatToHit:
     serializedVersion: 2
     m_Bits: 512
+  bulletSpread: 0.1
+  bulletSpeed: 30
+  explosionRadius: 0
 --- !u!195 &6405562768318306842
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -103,7 +103,7 @@ MonoBehaviour:
   maxHealth: 100
   damage: 50
   fireRate: 1
-  nutsAndBoltsOnDrop: 10
+  nutsAndBoltsOnDrop: 2
   distanceToStop: 2.25
   distanceToSeek: 8
   everthingButSelf:
