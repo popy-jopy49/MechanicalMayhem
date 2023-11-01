@@ -26,7 +26,6 @@ public class PlayerStats : Singleton<PlayerStats>
 
 		SceneManager.sceneLoaded += (_, _) =>
 		{
-			print("Start");
 			NBSceneLoaded();
 
 			player = GameObject.Find("Player").GetComponent<Player>();

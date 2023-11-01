@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 
@@ -22,8 +21,10 @@ public class PuzzleGrid : MonoBehaviour
 	{
 		PuzzleGrid grid = Instantiate(prefab, Camera.main.transform.Find("Puzzles")).Find("Grid").GetComponent<PuzzleGrid>();
         grid.fileName = GameAssets.I.GetRandomPrefab(files, out int index);
-        if (comparisonFiles != null)
+        if (comparisonFiles != null && comparisonFiles.Length > 0)
+        {
             grid.comparisonFileName = comparisonFiles[index].obj;
+        }
 
         grid.cameraParent = Camera.main.transform;
 		grid.SetWinFunc(winFunc);
