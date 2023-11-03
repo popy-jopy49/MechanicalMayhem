@@ -68,14 +68,10 @@ public class TrackManager : Singleton<TrackManager>
 		if (source.isPlaying)
 			return;
 
-		PlayTrack(trackIndex++);
-	}
+		if (trackIndex + 1 >= tracks.Count)
+			trackIndex = 0;
 
-	[Obsolete("Please put all audio clips in the sound manager array and call it by its name or index")]
-	public bool PlayTrack(AudioClip clipToPlay)
-	{
-		source.PlayOneShot(clipToPlay);
-		return true;
+		PlayTrack(trackIndex++);
 	}
 
 	[Serializable]

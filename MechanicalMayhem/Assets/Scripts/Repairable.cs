@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Repairable : MonoBehaviour
+public abstract class Repairable : MonoBehaviour
 {
 
     [SerializeField] protected List<GameObject> linkedItems = new();
