@@ -95,6 +95,7 @@ public class Tank : Repairable
 		firePoint = transform.Find("FirePoint");
 	}
 
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
 	{
 		Handles.color = Color.red;
@@ -102,5 +103,6 @@ public class Tank : Repairable
 		Handles.color = Color.green;
 		Handles.DrawWireDisc(transform.position, Vector3.back, distanceToStop);
 	}
+#endif
 
 }

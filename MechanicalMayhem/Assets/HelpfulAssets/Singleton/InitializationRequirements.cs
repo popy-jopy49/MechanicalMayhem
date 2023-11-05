@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using UnityEditor;
 
 namespace SWAssets
 {
-    [InitializeOnLoad]
     public class InitializationRequirements
     {
         static InitializationRequirements ()

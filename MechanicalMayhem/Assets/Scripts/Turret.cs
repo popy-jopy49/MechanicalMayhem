@@ -68,10 +68,12 @@ public class Turret : Repairable
 		Destroy(bullet, 5f);
 	}
 
-    private void OnDrawGizmosSelected()
+#if UNITY_EDITOR
+	private void OnDrawGizmosSelected()
     {
 		Handles.color = Color.red;
 		Handles.DrawWireDisc(transform.position, Vector3.back, range);
     }
+#endif
 
 }
