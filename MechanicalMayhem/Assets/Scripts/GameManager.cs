@@ -93,6 +93,16 @@ public class GameManager : Singleton<GameManager>
     {
         Application.Quit();
     }
+	
+	public void QuitToMainMenu()
+    {
+        SceneFader.I.FadeToScene(0);
+    }
+
+	public void RestartGame()
+	{
+		SceneFader.I.FadeToScene(1);
+	}
 
     public bool InPuzzle() => puzzle;
     public void SetInPuzzle(bool inPuzzle)
