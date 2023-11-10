@@ -9,6 +9,13 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
 
+	public enum DifficultyLevel
+	{
+		Easy,
+		Medium,
+		Hard,
+	}
+
     private GameObject hiddenHUD;
     private GameObject escapeMenu;
     private bool puzzle = false;
@@ -20,11 +27,14 @@ public class GameManager : Singleton<GameManager>
 	private bool chromaticAberration;
 	private float brightness;
 
-	void Awake()
+	public float DamageMultiplier { get; private set; }
+
+    void Awake()
 	{
 		InputManager.Initialise();
 		InputManager.INPUT_ACTIONS.Main.PauseScreen.started += PauseScreenStarted;
 		SceneManager.sceneLoaded += OnSceneLoaded;
+		DamageMultiplier = PlayerPrefs.GetInt(MainMenuManager.DifficultyString, 1);
 	}
 
     private void OnEnable()

@@ -24,7 +24,8 @@ public class Enemy : Attackable
 
     protected virtual void Awake()
 	{
-		target = GameObject.Find("Player").transform;
+        damage *= GameManager.I.DamageMultiplier;
+        target = GameObject.Find("Player").transform;
 		agent = GetComponent<NavMeshAgent>();
 		agent.updateRotation = false;
 		agent.updateUpAxis = false;

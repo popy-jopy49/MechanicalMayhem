@@ -7,6 +7,11 @@ using System;
 
 public class MainMenuManager : MonoBehaviour {
 
+    public const string DifficultyString = "Difficulty";
+
+    [Header("Level Select")]
+    [SerializeField] private TMP_Text difficultySelectText;
+
 	private void Awake()
 	{
         LoadVolume();
@@ -41,6 +46,24 @@ public class MainMenuManager : MonoBehaviour {
     {
         SceneFader.I.FadeToScene(1);
         GameManager.I.newGame = true;
+    }
+
+    public void Easy()
+    {
+        PlayerPrefs.SetInt(DifficultyString, 0);
+        difficultySelectText.text = "Difficulty: Easy";
+    }
+
+    public void Normal()
+    {
+        PlayerPrefs.SetInt(DifficultyString, 1);
+        difficultySelectText.text = "Difficulty: Normal";
+    }
+
+    public void Hard()
+    {
+        PlayerPrefs.SetInt(DifficultyString, 2);
+        difficultySelectText.text = "Difficulty: Hard";
     }
 
 	public static void QuitGame()
