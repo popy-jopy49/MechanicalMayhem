@@ -7,13 +7,16 @@ public class TDCameraFollow : MonoBehaviour
     private Transform player;
     private Vector2 currentVelocity;
 
+    // Makes rerfernce to the player
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
     }
 
+    // Follow player
     private void LateUpdate()
     {
+        // If player doens't exist then exit the function
         if (!player)
             return;
 
@@ -22,3 +25,4 @@ public class TDCameraFollow : MonoBehaviour
     }
 
 }
+
