@@ -25,11 +25,13 @@ public class Turret : Repairable
 
 	protected override void RepairedUpdate()
 	{
+		// check all targets in range
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, range, whatToHit);
 
 		if (colliders.Length <= 0)
 			return;
 
+		// Check for closest and whether they are through a wall or not
 		Vector2 vDist = Vector2.zero;
 		float minDist = Mathf.Infinity;
 		foreach (Collider2D col in colliders)
@@ -48,6 +50,7 @@ public class Turret : Repairable
 			minDist = sqrDist;
 		}
 
+		// Shoot and rotate if in range
 		if (minDist > range)
 			return;
 

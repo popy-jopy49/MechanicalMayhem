@@ -15,6 +15,7 @@ public class Workbench : MonoBehaviour
     private Color affordableColour;
     [SerializeField] private Color unaffordableColour;
 
+    // Gets references + resets upgrades if a new game
     private void Awake()
     {
         upgradeButton = gameObject.FindDeactivatedGameObject("Canvas", "WorkbenchUI").transform.Find("UpgradeButton").GetComponent<Button>();
@@ -30,6 +31,7 @@ public class Workbench : MonoBehaviour
         }
     }
 
+    // Loads and sets UI for each upgrade class
     private void SetUpgradeDetails(UpgradeItem upgradeItem)
     {
         Transform parent = transform.Find(upgradeItem.item);
@@ -41,6 +43,7 @@ public class Workbench : MonoBehaviour
 		}
     }
 
+    // Loads and changes UI for eah individual upgrade
     private void SetUpgradeData(int i, Transform parent, UpgradeItem upgradeItem)
 	{
 		int tempI = i;
@@ -86,6 +89,7 @@ public class Workbench : MonoBehaviour
 		});
 	}
 
+    // function for on click of every upgrade
     private void BuyOnClick(UpgradeItem item, int i, TMP_Text levelText)
     {
         UpgradeData upgradeData = item.upgradeDatas[i];
@@ -103,6 +107,7 @@ public class Workbench : MonoBehaviour
         info.SetValue(data, (float)info.GetValue(data) + upgradeData.incrementAmount);
     }
 
+    // checks if the player can afford the upgrade and whether it is max level or not
     private bool CanUpgrade(UpgradeData upgradeData)
     {
         bool canAfford = PlayerStats.I.GetNutsAndBolts() >= upgradeData.cost;
@@ -110,6 +115,7 @@ public class Workbench : MonoBehaviour
         return canAfford && notMaxLevel;
 	}
 
+    // Buys the upgrade
     private void Buy(UpgradeData upgradeData, TMP_Text levelText, string item)
     {
         if (!CanUpgrade(upgradeData))
@@ -121,11 +127,13 @@ public class Workbench : MonoBehaviour
         PlayerPrefs.SetInt($"{item}_{upgradeData.name}", upgradeData.startLevel);
 	}
 
+    // Changes to camel case for reflections
     private string ToCamelCase(string name)
     {
         return name.Replace(name[0], char.ToLower(name[0]));
     }
 
+    // Helper function for UI
     private string VariableToHuman(string inputString)
     {
 		string final = "";
@@ -139,6 +147,7 @@ public class Workbench : MonoBehaviour
         return final;
     }
 
+    // Cleans up on disable
 	private void OnDisable()
 	{
 		if (prevSelectedButton)
@@ -151,6 +160,7 @@ public class Workbench : MonoBehaviour
 		upgradeButton.onClick.RemoveAllListeners();
 	}
 
+    // Clears player prefs for testing and new games
 	public void ClearUpgradePrefs()
 	{
 		foreach (UpgradeItem item in upgradeItems)

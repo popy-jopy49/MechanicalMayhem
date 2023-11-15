@@ -17,6 +17,7 @@ public class PuzzleGrid : MonoBehaviour
     private Action winFunc;
     private Transform cameraParent;
 
+    // Global static function to instantiate new grid
     public static PuzzleGrid Setup(Transform prefab, GameAssets.PrefabData<string>[] files, Action winFunc, GameAssets.PrefabData<string>[] comparisonFiles = null)
 	{
 		PuzzleGrid grid = Instantiate(prefab, Camera.main.transform.Find("Puzzles")).Find("Grid").GetComponent<PuzzleGrid>();
@@ -35,6 +36,7 @@ public class PuzzleGrid : MonoBehaviour
 
     private void InitialiseGrid(string text)
 	{
+        // set grid offset and dimensions
         gridOffset = (gridSize * gridObjectSize - gridObjectSize) / 2f;
 		gridOffset.x *= -1;
 		grid = new GridObject[(int)gridSize.x, (int)gridSize.y];
@@ -42,11 +44,13 @@ public class PuzzleGrid : MonoBehaviour
         scale.z = 1;
 		transform.parent.Find("Background").localScale = scale;
 
+        // Loop through every row and column
 		int dataIndex = 0;
 		for (int y = 0; y < grid.GetLength(1); y++)
 		{
 			for (int x = 0; x < grid.GetLength(0); x++)
 			{
+                // Set up grid objects and each position
 				char digit = text[dataIndex];
 				Vector2 pos = GridToWorldPos((x, y));
 				grid[x, y] = new GridObject(digit, pos, gridObjectSize, parent, textPrefabDigits, winFunc);
@@ -57,6 +61,7 @@ public class PuzzleGrid : MonoBehaviour
 
     private string GetTextAtPath(string path)
 	{
+        // reads file at path
 		StreamReader reader = new($"Assets/Resources/{path}");
 		string text = reader.ReadToEnd().Trim().Replace("\n", "").Replace("\r", "");
 		reader.Close();
@@ -68,6 +73,7 @@ public class PuzzleGrid : MonoBehaviour
         if (!IsValidGridPosition(index))
             return false;
 
+        // Check if this grid tile is open
         bool free = grid[index.x, index.y].OpenPos();
         bool neighboursHavePlayer = false;
 
@@ -78,6 +84,7 @@ public class PuzzleGrid : MonoBehaviour
             (index.x, index.y + 1),
             (index.x, index.y - 1),
         };
+        // Loop through neibours to see if they have the player
         foreach ((int x, int y) neighbour in neighbours)
 		{
 			if (!IsValidGridPosition(neighbour))
@@ -95,15 +102,18 @@ public class PuzzleGrid : MonoBehaviour
 
     public bool AreNeighbours((int x, int y) firstIndex, (int x, int y) secondIndex)
     {
+        // Checks they are both grid positions and are different
         if (!IsValidGridPosition(firstIndex) || !IsValidGridPosition(secondIndex) || firstIndex == secondIndex)
             return false;
 
+        // checks directly left, right, up, and down
         return (Mathf.Abs(firstIndex.x - secondIndex.x) == 1 && firstIndex.y == secondIndex.y) ^
             (Mathf.Abs(firstIndex.y - secondIndex.y) == 1 && firstIndex.x == secondIndex.x);
     }
 
 	public (int x, int y) WorldToGridPos(Vector2 pos)
 	{
+        // Reverses grid to world transformations
 		Vector2 index = pos;
 		index -= gridOffset;
         index -= (Vector2)cameraParent.position;
@@ -112,11 +122,13 @@ public class PuzzleGrid : MonoBehaviour
 		return (Mathf.RoundToInt(index.x), Mathf.RoundToInt(index.y));
 	}
 
+    // applies reverse transformations to those in the setup
 	public Vector2 GridToWorldPos((int x, int y) index)
 	{
 		return new Vector2(index.x, -index.y) * gridObjectSize + gridOffset + (Vector2)cameraParent.position;
 	}
 
+    // compares grid digits to those of a file
     public bool CompareGrid()
     {
         string text = GetTextAtPath(comparisonFileName);
@@ -136,8 +148,9 @@ public class PuzzleGrid : MonoBehaviour
     }
 
 	public bool IsValidGridPosition((int x, int y) index)
-	{
-		return index.x >= 0 && index.x < grid.GetLength(0) &&
+    {
+        // Has to be in the grid
+        return index.x >= 0 && index.x < grid.GetLength(0) &&
 			   index.y >= 0 && index.y < grid.GetLength(1);
 	}
 
@@ -149,10 +162,12 @@ public class PuzzleGrid : MonoBehaviour
 		readonly bool wall = false;
 		char digit;
 
+        // Setup grid position
         public GridObject(char digit, Vector2 pos, Vector2 size, Transform parent, TextPrefabDigit[] textPrefabDigits, Action winFunc)
         {
             this.digit = digit;
             Transform prefab = null;
+            // Setup varaibles from struct
             foreach (TextPrefabDigit tPD in textPrefabDigits)
             {
                 if (digit != tPD.digit)

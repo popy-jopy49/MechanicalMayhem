@@ -10,6 +10,7 @@ public class ImageController : MonoBehaviour, IDragHandler
 	PuzzleGrid grid;
 	private (int x, int y) prevIndex = default;
 
+	// Get reference to grid
 	private void Awake()
 	{
 		grid = transform.parent.parent.Find("Grid").GetComponent<PuzzleGrid>();
@@ -49,6 +50,7 @@ public class ImageController : MonoBehaviour, IDragHandler
         }
 	}
 
+	// Set win function to be called when we win
 	public void SetWinFunc(Action winFunc) => this.winFunc = winFunc;
 
 }

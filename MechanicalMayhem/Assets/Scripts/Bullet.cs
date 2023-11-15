@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -8,6 +9,7 @@ public class Bullet : MonoBehaviour
 	private Repairable repairable;
 	private bool killedTarget = false;
 
+	// Sets variables in bullet
     public void Setup(Vector2 dir, float damage, float explosionRadius, LayerMask whatToHit, string layer, Repairable repairable = null)
     {
         this.damage = damage;
@@ -21,15 +23,18 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
 	{
 		Destroy(gameObject);
-		if (explosionRadius > 0)
+        // When colliding, explode if it is a bomb bullet
+        if (explosionRadius > 0)
         {
             Explode();
 			return;
         }
 
+		// Check to see if hit enemy
 		if (HitEnemy(collision.gameObject))
 			return;
 
+		// Check to see if hit player
 		if (HitPlayer(collision.gameObject))
 			return;
 
@@ -37,6 +42,7 @@ public class Bullet : MonoBehaviour
 
 	}
 
+	// Get list of colliders and attack each one
 	private void Explode()
 	{
 		Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius, whatToHit);
@@ -45,6 +51,7 @@ public class Bullet : MonoBehaviour
 
 		foreach (Collider2D col in cols)
 		{
+			// Check to see if obstructed by wall
 			RaycastHit2D hit2D = Physics2D.Raycast(transform.position, col.transform.position - transform.position);
 			if (!hit2D)
 				continue;
@@ -59,6 +66,7 @@ public class Bullet : MonoBehaviour
 
 	}
 
+	// See if player and damage if true
     private bool HitPlayer(GameObject gameObject)
 	{
 		Player player = gameObject.GetComponent<Player>();
@@ -71,6 +79,7 @@ public class Bullet : MonoBehaviour
 		return true;
 	}
 
+	// See if attackable and damage if true
     private bool HitEnemy(GameObject gameObject)
 	{
 		Attackable attackable = gameObject.GetComponent<Attackable>();

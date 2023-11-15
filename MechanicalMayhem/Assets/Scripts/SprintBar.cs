@@ -7,6 +7,7 @@ public class SprintBar : MonoBehaviour
     private Slider bar;
     private Transform arrow;
 
+    // Gets reference to bar and arrow
     private void Start()
     {
         bar = GetComponent<Slider>();
@@ -14,6 +15,7 @@ public class SprintBar : MonoBehaviour
         TDPlayerMovement.OnSprintChanged += OnSprintChanged;
     }
 
+    // Do some math to find the correct position taking into account the min and max sprint
     private void OnSprintChanged(float sprint, float maxSprint, float minSprint)
     {
         if (!arrow)

@@ -16,6 +16,7 @@ public class DroneController : Enemy
 		firePoint = transform.Find("FirePoint");
 	}
 
+	// Spawn drone if less than max drone count
 	protected override void Attack()
 	{
 		if (droneCount >= maxDroneCount)
@@ -26,6 +27,7 @@ public class DroneController : Enemy
 		drones.Add(drone);
 	}
 
+	// Check if drones have been destroyed and update accordingly
 	protected override void Update()
 	{
 		base.Update();

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class LevelLoad : MonoBehaviour
 {
 
+	// When colliding with player, load next level
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (!collision.CompareTag("Player"))

@@ -13,6 +13,7 @@ public class TrackManager : Singleton<TrackManager>
 	private int buildIndex;
 	private int trackIndex;
 
+	// Reference audio source and sets up functions to call not every frame
 	private void Awake()
 	{
 		source = GetComponent<AudioSource>();
@@ -23,6 +24,7 @@ public class TrackManager : Singleton<TrackManager>
 		InvokeRepeating(nameof(UpdateTrack), 0.5f, 0.5f);
 	}
 
+	// Plays a track based on an index of the tracks List
 	public bool PlayTrack(int index)
 	{
 		try
@@ -37,6 +39,7 @@ public class TrackManager : Singleton<TrackManager>
 		}
 	}
 
+	// Plays track based on name in tracks List
 	public bool PlayTrack(string name)
 	{
 		foreach (Track track in tracks[buildIndex].sceneTracks)
@@ -52,6 +55,7 @@ public class TrackManager : Singleton<TrackManager>
 		return false;
 	}
 
+	// Plays new track on scene load
 	private void OnSceneLoad(Scene _A, Scene _B)
 	{
 		int buildIndex = _B.buildIndex;
@@ -63,6 +67,7 @@ public class TrackManager : Singleton<TrackManager>
 		PlayTrack(trackIndex);
 	}
 
+	// Update track if the track has stopped playing or loop over tracks if the final track has been reached
 	private void UpdateTrack()
 	{
 		if (source.isPlaying)

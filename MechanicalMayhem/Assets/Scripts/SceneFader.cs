@@ -12,6 +12,7 @@ public class SceneFader : Singleton<SceneFader>
 	[SerializeField] private float fadeTime;
 	private bool fading = false;
 
+	// References panel and makes this object persistent
 	private void Awake()
 	{
 		DontDestroyOnLoad(transform.parent);
@@ -19,11 +20,14 @@ public class SceneFader : Singleton<SceneFader>
 		panel = GetComponent<Image>();
 		panel.enabled = false;
 	}
+
+	// Only enables panel when fading
 	private void Update()
 	{
 		panel.enabled = fading;
 	}
 
+	// Full function to asynchronously fade to specified scene
 	public async void FadeToScene(int buildIndex)
 	{
 		if (fading || buildIndex < 0 || GameManager.I.InPuzzle())
@@ -41,6 +45,7 @@ public class SceneFader : Singleton<SceneFader>
 		};
 	}
 
+	// Fades to target alpha
 	private async Task Fade(float targetAlpha)
 	{
 		float originalAlpha = panel.color.a;

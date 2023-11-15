@@ -46,10 +46,11 @@ public class TDPlayerMovement : MonoBehaviour
 
 	private void SprintStarted(InputAction.CallbackContext obj)
 	{
-        if (sprint > minSprint)
+        if (sprint > minSprint) // Sprint if valid
             isSprinting = true;
 	}
 
+    // Gets input, deals with sprinting, handles animation
 	private void Update()
 	{
 		input = InputManager.INPUT_ACTIONS.Main.Movement.ReadValue<Vector2>().normalized;
@@ -65,6 +66,7 @@ public class TDPlayerMovement : MonoBehaviour
 
     private void HandlePlayerAnimation()
     {
+        // Sets animation based on input
         if (input == Vector2.zero)
         {
             ChangeAnimationState(IDLE_STATE, currentDir);
@@ -94,8 +96,10 @@ public class TDPlayerMovement : MonoBehaviour
     {
         speed = movementSpeed;
 
+        // Inputing, moving, and not in a puzzle
         if (isSprinting && input != Vector2.zero && !GameManager.I.InPuzzle())
         {
+            // Sprint
             sprint -= Time.deltaTime * loseSpeed;
             speed = sprintSpeed;
             if (sprint <= 0)
@@ -103,14 +107,17 @@ public class TDPlayerMovement : MonoBehaviour
         }
         else
         {
+            // Regain sprint
             sprint += Time.deltaTime * regainSpeed;
         }
 
         sprint = Mathf.Clamp(sprint, 0, maxSprint);
 
+        // Update sprint bar
         OnSprintChanged?.Invoke(sprint, maxSprint, minSprint);
     }
 
+    // Move player
     private void FixedUpdate()
 	{
 		if (GameManager.I.InPuzzle())
@@ -119,6 +126,7 @@ public class TDPlayerMovement : MonoBehaviour
         rb.MovePosition(rb.position + newPos);
     }
 
+    // change animation
     private void ChangeAnimationState(string newState, string newDir)
     {
         string state = newState + newDir;

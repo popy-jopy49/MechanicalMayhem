@@ -9,12 +9,14 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
+        // Checks when time is up
         if (time < timeBetweenSpawns)
         {
             time += Time.deltaTime;
             return;
         }
 
+        // Spawns certain amount each spawn
         for (int i = 0; i < numberPerSpawn; i++)
         {
             GameObject enemyPrefab = GameAssets.I.GetRandomPrefab(GameAssets.I.EnemyPrefabs);

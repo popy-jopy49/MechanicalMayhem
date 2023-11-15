@@ -34,11 +34,13 @@ public class Tank : Repairable
 
 	protected override void RepairedUpdate()
 	{
+		// Get all targets in range
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, distanceToSeek, whatToHit);
 
 		if (colliders.Length <= 0)
 			return;
 
+		// find target that is closest and not through a wall
 		Transform target = colliders[0].transform;
 		Vector2 vDist = Vector2.zero;
 		float minDist = Mathf.Infinity;
@@ -59,9 +61,11 @@ public class Tank : Repairable
 			target = col.transform;
 		}
 
+		// Close enough to seek
 		if (minDist > distanceToSeek * distanceToSeek)
 			return;
 
+		// Move towards target and rotate
 		agent.isStopped = minDist <= distanceToStop * distanceToStop;
 		agent.SetDestination(target.position);
 
@@ -78,9 +82,11 @@ public class Tank : Repairable
 		}
 		time = 0;
 
+		// fire rate is up
 		Attack();
 	}
 
+	// Spawn bullet
 	protected virtual void Attack()
 	{
 		// Spawn bullet
@@ -95,7 +101,7 @@ public class Tank : Repairable
 		firePoint = transform.Find("FirePoint");
 	}
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR // Debug
     private void OnDrawGizmosSelected()
 	{
 		Handles.color = Color.red;

@@ -9,14 +9,16 @@ public class SoundManager : Singleton<SoundManager> {
     [SerializeField] private List<AudioClip> audioClips;
     private AudioSource source;
 
-	private void Awake()
+    // Reference audio source
+    private void Awake()
 	{
 		source = GetComponent<AudioSource>();
 		source.loop = false;
 		source.playOnAwake = false;
 	}
 
-	public bool PlaySound(int index)
+    // Plays a track based on an index of the audioClips List
+    public bool PlaySound(int index)
     {
 		try
 		{
@@ -29,6 +31,7 @@ public class SoundManager : Singleton<SoundManager> {
 		}
     }
 
+    // Plays track based on name in audioClips List
     public bool PlaySound(string name)
 	{
 		foreach (AudioClip clip in audioClips)

@@ -8,6 +8,7 @@ public class TrafficJamController : MonoBehaviour, IDragHandler, IBeginDragHandl
     [SerializeField] private float speed = 200f;
     private Rigidbody2D rb;
 
+    // Sets up rigidbody on cars
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -15,6 +16,7 @@ public class TrafficJamController : MonoBehaviour, IDragHandler, IBeginDragHandl
         rb.constraints = (y ? RigidbodyConstraints2D.FreezePositionX : RigidbodyConstraints2D.FreezePositionY) | RigidbodyConstraints2D.FreezeRotation;
     }
 
+    // While dragging, go to mouse position
     public void OnDrag(PointerEventData eventData)
     {
         // 13x5
@@ -37,12 +39,14 @@ public class TrafficJamController : MonoBehaviour, IDragHandler, IBeginDragHandl
         rb.velocity = speed * Time.deltaTime * pos;
     }
 
+    // Turn rb to kintematic
     public void OnEndDrag(PointerEventData eventData)
     {
         rb.isKinematic = true;
         rb.velocity = Vector2.zero;
     }
 
+    // Turn rb to dynamic
     public void OnBeginDrag(PointerEventData eventData)
     {
         rb.isKinematic = false;

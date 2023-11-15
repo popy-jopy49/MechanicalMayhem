@@ -19,11 +19,13 @@ public class RangedEnemy : Enemy {
 
     protected override void Attack()
     {
+		// Spawn bullet
         GameObject bullet = Instantiate(GameAssets.I.BulletPrefab, firePoint.position, firePoint.rotation);
         bullet.GetComponent<Bullet>().Setup(GetFireDirection() * bulletSpeed, damage, explosionRadius, whatToHit, "EnemyBullet");
         Destroy(bullet, 5f);
 	}
 
+	// Direction of fire + bullet spread
 	protected Vector2 GetFireDirection()
 	{
 		float bulletSpread = Random.Range(-this.bulletSpread, this.bulletSpread);

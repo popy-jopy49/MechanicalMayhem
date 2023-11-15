@@ -67,6 +67,7 @@ public class Weapon : MonoBehaviour
 		Shoot();
     }
 
+    // Direction of fire + bullet spread
     private Vector2 GetFireDirection(Vector3 target)
     {
 		float bulletSpread = UnityEngine.Random.Range(-weaponData.bulletSpread, weaponData.bulletSpread);

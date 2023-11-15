@@ -17,6 +17,7 @@ public class WeaponManager : MonoBehaviour
     private TMP_Text totalAmmo;
     private TMP_Text currentAmmo;
 
+	// Find all references
     private void Awake()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -38,6 +39,7 @@ public class WeaponManager : MonoBehaviour
 		UpdateWeaponUI();
     }
 
+	// Reset weapon values if new game
     private void Start()
     {
 		if (!GameManager.I.newGame)
@@ -46,6 +48,7 @@ public class WeaponManager : MonoBehaviour
 		UpdateWeaponValues();
     }
 
+	// Sets weapon values to default weapon values
 	public void UpdateWeaponValues()
 	{
 		for (int i = 0; i < weapons.Count; i++)
@@ -55,6 +58,7 @@ public class WeaponManager : MonoBehaviour
 		}
 	}
 
+	// sets each field
     private void ChangeWeaponDataValues(ref WeaponData weaponData, WeaponData defaultData)
     {
 		if (weaponData == null) return;
@@ -77,6 +81,7 @@ public class WeaponManager : MonoBehaviour
 		weaponData.enemy = defaultData.enemy;
     }
 
+	// Selects each weapon
     private void SelectWeapon3(InputAction.CallbackContext obj)
 	{
         if (weapons.Count <= 3)

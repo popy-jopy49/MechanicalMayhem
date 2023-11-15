@@ -15,6 +15,7 @@ public class PlayerStats : Singleton<PlayerStats>
 	[SerializeField] private float defaultMaxHealth;
 	[SerializeField] private float defaultMinimapSize;
 
+	// Reset if new game | Set on scene load
 	private void Awake()
 	{
 		if (GameManager.I.newGame)
@@ -40,6 +41,7 @@ public class PlayerStats : Singleton<PlayerStats>
 		};
 	}
 
+	// Sets all upgrades to the ones in PlayerPrefs
 	private void InitialisePlayerUpgrades()
 	{
 		player.SetMaxHealth(PlayerPrefs.GetFloat("Player_MaxHealth_Value"));
@@ -47,6 +49,7 @@ public class PlayerStats : Singleton<PlayerStats>
 		minimapCamera.orthographicSize = PlayerPrefs.GetFloat("Player_MinimapSize_Value");
 	}
 
+	// Setter functions that save to PlayerPrefs and initialise
 	public void SetMaxSprint(float incrementAmount, string item, string upgradeName)
 	{
 		int level = PlayerPrefs.GetInt($"{item}_{upgradeName}", 0);
@@ -72,12 +75,14 @@ public class PlayerStats : Singleton<PlayerStats>
 	private int nutsAndBolts;
 	private TMP_Text nbText;
 
+	// Reset nuts and bolts
 	private void NBSceneLoaded()
 	{
 		nbText = GameObject.Find("NutsAndBoltsAmount").GetComponent<TMP_Text>();
 		ChangeNutsAndBolts(0);
 	}
 
+	// debug
 	private void Update()
 	{
 #if UNITY_EDITOR
@@ -86,6 +91,7 @@ public class PlayerStats : Singleton<PlayerStats>
 #endif
 	}
 
+	// get and set functions
 	public void ChangeNutsAndBolts(int amount)
 	{
 		nutsAndBolts += amount;

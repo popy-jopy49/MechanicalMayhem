@@ -7,6 +7,7 @@ public class Drone : Tank
 	private Transform[] firePoints;
 	private byte currentTurret = 0;
 
+	// Spawn bullet out of alternating turret
 	protected override void Attack()
 	{
 		currentTurret = (byte)Mathf.Abs(currentTurret - 1);

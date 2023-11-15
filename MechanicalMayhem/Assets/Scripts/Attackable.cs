@@ -7,11 +7,13 @@ public class Attackable : MonoBehaviour
     [Header("Health")]
     [SerializeField] protected float maxHealth;
 
+    // Initialise health
     private void Start()
     {
         health = maxHealth;
     }
 
+    // Damage function for other scripts
     public virtual bool Damage(float damage)
     {
         health -= damage;
@@ -22,6 +24,7 @@ public class Attackable : MonoBehaviour
         return true;
     }
 
+    // Destroys object on death
     protected virtual void Die()
     {
         Destroy(gameObject);
